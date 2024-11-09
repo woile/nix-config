@@ -1,9 +1,8 @@
 {
-  description = "A flake for a development shell";
+  description = "A development shell";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
-
   outputs =
     inputs@{
       flake-parts,
@@ -19,7 +18,6 @@
       perSystem =
         { pkgs, ... }:
         {
-
           devShells.default = pkgs.mkShell {
             name = "dev";
 
@@ -32,7 +30,6 @@
               echo "Welcome to the devshell!"
             '';
           };
-
         };
     };
 }
