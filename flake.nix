@@ -1,5 +1,6 @@
 {
-  description = "A flake for a development shell";
+  description = "My nix config";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
   };
@@ -19,20 +20,25 @@
       perSystem =
         { pkgs, ... }:
         {
-
           devShells.default = pkgs.mkShell {
             name = "dev";
-
-            # Available packages on https://search.nixos.org/packages
             buildInputs = [
               pkgs.just
             ];
 
             shellHook = ''
-              echo "Welcome to the devshell!"
+              echo "Welcome to santi's nix config"
+              # just --list
             '';
           };
-
         };
+      flake = {
+        templates = {
+          devshell = {
+            path = ./templates/devshell;
+            description = "A simple nix shell for development";
+          };
+        };
+      };
     };
 }
