@@ -2,12 +2,13 @@
   description = "My nix config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
   };
 
   outputs =
     inputs@{
       flake-parts,
+      nixpkgs,
       ...
     }:
     # https://flake.parts/
@@ -38,6 +39,12 @@
             path = ./templates/devshell;
             description = "A simple nix shell for development";
           };
+        };
+        nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [
+            ./hw/lenovo_yoga_pro7/configuration.nix
+          ];
         };
       };
     };
