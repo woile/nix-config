@@ -99,6 +99,7 @@
       rng-tools
       gopass-jsonapi
       just
+      nixd
       #  thunderbird
     ];
   };
@@ -115,7 +116,13 @@
   programs.gnupg.agent.enable = true;
 
   programs.git.enable = true;
-  programs.direnv.enable = true;
+  programs.direnv = {
+    enable = true;
+    direnvrcExtra = ''
+      hide_env_diff = true
+    '';
+  };
+  programs.starship.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
