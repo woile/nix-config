@@ -100,6 +100,9 @@
       gopass-jsonapi
       just
       nixd
+      obsidian
+      chromium
+      stremio
       #  thunderbird
     ];
   };
