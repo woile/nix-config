@@ -52,7 +52,7 @@
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
-    variant = "";
+    variant = "altgr-intl";
   };
 
   # Enable CUPS to print documents.
@@ -102,7 +102,7 @@
       google-chrome
       stremio
       spotify
-      nixfmt
+      nixfmt-rfc-style
       digital
       kdePackages.kgpg
       systemctl-tui
@@ -126,12 +126,12 @@
   programs.gnupg.agent.enable = true;
 
   programs.git.enable = true;
-  programs.direnv = {
-    enable = true;
-    direnvrcExtra = ''
-      hide_env_diff = true
-    '';
-  };
+  programs.direnv.enable = true;
+  #   enable = true;
+  #   direnvrcExtra = ''
+  #     hide_env_diff = true
+  #   '';
+  # };
   programs.starship.enable = true;
 
   # Allow unfree packages

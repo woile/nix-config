@@ -2,13 +2,23 @@
   description = "My nix config";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
+    # system packages for nixos
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs/nixos-24.11";
+    };
+
+    # user packages and dotfiles
+    home-manager = {
+      url = "github:nix-community/home-manager/release-24.11";
+      inputs.nixpkgs.follows = "nixpkgs"; # Use system packages list where available
+    };
   };
 
   outputs =
     inputs@{
       flake-parts,
       nixpkgs,
+      home-manager,
       ...
     }:
     # https://flake.parts/
@@ -28,7 +38,7 @@
             ];
 
             shellHook = ''
-              echo "Welcome to santi's nix config"
+              echo "woile nix config"
               just --list
             '';
           };
@@ -44,6 +54,12 @@
           system = "x86_64-linux";
           modules = [
             ./hardware/lenovo/yoga/7/14AHP9/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.woile = import ./home.nix;
+            }
           ];
         };
       };
