@@ -29,7 +29,7 @@
 
             shellHook = ''
               echo "Welcome to santi's nix config"
-              # just --list
+              just --list
             '';
           };
         };
@@ -43,7 +43,7 @@
         nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [
-            ./hw/lenovo_yoga_pro7/configuration.nix
+            ./hardware/lenovo/yoga/7/14AHP9/configuration.nix
           ];
         };
       };
