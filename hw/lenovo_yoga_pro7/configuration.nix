@@ -66,7 +66,6 @@
   hardware.bluetooth.powerOnBoot = true;
   hardware.bluetooth.settings.General.Experimental = true;
 
-
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -104,6 +103,10 @@
       stremio
       spotify
       nixfmt
+      digital
+      kdePackages.kgpg
+      systemctl-tui
+      catppuccin-kde
       #  thunderbird
     ];
   };
