@@ -39,43 +39,31 @@
     };
   };
 
-  home.packages = [
-    pkgs.neofetch
-    pkgs.nerdfonts # fonts with ligatures
-    pkgs.uv # python package manager
-    pkgs.python312
-    pkgs.just
-    pkgs.obsidian
-    pkgs.gopass
-    pkgs.gopass-jsonapi
-    pkgs.google-chrome
-    pkgs.stremio
-    pkgs.spotify
-    pkgs.systemctl-tui
+  home.packages = with pkgs; [
+    nerdfonts # fonts with ligatures
+    uv # python package manager
+    python312
+    just
+    obsidian
+    gopass
+    gopass-jsonapi
+    google-chrome
+    stremio
+    spotify
+    systemctl-tui
+    macchina # system info
+    lmstudio # ai model manager
+    rage
   ];
 
   home.shellAliases = {
     ls = "exa -l";
+    neofetch = "macchina";
   };
 
   fonts = {
     fontconfig = {
       enable = true;
-
-      # defaultFonts = {
-      #   serif = [
-      #     "DejaVu Serif"
-
-      #   ];
-      #   sansSerif = [
-      #     "DejaVu Sans"
-
-      #   ];
-      #   monospace = [ "DejaVu Sans Mono" ];
-      #   emoji = [
-      #     "Noto Color Emoji"
-      #   ];
-      # };
     };
   };
 
