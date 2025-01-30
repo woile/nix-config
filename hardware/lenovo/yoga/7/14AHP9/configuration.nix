@@ -5,7 +5,8 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -24,7 +25,7 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "America/Argentina/Cordoba";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -87,32 +88,26 @@
   users.users.woile = {
     isNormalUser = true;
     description = "Santiago Fraire";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       kdePackages.kate
+      kdePackages.kgpg
       vim
       git
       vscode-fhs # FHS variant, which allows installing extensions
-      gopass
       rng-tools
-      gopass-jsonapi
-      just
       nixd
-      obsidian
-      google-chrome
-      stremio
-      spotify
       nixfmt-rfc-style
       digital
-      kdePackages.kgpg
-      systemctl-tui
       catppuccin-kde
       #  thunderbird
     ];
   };
 
-  # Install firefox.
-  programs.firefox.enable = true;
+
   programs.steam = {
     enable = true;
     # Open ports in the firewall for Steam Remote Play
@@ -123,16 +118,6 @@
     localNetworkGameTransfers.openFirewall = true;
   };
   programs.partition-manager.enable = true;
-  programs.gnupg.agent.enable = true;
-
-  programs.git.enable = true;
-  programs.direnv.enable = true;
-  #   enable = true;
-  #   direnvrcExtra = ''
-  #     hide_env_diff = true
-  #   '';
-  # };
-  programs.starship.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -170,6 +155,9 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
 }
