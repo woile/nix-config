@@ -54,11 +54,13 @@
     macchina # system info
     lmstudio # ai model manager
     rage
+    gitui
   ];
 
   home.shellAliases = {
     ls = "exa -l";
     neofetch = "macchina";
+    tig = "gitui";
   };
 
   fonts = {
