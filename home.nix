@@ -55,6 +55,7 @@
     lmstudio # ai model manager
     rage
     gitui
+    telegram-desktop
   ];
 
   home.shellAliases = {
