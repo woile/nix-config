@@ -103,7 +103,6 @@
     ];
   };
 
-
   programs.steam = {
     enable = true;
     # Open ports in the firewall for Steam Remote Play
@@ -114,9 +113,6 @@
     localNetworkGameTransfers.openFirewall = true;
   };
   programs.partition-manager.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -151,9 +147,33 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix = {
+    # Store optimization
+    optimise = {
+      automatic = true;
+      dates = [ "13:00" ];
+    };
 
+    # Garbage collection
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+
+    settings.experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
+
+  # nixpkgs instance config
+  nixpkgs = {
+    config = {
+      # Always allow unfree packages
+      allowUnfree = true;
+      # Workaround for https://github.com/nix-community/home-manager/issues/2942
+      allowUnfreePredicate = _: true;
+    };
+  };
 }
