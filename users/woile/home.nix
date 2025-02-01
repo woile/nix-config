@@ -23,7 +23,15 @@
     };
   };
   programs.bash.enable = true;
-  programs.git.enable = true;
+  programs.git = {
+    enable = true;
+    userName = "Santiago Fraire Willemoes";
+    userEmail = "santiwilly@gmail.com";
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
+    delta.enable = true;
+  };
   programs.eza = {
     enable = true;
     icons = "auto";
@@ -56,7 +64,15 @@
     rage
     gitui
     telegram-desktop
-    transmission-gtk
+    transmission_4-qt
+
+    digital
+
+    vscode-fhs # FHS variant, which allows installing extensions
+
+    # nix tooling
+    nixfmt-rfc-style
+    nixd
 
     #kde
     kdePackages.kcalc

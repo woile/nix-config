@@ -94,15 +94,11 @@
     ];
     packages = with pkgs; [
       vim
-      git
-      vscode-fhs # FHS variant, which allows installing extensions
       rng-tools
-      nixd
-      nixfmt-rfc-style
-      digital
     ];
   };
 
+  # does some system configuration that Home Manager doesn’t have the privileges to do
   programs.steam = {
     enable = true;
     # Open ports in the firewall for Steam Remote Play
