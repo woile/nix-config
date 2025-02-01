@@ -56,6 +56,13 @@
     rage
     gitui
     telegram-desktop
+    transmission-gtk
+
+    #kde
+    kdePackages.kcalc
+    catppuccin-kde
+    kdePackages.kate
+    kdePackages.kgpg
   ];
 
   home.shellAliases = {

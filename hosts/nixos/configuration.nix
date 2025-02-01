@@ -7,7 +7,7 @@
 {
   imports = [
     # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    ../../hardware/lenovo/yoga/7/14AHP9/hardware-configuration.nix
   ];
 
   # Bootloader.
@@ -93,8 +93,6 @@
       "wheel"
     ];
     packages = with pkgs; [
-      kdePackages.kate
-      kdePackages.kgpg
       vim
       git
       vscode-fhs # FHS variant, which allows installing extensions
@@ -102,8 +100,6 @@
       nixd
       nixfmt-rfc-style
       digital
-      catppuccin-kde
-      #  thunderbird
     ];
   };
 
