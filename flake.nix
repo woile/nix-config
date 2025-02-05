@@ -50,19 +50,12 @@
             description = "A simple nix shell for development";
           };
         };
-        nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          modules = [
-            ./hosts/nixos/configuration.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.backupFileExtension = "backup";
-              home-manager.users.woile = import ./users/woile/home.nix;
-            }
-          ];
-        };
+        nixosConfigurations.nixos = nixpkgs.lib.nixosSystem (
+          import ./hosts/nixos/system.nix {
+            home-manager = home-manager;
+          }
+        );
+
       };
     };
 }
