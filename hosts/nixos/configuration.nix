@@ -61,6 +61,8 @@
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
+  # automatically switch to newly-connected devices
+  hardware.pulseaudio.extraConfig = "load-module module-switch-on-connect";
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
