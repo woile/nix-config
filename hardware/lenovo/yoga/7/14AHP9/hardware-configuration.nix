@@ -25,6 +25,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [ "amd_pstate=active" ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/4c3a7767-2d19-421b-be66-e2fda9ce9b3d";
@@ -53,5 +54,49 @@
   # networking.interfaces.wlp2s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  # Enable the Nvidia card, as well as Prime and Offload
+  # hardware.amdgpu.initrd.enable = true;
+
+  # Nvidia secondary graphics
+  hardware.graphics.enable = true;
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+
+    # fix for kernel 6.13 5/02/2024
+    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+      version = "570.86.16"; # use new 570 drivers
+      sha256_64bit = "sha256-RWPqS7ZUJH9JEAWlfHLGdqrNlavhaR1xMyzs8lJhy9U=";
+      openSha256 = "sha256-DuVNA63+pJ8IB7Tw2gM4HbwlOh1bcDg2AN2mbEU9VPE=";
+      settingsSha256 = "sha256-9rtqh64TyhDF5fFAYiWl3oDHzKJqyOW3abpcf2iNRT8=";
+      usePersistenced = false;
+    };
+    # Use proprietary drivers
+    open = true;
+
+    # Enable the NVIDIA kernel module
+    modesetting.enable = true;
+    nvidiaSettings = true;
+
+    # Enable runtime power management
+    prime = {
+
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      nvidiaBusId = "PCI:1:0:0";
+      amdgpuBusId = "PCI:63:0:0";
+    };
+
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+    };
+
+  };
+
 }
