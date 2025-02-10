@@ -83,6 +83,11 @@
     #media-session.enable = true;
   };
 
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -111,6 +116,11 @@
     localNetworkGameTransfers.openFirewall = true;
   };
   programs.partition-manager.enable = true;
+
+  programs.appimage = {
+    enable = true;
+    binfmt = true;
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

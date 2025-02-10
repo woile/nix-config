@@ -47,6 +47,22 @@
     };
   };
 
+  programs.zed-editor = {
+    enable = true;
+    extensions = [
+      "zed-python-refactoring"
+      "nix"
+      "http"
+      "jinja2"
+      "just"
+      "kdl"
+      "mermaid"
+      "nickel"
+      "sql"
+    ];
+    userSettings = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/settings.json));
+  };
+
   home.packages = with pkgs; [
     nerdfonts # fonts with ligatures
     uv # python package manager
@@ -73,6 +89,7 @@
     # nix tooling
     nixfmt-rfc-style
     nixd
+    nil
 
     #kde
     kdePackages.kcalc
