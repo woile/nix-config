@@ -37,6 +37,9 @@
     icons = "auto";
   };
   programs.gpg.enable = true;
+  programs.gpg.publicKeys = [
+    { source = ../../crypto/gpg-pubkeys.txt; trust = 5; }
+  ];
   programs.starship.enable = true;
   programs.firefox.enable = true;
   programs.poetry = {
@@ -49,6 +52,9 @@
 
   programs.zed-editor = {
     enable = true;
+
+    # extension list:
+    # https://github.com/zed-industries/extensions/tree/main/extensions
     extensions = [
       "zed-python-refactoring"
       "nix"
@@ -58,9 +64,11 @@
       "kdl"
       "mermaid"
       "nickel"
+      "toml"
       "sql"
     ];
     userSettings = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/settings.json));
+    userKeymaps = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/keymaps.json));
   };
 
   home.packages = with pkgs; [
@@ -81,6 +89,7 @@
     gitui
     telegram-desktop
     transmission_4-qt
+    signal-desktop
 
     digital
 
@@ -110,4 +119,10 @@
     };
   };
 
+  services.gpg-agent = {
+    enable = true;
+    enableBashIntegration = true;
+    enableSshSupport = true;
+    pinentryPackage = pkgs.pinentry-qt;
+  };
 }

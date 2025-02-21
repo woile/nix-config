@@ -4,5 +4,37 @@
     "light": "One Light",
     "dark": "One Dark"
   },
-  "dock": "right"
+  "dock": "right",
+  "language_models": {
+    "ollama": {
+      "api_url": "http://localhost:11434"
+    }
+  },
+
+  "assistant": {
+    "enabled": true,
+    "version": "2",
+    "default_open_ai_model": null,
+    "default_model": {
+      "provider": "ollama",
+      "model": "qwen2.5-coder"
+    }
+  },
+  "hour_format": "hour24",
+  "auto_update": false,
+  "load_direnv": "shell_hook",
+  "base_keymap": "VSCode",
+  "show_whitespaces": "all",
+  "project_panel": {
+    "dock": "right"
+  },
+  "inlay_hints": {
+    "enabled": true,
+    "show_type_hints": true,
+    "show_parameter_hints": true,
+    "show_other_hints": true,
+    "show_background": false,
+    "edit_debounce_ms": 700,
+    "scroll_debounce_ms": 50
+  }
 }
