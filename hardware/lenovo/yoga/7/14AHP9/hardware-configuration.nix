@@ -26,7 +26,7 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.kernelParams = [ "amd_pstate=active" ];
-
+  boot.kernel.sysctl."kernel.sysrq" = 502;
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/4c3a7767-2d19-421b-be66-e2fda9ce9b3d";
     fsType = "btrfs";

@@ -72,7 +72,6 @@
   };
 
   home.packages = with pkgs; [
-    nerdfonts # fonts with ligatures
     uv # python package manager
     python312
     just
@@ -105,6 +104,11 @@
     catppuccin-kde
     kdePackages.kate
     kdePackages.kgpg
+
+    # fonts
+    # nerd-fonts.fira-code
+    # nerd-fonts.droid-sans-mono
+    # nerd-fonts.jetbrains-mono
   ];
 
   home.shellAliases = {
