@@ -6,6 +6,9 @@
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-24.11";
     };
+    nixpkgs-unstable = {
+      url = "github:NixOS/nixpkgs/nixos-unstable";
+    };
 
     # user packages and dotfiles
     home-manager = {
@@ -55,7 +58,7 @@
             home-manager = home-manager;
           }
         );
-
+        specialArgs = { inherit inputs; };
       };
     };
 }

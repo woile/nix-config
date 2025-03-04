@@ -10,6 +10,12 @@
     ../../hardware/lenovo/yoga/7/14AHP9/hardware-configuration.nix
   ];
 
+  # register 'pkgsUnstable' to access anywhere in the config
+  # _module.args.pkgsUnstable = import inputs.nixpkgs-unstable {
+  #   inherit (pkgs.stdenv.hostPlatform) system;
+  #   inherit (config.nixpkgs) config;
+  # };
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

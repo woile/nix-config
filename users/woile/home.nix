@@ -52,7 +52,7 @@
 
   programs.zed-editor = {
     enable = true;
-
+    # package = pkgsUnstable.zed-editor;
     # extension list:
     # https://github.com/zed-industries/extensions/tree/main/extensions
     extensions = [
@@ -71,44 +71,45 @@
     userKeymaps = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/keymaps.json));
   };
 
-  home.packages = with pkgs; [
-    uv # python package manager
-    python312
-    just
-    obsidian
-    gopass
-    gopass-jsonapi
-    google-chrome
-    stremio
-    spotify
-    systemctl-tui
-    macchina # system info
-    lmstudio # ai model manager
-    rage
-    gitui
-    telegram-desktop
-    transmission_4-qt
-    signal-desktop
+  home.packages = [
+    pkgs.uv # python package manager
+    pkgs.python312
+    pkgs.just
+    pkgs.obsidian
+    pkgs.gopass
+    pkgs.gopass-jsonapi
+    pkgs.google-chrome
+    pkgs.stremio
+    pkgs.spotify
+    pkgs.systemctl-tui
+    pkgs.macchina # system info
+    pkgs.lmstudio # ai model manager
+    pkgs.rage
+    pkgs.gitui
+    pkgs.telegram-desktop
+    pkgs.transmission_4-qt
+    pkgs.signal-desktop
+    pkgs.vlc
+    pkgs.digital
 
-    digital
-
-    vscode-fhs # FHS variant, which allows installing extensions
+    pkgs.vscode-fhs # FHS variant, which allows installing extensions
 
     # nix tooling
-    nixfmt-rfc-style
-    nixd
-    nil
+    pkgs.nixfmt-rfc-style
+    pkgs.nixd
+    pkgs.nil
 
     #kde
-    kdePackages.kcalc
-    catppuccin-kde
-    kdePackages.kate
-    kdePackages.kgpg
+    pkgs.kdePackages.kcalc
+    pkgs.catppuccin-kde
+    pkgs.kdePackages.kate
+    pkgs.kdePackages.kgpg
 
+    pkgs.onlyoffice-desktopeditors
     # fonts
-    # nerd-fonts.fira-code
-    # nerd-fonts.droid-sans-mono
-    # nerd-fonts.jetbrains-mono
+    # pkgsUnstable.nerd-fonts.fira-code
+    # pkgsUnstable.nerd-fonts.droid-sans-mono
+    # pkgsUnstable.nerd-fonts.jetbrains-mono
   ];
 
   home.shellAliases = {
