@@ -38,7 +38,10 @@
   };
   programs.gpg.enable = true;
   programs.gpg.publicKeys = [
-    { source = ../../crypto/gpg-pubkeys.txt; trust = 5; }
+    {
+      source = ../../crypto/gpg-pubkeys.txt;
+      trust = 5;
+    }
   ];
   programs.starship.enable = true;
   programs.firefox.enable = true;
@@ -52,6 +55,11 @@
 
   programs.zed-editor = {
     enable = true;
+    extraPackages = [
+      pkgs.nixd
+      pkgs.package-version-server
+      pkgs.nixfmt-rfc-style
+    ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
     # https://github.com/zed-industries/extensions/tree/main/extensions

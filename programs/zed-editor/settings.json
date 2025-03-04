@@ -36,5 +36,26 @@
     "show_background": false,
     "edit_debounce_ms": 700,
     "scroll_debounce_ms": 50
+  },
+
+  "settings": {
+    "dialyzerEnabled": true
+  },
+  "lsp": {
+    "nixd": {
+      "binary": {
+        "path_lookup": true
+      }
+    }
+  },
+  "languages": {
+    "Nix": {
+      "formatter": {
+        "external": {
+          "command": "nixfmt",
+          "arguments": []
+        }
+      }
+    }
   }
 }

@@ -4,15 +4,12 @@
   inputs = {
     # system packages for nixos
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-24.11";
-    };
-    nixpkgs-unstable = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
 
     # user packages and dotfiles
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs"; # Use system packages list where available
     };
   };
@@ -31,6 +28,11 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
+      # imports = [
+      #       # Import home-manager's flake module
+      #       inputs.home-manager.flakeModules.home-manager
+      #   ];
+
       perSystem =
         { pkgs, ... }:
         {
