@@ -112,6 +112,7 @@
     pkgs.catppuccin-kde
     pkgs.kdePackages.kate
     pkgs.kdePackages.kgpg
+    pkgs.kdePackages.merkuro
 
     pkgs.onlyoffice-desktopeditors
     # fonts

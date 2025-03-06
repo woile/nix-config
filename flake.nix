@@ -52,7 +52,11 @@
         templates = {
           devshell = {
             path = ./templates/devshell;
-            description = "A simple nix shell for development";
+            description = "A basic nix shell for development";
+          };
+          rust-shell = {
+            path = ./templates/rust-shell;
+            description = "A basic nix shell for rust development";
           };
         };
         nixosConfigurations.nixos = nixpkgs.lib.nixosSystem (
@@ -63,4 +67,13 @@
         specialArgs = { inherit inputs; };
       };
     };
+  nixConfig = {
+    extra-substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
+
 }
