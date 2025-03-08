@@ -36,6 +36,9 @@
     enable = true;
     icons = "auto";
   };
+  programs.bat = {
+    enable = true;
+  };
   programs.gpg.enable = true;
   programs.gpg.publicKeys = [
     {
@@ -80,42 +83,48 @@
     userKeymaps = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/keymaps.json));
   };
 
-  home.packages = [
-    pkgs.uv # python package manager
-    pkgs.python312
-    pkgs.just
-    pkgs.obsidian
-    pkgs.gopass
-    pkgs.gopass-jsonapi
-    pkgs.google-chrome
-    pkgs.stremio
-    pkgs.spotify
-    pkgs.systemctl-tui
-    pkgs.macchina # system info
-    pkgs.lmstudio # ai model manager
-    pkgs.rage
-    pkgs.gitui
-    pkgs.telegram-desktop
-    pkgs.transmission_4-qt
-    pkgs.signal-desktop
-    pkgs.vlc
-    pkgs.digital
+  home.packages = with pkgs; [
+    # custom coreutils
+    gitui # tig alternative
+    rage # age encryption
+    just # make alternative
+    macchina # neofetch alternative
 
-    pkgs.vscode-fhs # FHS variant, which allows installing extensions
+    # python development
+    uv # python package manager
+    python312
+
+    obsidian
+    gopass
+    gopass-jsonapi
+    google-chrome
+    stremio
+    spotify
+
+    # system info
+    systemctl-tui
+
+    telegram-desktop
+    transmission_4-qt
+    signal-desktop
+    vlc
+    digital
+
+    vscode-fhs # FHS variant, which allows installing extensions
 
     # nix tooling
-    pkgs.nixfmt-rfc-style
-    pkgs.nixd
-    pkgs.nil
+    nixfmt-rfc-style
+    nixd
+    nil
 
     #kde
-    pkgs.kdePackages.kcalc
-    pkgs.catppuccin-kde
-    pkgs.kdePackages.kate
-    pkgs.kdePackages.kgpg
-    pkgs.kdePackages.merkuro
+    kdePackages.kcalc
+    catppuccin-kde
+    kdePackages.kate
+    kdePackages.kgpg
+    kdePackages.merkuro
 
-    pkgs.onlyoffice-desktopeditors
+    onlyoffice-desktopeditors
     # fonts
     # pkgsUnstable.nerd-fonts.fira-code
     # pkgsUnstable.nerd-fonts.droid-sans-mono
@@ -126,6 +135,7 @@
     ls = "exa -l";
     neofetch = "macchina";
     tig = "gitui";
+    cat = "bat -pp";
   };
 
   fonts = {
