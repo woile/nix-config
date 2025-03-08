@@ -65,22 +65,24 @@
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
-  # automatically switch to newly-connected devices
-  hardware.pulseaudio.extraConfig = "load-module module-switch-on-connect";
-
   # Enable bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   hardware.bluetooth.settings.General.Experimental = true;
 
   security.rtkit.enable = true;
+
+  # Enable sound with pipewire.
+  services.pulseaudio.enable = false;
+  # automatically switch to newly-connected devices
+  services.pulseaudio.extraConfig = "load-module module-switch-on-connect";
+
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    wireplumber.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -150,7 +152,7 @@
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
-    51413  # transmission
+    51413 # transmission
   ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.

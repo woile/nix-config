@@ -44,10 +44,25 @@
   "lsp": {
     "nixd": {
       "binary": {
-        "path_lookup": true
+        "path": "nixd"
+      }
+    },
+    "rust-analyzer": {
+      "binary": {
+        "path": "/run/current-system/sw/bin/bash",
+        "arguments": [
+          "-c",
+          "if [ -e flake.nix ]; then nix develop --command rust-analyzer; else rust-analyzer; fi"
+        ]
+      }
+    },
+    "package-version-server": {
+      "binary": {
+        "path": "package-version-server"
       }
     }
   },
+
   "languages": {
     "Nix": {
       "formatter": {
