@@ -140,4 +140,5 @@
     enableSshSupport = true;
     pinentryPackage = pkgs.pinentry-qt;
   };
+
 }

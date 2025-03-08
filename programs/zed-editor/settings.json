@@ -7,7 +7,19 @@
   "dock": "right",
   "language_models": {
     "ollama": {
-      "api_url": "http://localhost:11434"
+      "api_url": "http://localhost:11434",
+      "available_models": [
+        {
+          "name": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M",
+          "display_name": "zeta-8b",
+          "max_tokens": 11264
+        },
+        {
+          "name": "qwen2.5-coder",
+          "display_name": "qwen 2.5 coder 32K",
+          "max_tokens": 11264
+        }
+      ]
     }
   },
 
@@ -17,7 +29,7 @@
     "default_open_ai_model": null,
     "default_model": {
       "provider": "ollama",
-      "model": "qwen2.5-coder"
+      "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
     }
   },
   "hour_format": "hour24",

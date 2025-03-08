@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -91,11 +91,6 @@
     #media-session.enable = true;
   };
 
-  services.ollama = {
-    enable = true;
-    acceleration = "cuda";
-  };
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -149,6 +144,14 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+    loadModels = [
+      "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
+    ];
+  };
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [
