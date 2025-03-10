@@ -55,7 +55,9 @@
       virtualenvs.in-project = true;
     };
   };
-
+  programs.wezterm = {
+    enable = true;
+  };
   programs.zed-editor = {
     enable = true;
     extraPackages = [
@@ -120,9 +122,10 @@
     #kde
     kdePackages.kcalc
     catppuccin-kde
-    kdePackages.kate
+    kdePackages.kate # text-editor
     kdePackages.kgpg
-    kdePackages.merkuro
+    kdePackages.merkuro # calendar
+    kdePackages.francis # pomodoro
 
     onlyoffice-desktopeditors
     # fonts
