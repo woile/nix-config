@@ -130,6 +130,14 @@
   environment.systemPackages = [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
+    # #kde
+    pkgs.kdePackages.kcalc
+    pkgs.catppuccin-kde
+    pkgs.kdePackages.kate # text-editor
+    pkgs.kdePackages.kgpg
+    pkgs.kdePackages.merkuro # calendar
+    pkgs.kdePackages.francis # pomodoro
+    pkgs.kdePackages.koi # dark/light auto-switch
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

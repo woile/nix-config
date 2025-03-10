@@ -119,14 +119,6 @@
     nixd
     nil
 
-    #kde
-    kdePackages.kcalc
-    catppuccin-kde
-    kdePackages.kate # text-editor
-    kdePackages.kgpg
-    kdePackages.merkuro # calendar
-    kdePackages.francis # pomodoro
-
     onlyoffice-desktopeditors
     # fonts
     # pkgsUnstable.nerd-fonts.fira-code
