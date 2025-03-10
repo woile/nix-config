@@ -144,6 +144,8 @@
     enableBashIntegration = true;
     enableSshSupport = true;
     pinentryPackage = pkgs.pinentry-qt;
+    defaultCacheTtlSsh = 8 * 60 * 60; # 8 hours
+    maxCacheTtlSsh = 8 * 60 * 60; # 8 hours
   };
 
 }
