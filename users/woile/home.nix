@@ -120,6 +120,7 @@
     nil
 
     onlyoffice-desktopeditors
+    openssl
     # fonts
     # pkgsUnstable.nerd-fonts.fira-code
     # pkgsUnstable.nerd-fonts.droid-sans-mono
