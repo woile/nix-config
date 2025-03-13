@@ -108,6 +108,9 @@
     ];
   };
 
+  programs.nix-ld = {
+    enable = true;
+  };
   # does some system configuration that Home Manager doesn’t have the privileges to do
   programs.steam = {
     enable = true;
