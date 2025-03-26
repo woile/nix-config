@@ -58,6 +58,7 @@
   programs.wezterm = {
     enable = true;
   };
+
   programs.zed-editor = {
     enable = true;
     extraPackages = [
@@ -80,6 +81,7 @@
       "toml"
       "sql"
       "git-firefly"
+      "slint"
     ];
     userSettings = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/settings.json));
     userKeymaps = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/keymaps.json));
@@ -120,7 +122,9 @@
     nil
 
     onlyoffice-desktopeditors
+
     openssl
+    nss
     # fonts
     # pkgsUnstable.nerd-fonts.fira-code
     # pkgsUnstable.nerd-fonts.droid-sans-mono
