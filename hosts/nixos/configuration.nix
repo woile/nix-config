@@ -101,12 +101,16 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "kvm" # apparently helps with android emulators
+      "adbusers" # android debugging
     ];
     packages = with pkgs; [
       vim
       rng-tools
     ];
   };
+
+  programs.adb.enable = true;
 
   programs.nix-ld = {
     enable = true;
