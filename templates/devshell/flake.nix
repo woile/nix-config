@@ -22,8 +22,8 @@
             name = "dev";
 
             # Available packages on https://search.nixos.org/packages
-            buildInputs = [
-              pkgs.just
+            buildInputs = with pkgs; [
+              just
             ];
 
             shellHook = ''
