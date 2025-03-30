@@ -26,9 +26,8 @@
             name = "dev";
 
             # Available packages on https://search.nixos.org/packages
-            buildInputs = [
-              pkgs.just
-              pkgs.nodejs_22
+            buildInputs = with pkgs; [
+              just
               inputs'.fenix.packages.stable.toolchain
             ];
 
