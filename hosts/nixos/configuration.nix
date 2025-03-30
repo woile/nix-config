@@ -111,6 +111,7 @@
   };
 
   programs.adb.enable = true;
+  programs.bandwhich.enable = true;
 
   programs.nix-ld = {
     enable = true;

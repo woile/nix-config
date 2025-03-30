@@ -59,6 +59,15 @@
     enable = true;
   };
 
+  programs.librewolf = {
+    enable = true;
+    languagePacks = [
+      "en-GB"
+      "es-AR"
+      "pt-PT"
+      "nl"
+    ];
+  };
   programs.zed-editor = {
     enable = true;
     extraPackages = [
