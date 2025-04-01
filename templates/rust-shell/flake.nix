@@ -33,7 +33,6 @@
 
             shellHook = ''
               echo "Welcome to the rust devshell!"
-              just --list
             '';
           };
         };
