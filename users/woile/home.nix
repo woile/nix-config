@@ -98,41 +98,42 @@
 
   home.packages = with pkgs; [
     # custom coreutils
-    gitui # tig alternative
-    rage # age encryption
     just # make alternative
+    rage # age encryption
     macchina # neofetch alternative
+
+    # TUI
+    systemctl-tui
+    gitui # tig alternative
 
     # python development
     uv # python package manager
     python312
 
-    obsidian
+    # security
     gopass
     gopass-jsonapi
-    google-chrome
-    stremio
-    spotify
+    openssl
 
-    # system info
-    systemctl-tui
-
+    # GUI
+    obsidian
     telegram-desktop
     transmission_4-qt
     signal-desktop
     vlc
     digital
-
+    element-desktop
     vscode-fhs # FHS variant, which allows installing extensions
+    google-chrome
+    stremio
+    spotify
+    onlyoffice-desktopeditors
 
     # nix tooling
     nixfmt-rfc-style
     nixd
     nil
 
-    onlyoffice-desktopeditors
-
-    openssl
     nss
     # fonts
     # pkgsUnstable.nerd-fonts.fira-code
