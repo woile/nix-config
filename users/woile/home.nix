@@ -48,6 +48,9 @@
   ];
   programs.starship.enable = true;
   programs.firefox.enable = true;
+  programs.firefox.nativeMessagingHosts = [
+    pkgs.firefoxpwa
+  ];
   programs.poetry = {
     enable = true;
     settings = {
@@ -128,6 +131,8 @@
     stremio
     spotify
     onlyoffice-desktopeditors
+    windsurf
+    code-cursor
 
     # nix tooling
     nixfmt-rfc-style
@@ -135,6 +140,9 @@
     nil
 
     nss
+
+    #others
+    firefoxpwa
     # fonts
     # pkgsUnstable.nerd-fonts.fira-code
     # pkgsUnstable.nerd-fonts.droid-sans-mono
