@@ -4,6 +4,21 @@
     "light": "One Light",
     "dark": "One Dark"
   },
+  "git_panel": {
+    "dock": "right"
+  },
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "notification_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "right"
+  },
+  "features": {
+    "edit_prediction_provider": "zed"
+  },
   "dock": "right",
   "language_models": {
     "ollama": {
@@ -30,7 +45,8 @@
     "default_model": {
       "provider": "ollama",
       "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
-    }
+    },
+    "dock": "right"
   },
   "hour_format": "hour24",
   "auto_update": false,
