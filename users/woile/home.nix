@@ -94,6 +94,7 @@
       "sql"
       "git-firefly"
       "slint"
+      "mcp-server-puppeteer"
     ];
     userSettings = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/settings.json));
     userKeymaps = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/keymaps.json));
