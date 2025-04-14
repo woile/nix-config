@@ -43,6 +43,10 @@
     "version": "2",
     "default_open_ai_model": null,
     "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-7-sonnet-latest"
+    },
+    "editor_model": {
       "provider": "ollama",
       "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
     },
