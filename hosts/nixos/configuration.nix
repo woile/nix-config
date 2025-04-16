@@ -64,6 +64,15 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.printing.cups-pdf.enable = true;
+  services.printing.cups-pdf.instances = {
+    pdf = {
+      settings = {
+        Out = "\${HOME}/printed-pdf";
+        UserUMask = "0033";
+      };
+    };
+  };
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
@@ -133,19 +142,26 @@
     binfmt = true;
   };
 
+  # GameMode
+  # Add to game launch options in steam:
+  # gamemoderun %command%
+  programs.gamemode.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     #  wget
-    # #kde
-    pkgs.kdePackages.kcalc
-    pkgs.catppuccin-kde
-    pkgs.kdePackages.kate # text-editor
-    pkgs.kdePackages.kgpg
-    pkgs.kdePackages.merkuro # calendar
-    pkgs.kdePackages.francis # pomodoro
-    pkgs.kdePackages.koi # dark/light auto-switch
+
+    # kde
+    kdePackages.kcalc
+    catppuccin-kde
+    kdePackages.kate # text-editor
+    kdePackages.kgpg
+    kdePackages.merkuro # calendar
+    kdePackages.francis # pomodoro
+    kdePackages.koi # dark/light auto-switch
+
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -73,10 +73,12 @@
   };
   programs.zed-editor = {
     enable = true;
-    extraPackages = [
-      pkgs.nixd
-      pkgs.package-version-server
-      pkgs.nixfmt-rfc-style
+    extraPackages = with pkgs; [
+      nixd
+      package-version-server
+      nixfmt-rfc-style
+      wayland
+      libxkbcommon
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
