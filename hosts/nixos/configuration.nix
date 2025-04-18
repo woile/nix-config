@@ -112,6 +112,7 @@
       "wheel"
       "kvm" # apparently helps with android emulators
       "adbusers" # android debugging
+      "libvirtd" # virtualisation
     ];
     packages = with pkgs; [
       vim
@@ -121,6 +122,10 @@
 
   programs.adb.enable = true;
   programs.bandwhich.enable = true;
+
+  programs.virt-manager.enable = true;
+  virtualisation.libvirtd.enable = true;
+  virtualisation.spiceUSBRedirection.enable = true;
 
   programs.nix-ld = {
     enable = true;

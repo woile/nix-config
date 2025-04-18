@@ -125,7 +125,7 @@
     obsidian
     telegram-desktop
     transmission_4-qt
-    signal-desktop
+    signal-desktop-bin
     vlc
     digital
     element-desktop
