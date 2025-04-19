@@ -79,6 +79,7 @@
       nixfmt-rfc-style
       wayland
       libxkbcommon
+      libinput
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
