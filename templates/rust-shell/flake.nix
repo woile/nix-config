@@ -28,7 +28,16 @@
             # Available packages on https://search.nixos.org/packages
             buildInputs = with pkgs; [
               just
-              inputs'.fenix.packages.stable.toolchain
+              (
+                with inputs'.fenix.packages;
+                combine [
+                  stable.toolchain
+                  # list of targets:
+                  # https://doc.rust-lang.org/rustc/platform-support.html
+                  # for other targets add:
+                  # targets.aarch64-linux-android.stable.rust-std
+                ]
+              )
             ];
 
             shellHook = ''
