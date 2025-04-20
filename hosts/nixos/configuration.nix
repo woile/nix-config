@@ -167,6 +167,8 @@
     kdePackages.francis # pomodoro
     kdePackages.koi # dark/light auto-switch
 
+    # clipboard
+    wl-clipboard-rs
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
