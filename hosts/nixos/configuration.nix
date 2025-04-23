@@ -166,9 +166,13 @@
     kdePackages.merkuro # calendar
     kdePackages.francis # pomodoro
     kdePackages.koi # dark/light auto-switch
+    kdePackages.okular # PDF viewer
 
     # clipboard
     wl-clipboard-rs
+
+    # used to sign PDF by okular
+    nss_latest
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
