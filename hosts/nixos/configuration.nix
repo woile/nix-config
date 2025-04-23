@@ -68,7 +68,7 @@
   services.printing.cups-pdf.instances = {
     pdf = {
       settings = {
-        Out = "\${HOME}/printed-pdf";
+        Out = "\${HOME}/pdf-printed";
         UserUMask = "0033";
       };
     };
