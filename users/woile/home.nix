@@ -108,6 +108,7 @@
     just # make alternative
     rage # age encryption
     macchina # neofetch alternative
+    d2 # diagrams
 
     # TUI
     systemctl-tui
@@ -147,10 +148,6 @@
 
     #others
     firefoxpwa
-    # fonts
-    # pkgsUnstable.nerd-fonts.fira-code
-    # pkgsUnstable.nerd-fonts.droid-sans-mono
-    # pkgsUnstable.nerd-fonts.jetbrains-mono
   ];
 
   home.shellAliases = {
