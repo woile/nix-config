@@ -31,7 +31,7 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "Europe/Amsterdam";
+  # time.timeZone = "Europe/Lisbon";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -47,6 +47,10 @@
     LC_TELEPHONE = "nl_NL.UTF-8";
     LC_TIME = "nl_NL.UTF-8";
   };
+
+  # automatic timezone
+  services.automatic-timezoned.enable = true;
+  services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -204,6 +208,7 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
+  networking.nameservers = [ "1.1.1.1" ];
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
