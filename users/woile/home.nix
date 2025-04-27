@@ -138,6 +138,7 @@
     onlyoffice-desktopeditors
     windsurf
     code-cursor
+    ventoy-full-qt
 
     # nix tooling
     nixfmt-rfc-style
