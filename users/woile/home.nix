@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
-  nixpkgs.config.allowUnfreePredicate = pkg:
+  nixpkgs.config.allowUnfreePredicate =
+    pkg:
     builtins.elem (pkgs.lib.getName pkg) [
       "steam"
       "steam-run"
@@ -150,8 +151,6 @@
     vlc
     digital
     element-desktop
-    # vscode-fhs # FHS variant, which allows installing extensions
-    google-chrome
     stremio
 
     onlyoffice-desktopeditors
