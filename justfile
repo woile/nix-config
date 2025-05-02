@@ -9,3 +9,11 @@ rebuild__boot:
 # update the lock
 update:
 	nix flake update
+
+# initialise home-manager on a linux host
+init__home-manager host='woile-ubuntu':
+	nix run home-manager/master -- init --switch --flake ".#{{host}}"
+
+# build host with only home-manager
+rebuild__home-manager host='woile-ubuntu':
+	nix run home-manager/master -- switch -b backup --flake ".#{{host}}"

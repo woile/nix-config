@@ -64,6 +64,14 @@
             home-manager = home-manager;
           }
         );
+        homeConfigurations = {
+
+          woile-ubuntu = import ./hosts/ubuntu/system.nix {
+            home-manager = home-manager;
+            nixpkgs = nixpkgs;
+          };
+
+        };
         specialArgs = { inherit inputs; };
       };
     };

@@ -1,5 +1,20 @@
 { pkgs, ... }:
 {
+  nixpkgs.config.allowUnfreePredicate = pkg:
+    builtins.elem (pkgs.lib.getName pkg) [
+      "steam"
+      "steam-run"
+      "steam-original"
+      "obsidian"
+      "google-chrome"
+      "stremio-shell"
+      "stremio-server"
+      "windsurf"
+      "cursor"
+      "code"
+      "vscode"
+    ];
+
   home.username = "woile";
   home.homeDirectory = "/home/woile";
 
@@ -12,6 +27,9 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "24.11";
+
+  # disable home-manager news
+  news.display = "silent";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -131,10 +149,10 @@
     vlc
     digital
     element-desktop
-    vscode-fhs # FHS variant, which allows installing extensions
+    # vscode-fhs # FHS variant, which allows installing extensions
     google-chrome
     stremio
-    spotify
+
     onlyoffice-desktopeditors
     windsurf
     code-cursor
