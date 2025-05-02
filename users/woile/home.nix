@@ -127,6 +127,7 @@
     rage # age encryption
     macchina # neofetch alternative
     d2 # diagrams
+    dig
 
     # TUI
     systemctl-tui
@@ -156,7 +157,7 @@
     onlyoffice-desktopeditors
     windsurf
     code-cursor
-    ventoy-full-qt
+    ventoy-full-gtk
 
     # nix tooling
     nixfmt-rfc-style
