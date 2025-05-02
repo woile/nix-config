@@ -130,6 +130,7 @@
   programs.virt-manager.enable = true;
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
+  services.spice-vdagentd.enable = true; # enable copy and paste between host and guest
 
   programs.nix-ld = {
     enable = true;
