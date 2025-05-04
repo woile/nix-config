@@ -50,7 +50,7 @@
       "provider": "ollama",
       "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
     },
-    "dock": "right"
+    "dock": "left"
   },
   "hour_format": "hour24",
   "auto_update": false,
