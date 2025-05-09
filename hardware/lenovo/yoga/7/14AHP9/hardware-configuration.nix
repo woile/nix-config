@@ -46,6 +46,10 @@
     { device = "/dev/disk/by-uuid/42343ad5-a411-4314-8f1f-c14f69b5a458"; }
   ];
 
+  ## Attempts at fixing OOM issues
+  zramSwap.enable = true;
+  systemd.oomd.enableUserSlices = true;
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
