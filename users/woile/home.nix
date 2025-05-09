@@ -1,21 +1,5 @@
 { pkgs, ... }:
 {
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (pkgs.lib.getName pkg) [
-      "steam"
-      "steam-run"
-      "steam-original"
-      "obsidian"
-      "google-chrome"
-      "stremio-shell"
-      "stremio-server"
-      "windsurf"
-      "cursor"
-      "code"
-      "vscode"
-    ];
-
   home.username = "woile";
   home.homeDirectory = "/home/woile";
 
@@ -186,7 +170,7 @@
     enable = true;
     enableBashIntegration = true;
     enableSshSupport = true;
-    pinentryPackage = pkgs.pinentry-qt;
+    pinentry.package = pkgs.pinentry-qt;
     defaultCacheTtlSsh = 8 * 60 * 60; # 8 hours
     maxCacheTtlSsh = 8 * 60 * 60; # 8 hours
   };

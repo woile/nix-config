@@ -8,6 +8,12 @@
   {
     "context": "Workspace",
     "bindings": {
+      "ctrl-alt-b": "workspace::ToggleLeftDock"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
       "ctrl-`": "workspace::ToggleBottomDock"
     }
   }

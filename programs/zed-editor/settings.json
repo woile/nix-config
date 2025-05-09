@@ -33,6 +33,11 @@
           "name": "qwen2.5-coder",
           "display_name": "qwen 2.5 coder 32K",
           "max_tokens": 11264
+        },
+        {
+          "name": "hf.co/unsloth/Qwen3-8B-GGUF:Q4_K_XL",
+          "display_name": "qwen3:8b",
+          "max_tokens": 11264
         }
       ]
     }
@@ -43,8 +48,8 @@
     "version": "2",
     "default_open_ai_model": null,
     "default_model": {
-      "provider": "zed.dev",
-      "model": "claude-3-7-sonnet-latest"
+      "provider": "google",
+      "model": "gemini-2.5-flash-preview-04-17"
     },
     "editor_model": {
       "provider": "ollama",
