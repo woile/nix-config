@@ -33,7 +33,13 @@
     extraConfig = {
       init.defaultBranch = "main";
     };
-    delta.enable = true;
+    riff.enable = true;
+    includes = [
+      {
+        path = "~/projects/kpn/.gitconfig";
+        condition = "gitdir:~/projects/kpn";
+      }
+    ];
   };
   programs.eza = {
     enable = true;
