@@ -55,6 +55,7 @@
       trust = 5;
     }
   ];
+
   programs.starship.enable = true;
   programs.firefox.enable = true;
   programs.firefox.nativeMessagingHosts = [
@@ -181,4 +182,5 @@
     maxCacheTtlSsh = 8 * 60 * 60; # 8 hours
   };
 
+  services.kdeconnect.enable = true;
 }
