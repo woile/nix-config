@@ -19,4 +19,10 @@
   imports = [
     ../../users/woile/home.nix
   ];
+
+  home.packages = with pkgs; [
+    kubectl
+    helm
+    k9s
+  ];
 }
