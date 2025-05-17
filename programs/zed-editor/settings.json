@@ -37,7 +37,8 @@
         {
           "name": "hf.co/unsloth/Qwen3-8B-GGUF:Q4_K_XL",
           "display_name": "qwen3:8b",
-          "max_tokens": 11264
+          "max_tokens": 11264,
+          "supports_tools": true
         }
       ]
     }
