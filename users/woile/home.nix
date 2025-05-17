@@ -147,7 +147,7 @@
     onlyoffice-desktopeditors
     windsurf
     code-cursor
-    ventoy-full-gtk
+    # ventoy-full-gtk  # marked insecure as of now
 
     # nix tooling
     nixfmt-rfc-style
