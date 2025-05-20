@@ -90,6 +90,7 @@
       wayland
       libxkbcommon
       libinput
+      slint-lsp
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
