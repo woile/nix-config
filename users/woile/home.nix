@@ -91,6 +91,7 @@
       libxkbcommon
       libinput
       slint-lsp
+      nodejs
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:

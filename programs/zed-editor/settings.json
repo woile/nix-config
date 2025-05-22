@@ -19,7 +19,6 @@
   "features": {
     "edit_prediction_provider": "zed"
   },
-  "dock": "right",
   "language_models": {
     "ollama": {
       "api_url": "http://localhost:11434",
@@ -46,19 +45,20 @@
 
   "assistant": {
     "enabled": true,
-    "version": "2",
-    "default_open_ai_model": null,
     "default_model": {
       "provider": "google",
       "model": "gemini-2.5-flash-preview-04-17"
     },
-    "editor_model": {
+    "inline_assistant_model": {
+      "provider": "ollama",
+      "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
+    },
+    "commit_message_model": {
       "provider": "ollama",
       "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
     },
     "dock": "left"
   },
-  "hour_format": "hour24",
   "auto_update": false,
   "load_direnv": "shell_hook",
   "base_keymap": "VSCode",
@@ -68,21 +68,24 @@
   },
   "inlay_hints": {
     "enabled": true,
-    "show_type_hints": true,
-    "show_parameter_hints": true,
-    "show_other_hints": true,
     "show_background": false,
-    "edit_debounce_ms": 700,
-    "scroll_debounce_ms": 50
+    "show_other_hints": true,
+    "show_parameter_hints": true,
+    "show_type_hints": true
+  },
+  "journal": {
+    "hour_format": "hour24"
   },
 
-  "settings": {
-    "dialyzerEnabled": true
-  },
   "lsp": {
     "nixd": {
       "binary": {
         "path": "nixd"
+      }
+    },
+    "slint-lsp": {
+      "binary": {
+        "path": "slint-lsp"
       }
     },
     "rust-analyzer": {
@@ -105,8 +108,8 @@
     "Nix": {
       "formatter": {
         "external": {
-          "command": "nixfmt",
-          "arguments": []
+          "arguments": [],
+          "command": "nixfmt"
         }
       }
     }
