@@ -202,6 +202,7 @@
       "qwen3:8b"
       "hf.co/unsloth/Qwen3-8B-GGUF:Q4_K_XL"
       "hf.co/unsloth/Qwen3-14B-GGUF:Q4_K_XL"
+      "hf.co/unsloth/medgemma-4b-it-GGUF:BF16"
     ];
   };
 
