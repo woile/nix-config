@@ -72,6 +72,13 @@
     enable = true;
   };
 
+  programs.uv = {
+    enable = true;
+    settings = {
+      python-downloads = "never";
+      python-preference = "only-system";
+    };
+  };
   programs.librewolf = {
     enable = true;
     languagePacks = [
@@ -128,7 +135,6 @@
     gitui # tig alternative
 
     # python development
-    uv # python package manager
     python312
 
     # security
