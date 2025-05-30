@@ -112,6 +112,7 @@
       "kdl"
       "mermaid"
       "nickel"
+      "ruff"
       "toml"
       "sql"
       "git-firefly"
@@ -129,6 +130,8 @@
     macchina # neofetch alternative
     d2 # diagrams
     dig
+    dust # du replacement
+    btop
 
     # TUI
     systemctl-tui
@@ -171,6 +174,8 @@
     neofetch = "macchina";
     tig = "gitui";
     cat = "bat -pp";
+    du = "dust";
+    htop = "btop";
   };
 
   fonts = {
