@@ -4,7 +4,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
@@ -22,7 +21,7 @@
     "sd_mod"
   ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest; # Use LTS which is the default
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.kernelParams = [ "amd_pstate=active" ];
