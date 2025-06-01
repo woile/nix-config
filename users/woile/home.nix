@@ -167,6 +167,7 @@
 
     #others
     firefoxpwa
+    slint-lsp
   ];
 
   home.shellAliases = {

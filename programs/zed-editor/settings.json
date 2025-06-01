@@ -84,6 +84,10 @@
       }
     },
     "slint-lsp": {
+      "cached_binary_path": "slint-lsp",
+      "cached_binary": {
+        "path": "slint-lsp"
+      },
       "binary": {
         "path": "slint-lsp"
       }
