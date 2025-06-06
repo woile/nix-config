@@ -43,7 +43,8 @@
     }
   },
 
-  "assistant": {
+  "agent": {
+    "version": "2",
     "enabled": true,
     "default_model": {
       "provider": "google",
