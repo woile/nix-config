@@ -24,5 +24,13 @@
     kubectl
     helm
     k9s
+    rancher
   ];
+
+  # load home-manager untracked functions
+  programs.bash.bashrcExtra = ''
+    if [ -f ~/.extrarc ]; then
+      source ~/.extrarc
+    fi
+  '';
 }
