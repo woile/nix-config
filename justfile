@@ -17,3 +17,9 @@ init__home-manager host='woile-ubuntu':
 # build host with only home-manager
 rebuild__home-manager host='woile-ubuntu':
 	nix run home-manager/master -- switch -b backup --flake ".#{{host}}"
+
+generations__home-manager:
+	home-manager generations
+
+generations_expire__home-manager host='woile-ubuntu':
+	home-manager expire-generations "-7 days" --flake ".#{{host}}"
