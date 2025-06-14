@@ -173,6 +173,7 @@
     kdePackages.francis # pomodoro
     kdePackages.koi # dark/light auto-switch
     kdePackages.okular # PDF viewer
+    kdePackages.kontrast # color contrast
 
     # clipboard
     wl-clipboard-rs
