@@ -132,6 +132,7 @@
     dig
     dust # du replacement
     btop
+    gpg-tui
 
     # TUI
     systemctl-tui
