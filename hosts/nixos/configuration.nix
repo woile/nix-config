@@ -174,6 +174,7 @@
     kdePackages.koi # dark/light auto-switch
     kdePackages.okular # PDF viewer
     kdePackages.kontrast # color contrast
+    kdePackages.calligra # office suite
 
     # clipboard
     wl-clipboard-rs
