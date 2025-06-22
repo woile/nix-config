@@ -17,3 +17,16 @@ nix flake init -t github:woile/nix-config#devshell
 ```sh
 nix flake init -t github:woile/nix-config#rust-shell
 ```
+
+Manages toolchain using [fenix](https://github.com/nix-community/fenix)
+
+### Rust packages and dev shell
+
+Apply to the current folder by running:
+
+```sh
+nix flake init -t github:woile/nix-config#rust-pkgs-shell
+```
+
+Manages toolchain using [fenix](https://github.com/nix-community/fenix) and builds using [crane](https://github.com/ipetkov/crane/),
+to avoid rebuilding each crate.
