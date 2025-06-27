@@ -175,7 +175,7 @@
     kdePackages.okular # PDF viewer
     kdePackages.kontrast # color contrast
     kdePackages.calligra # office suite
-
+    kdePackages.akonadi # contacts
     # clipboard
     wl-clipboard-rs
 
