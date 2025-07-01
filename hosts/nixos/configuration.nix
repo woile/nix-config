@@ -203,6 +203,7 @@
       "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
       "qwen3:8b"
       "gemma3n:e4b"
+      "hf.co/unsloth/gemma-3n-E4B-it-GGUF:Q4_K_XL"
       "hf.co/unsloth/Qwen3-8B-GGUF:Q4_K_XL"
       "hf.co/unsloth/Qwen3-14B-GGUF:Q4_K_XL"
       "hf.co/unsloth/medgemma-4b-it-GGUF:Q4_K_XL"
