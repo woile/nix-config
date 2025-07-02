@@ -132,6 +132,9 @@
     dig
     dust # du replacement
     btop
+    bottom
+    dysk
+
     gpg-tui
 
     # TUI
@@ -177,7 +180,7 @@
     tig = "gitui";
     cat = "bat -pp";
     du = "dust";
-    htop = "btop";
+    htop = "btm";
   };
 
   fonts = {
