@@ -1,5 +1,5 @@
 {
-  description = "A development shell for rust";
+  description = "A rust development shell";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     fenix = {
@@ -24,22 +24,26 @@
         let
           fenix = inputs'.fenix.packages;
           rustChannel = "stable";
+          rustToolchain = (
+            fenix.combine [
+              fenix.${rustChannel}.toolchain
+
+              # https://doc.rust-lang.org/rustc/platform-support.html
+              # For more targets add:
+              # fenix.targets.aarch64-linux-android."${rustChannel}".rust-std
+              # fenix.targets.x86_64-linux-android."${rustChannel}".rust-std
+            ]
+          );
         in
         {
+          # Default shell opened with `nix develop`
           devShells.default = pkgs.mkShell {
             name = "dev";
 
             # Available packages on https://search.nixos.org/packages
             buildInputs = with pkgs; [
               just
-              (fenix.combine [
-                fenix.${rustChannel}.toolchain
-
-                # https://doc.rust-lang.org/rustc/platform-support.html
-                # For more targets add:
-                # fenix.targets.aarch64-linux-android."${rustChannel}".rust-std
-                # fenix.targets.x86_64-linux-android."${rustChannel}".rust-std
-              ])
+              rustToolchain
             ];
 
             shellHook = ''

@@ -18,6 +18,7 @@
       perSystem =
         { pkgs, ... }:
         {
+          # Default shell opened with `nix develop`
           devShells.default = pkgs.mkShell {
             name = "dev";
 
