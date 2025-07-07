@@ -9,4 +9,7 @@
     vscode-fhs # FHS variant, which allows installing extensions
     google-chrome
   ];
+  home.shellAliases = {
+    "kde-restart" = "plasmashell --replace";
+  };
 }

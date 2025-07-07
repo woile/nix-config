@@ -57,7 +57,7 @@
     extraArgs = [
       "-g"
       "--avoid"
-      "'^(X|plasma.*|konsole|kwin|wezterm*)$'"
+      "'^(X|plasma.*|konsole|kwin|google-chrome-stable|wezterm*)$'"
       "--prefer"
       "^(electron|libreoffice|gimp)$'"
     ];
