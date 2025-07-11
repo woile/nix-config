@@ -172,6 +172,11 @@
     #others
     firefoxpwa
     slint-lsp
+
+    # fonts
+    nerd-fonts.iosevka
+    nerd-fonts.jetbrains-mono
+    iosevka
   ];
 
   home.shellAliases = {

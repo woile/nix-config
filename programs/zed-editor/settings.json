@@ -4,6 +4,7 @@
     "light": "One Light",
     "dark": "One Dark"
   },
+  "buffer_font_family": "JetBrainsMono Nerd Font",
   "git_panel": {
     "dock": "right"
   },
