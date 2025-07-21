@@ -1,10 +1,17 @@
 {
-  "theme": {
-    "mode": "system",
-    "light": "One Light",
-    "dark": "One Dark"
+  "agent": {
+    "commit_message_model": {
+      "provider": "ollama",
+      "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
+    },
+    "dock": "left",
+    "enabled": true,
+    "inline_assistant_model": {
+      "provider": "ollama",
+      "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
+    }
   },
-  "buffer_font_family": "JetBrainsMono Nerd Font",
+
   "git_panel": {
     "dock": "right"
   },
@@ -15,6 +22,9 @@
     "dock": "left"
   },
   "outline_panel": {
+    "dock": "right"
+  },
+  "project_panel": {
     "dock": "right"
   },
   "features": {
@@ -44,30 +54,11 @@
     }
   },
 
-  "agent": {
-    "version": "2",
-    "enabled": true,
-    "default_model": {
-      "provider": "google",
-      "model": "gemini-2.5-flash-preview-04-17"
-    },
-    "inline_assistant_model": {
-      "provider": "ollama",
-      "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
-    },
-    "commit_message_model": {
-      "provider": "ollama",
-      "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
-    },
-    "dock": "left"
-  },
   "auto_update": false,
   "load_direnv": "shell_hook",
   "base_keymap": "VSCode",
   "show_whitespaces": "all",
-  "project_panel": {
-    "dock": "right"
-  },
+
   "inlay_hints": {
     "enabled": true,
     "show_background": false,
@@ -86,10 +77,6 @@
       }
     },
     "slint-lsp": {
-      "cached_binary_path": "slint-lsp",
-      "cached_binary": {
-        "path": "slint-lsp"
-      },
       "binary": {
         "path": "slint-lsp"
       }
@@ -119,5 +106,11 @@
         }
       }
     }
-  }
+  },
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+  "buffer_font_family": "JetBrainsMono Nerd Font"
 }
