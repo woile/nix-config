@@ -126,6 +126,8 @@
 
   programs.adb.enable = true;
   programs.bandwhich.enable = true;
+  programs.captive-browser.enable = true;
+  programs.captive-browser.interface = "wlp2s0";
 
   programs.virt-manager.enable = true;
   virtualisation.libvirtd.enable = true;
@@ -229,6 +231,7 @@
   # networking.firewall.enable = false;
 
   networking.nameservers = [ "1.1.1.1" ];
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
