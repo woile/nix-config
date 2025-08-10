@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     vscode-fhs # FHS variant, which allows installing extensions
     google-chrome
+    pinta
   ];
   home.shellAliases = {
     "kde-restart" = "plasmashell --replace";
