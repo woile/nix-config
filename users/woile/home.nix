@@ -99,6 +99,7 @@
       libinput
       slint-lsp
       nodejs
+      tofu-ls
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
@@ -118,6 +119,7 @@
       "git-firefly"
       "slint"
       "mcp-server-puppeteer"
+      "opentofu"
     ];
     userSettings = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/settings.json));
     userKeymaps = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/keymaps.json));
