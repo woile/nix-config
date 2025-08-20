@@ -12,6 +12,13 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs"; # Use system packages list where available
     };
+
+    ## Packages
+
+    temporis = {
+      url = "github:reciperium/temporis";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -62,6 +69,7 @@
         nixosConfigurations.nixos = nixpkgs.lib.nixosSystem (
           import ./hosts/nixos/system.nix {
             home-manager = home-manager;
+            inputs = inputs;
           }
         );
         homeConfigurations = {
@@ -69,6 +77,7 @@
           woile-ubuntu = import ./hosts/ubuntu/system.nix {
             home-manager = home-manager;
             nixpkgs = nixpkgs;
+            inputs = inputs;
           };
 
         };

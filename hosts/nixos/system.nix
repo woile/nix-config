@@ -1,4 +1,4 @@
-{ home-manager }:
+{ home-manager, inputs, ... }:
 {
   system = "x86_64-linux";
   modules = [
@@ -11,4 +11,5 @@
       home-manager.users.woile = import ./home.nix;
     }
   ];
+  specialArgs = { inherit inputs; };
 }

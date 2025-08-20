@@ -2,7 +2,11 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -183,6 +187,8 @@
 
     # used to sign PDF by okular
     nss_latest
+
+    inputs.temporis.packages.${system}.temporis-desktop
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -225,6 +231,7 @@
       }
     ];
     allowedUDPPortRanges = allowedTCPPortRanges;
+    enable = false;
   };
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
