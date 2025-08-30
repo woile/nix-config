@@ -162,7 +162,7 @@
     vlc
     digital
     element-desktop
-    stremio
+    # stremio
 
     onlyoffice-desktopeditors
     # ventoy-full-gtk  # marked insecure as of now

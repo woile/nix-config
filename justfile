@@ -1,6 +1,6 @@
 # apply the configuration
 rebuild:
-	sudo nixos-rebuild switch --flake .
+	sudo nixos-rebuild switch --show-trace --flake .
 
 # rebuild but keep the old generation until reboot
 rebuild__boot:
