@@ -9,6 +9,7 @@
     vscode-fhs # FHS variant, which allows installing extensions
     google-chrome
     pinta
+    krita
   ];
   home.shellAliases = {
     "kde-restart" = "plasmashell --replace";
