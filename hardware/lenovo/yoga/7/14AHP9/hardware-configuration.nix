@@ -52,14 +52,14 @@
   # Try this if situation deteriorates, disable oomd
   services.earlyoom = {
     enable = true;
-    freeSwapThreshold = 2;
-    freeMemThreshold = 2;
+    freeSwapThreshold = 5;
+    freeMemThreshold = 5;
     extraArgs = [
       "-g"
       "--avoid"
-      "'^(X|plasma.*|konsole|kwin|google-chrome-stable|wezterm*)$'"
+      "'^(X|plasma.*|konsole|kwin|wezterm*)$'"
       "--prefer"
-      "^(electron|libreoffice|gimp)$'"
+      "^(electron|libreoffice|gimp|rust-analyzer*|zed-editor*)$'"
     ];
   };
 
