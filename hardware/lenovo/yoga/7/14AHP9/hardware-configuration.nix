@@ -102,10 +102,16 @@
     # Enable runtime power management
     prime = {
 
+      # offload: puts your dGPU to sleep and lets the iGPU handle all tasks, except if you call the dGPU specifically
+      # with `nvidia-offload <cmd>`
       offload = {
-        enable = true;
-        enableOffloadCmd = true;
+        enable = false;
+        enableOffloadCmd = false;
       };
+
+      # sync: rendering is completely delegated to the dGPU, while the iGPU only displays the rendered framebuffers
+      sync.enable = true;
+
       nvidiaBusId = "PCI:1:0:0";
       amdgpuBusId = "PCI:63:0:0";
     };
