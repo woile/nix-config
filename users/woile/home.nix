@@ -74,7 +74,9 @@
   programs.wezterm = {
     enable = true;
   };
-
+  programs.helix = {
+    enable = true;
+  };
   programs.uv = {
     enable = true;
     settings = {
