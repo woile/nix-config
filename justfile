@@ -7,8 +7,8 @@ rebuild__boot:
 	sudo nixos-rebuild boot --flake .
 
 # update the lock
-update:
-	nix flake update
+update input:
+	nix flake update {{input}}
 
 # initialise home-manager on a linux host
 init__home-manager host='woile-ubuntu':
