@@ -105,6 +105,7 @@
       slint-lsp
       nodejs
       tofu-ls
+      opentofu
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
