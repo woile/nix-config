@@ -217,6 +217,7 @@
       "hf.co/unsloth/medgemma-4b-it-GGUF:Q4_K_XL"
     ];
   };
+  services.flatpak.enable = true;
 
   # Open ports in the firewall.
   networking.firewall = rec {
