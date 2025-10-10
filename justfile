@@ -7,7 +7,7 @@ rebuild__boot:
 	sudo nixos-rebuild boot --flake .
 
 # update the lock
-update input:
+update input='':
 	nix flake update {{input}}
 
 # initialise home-manager on a linux host
