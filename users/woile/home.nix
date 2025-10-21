@@ -31,12 +31,11 @@
   programs.bash.enable = true;
   programs.git = {
     enable = true;
-    userName = "Santiago Fraire Willemoes";
-    userEmail = "santiwilly@gmail.com";
-    extraConfig = {
+    settings = {
+      user.email = "santiwilly@gmail.com";
+      user.name = "Santiago Fraire Willemoes";
       init.defaultBranch = "main";
     };
-    riff.enable = true;
     includes = [
       {
         path = "~/projects/kpn/.gitconfig";
