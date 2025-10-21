@@ -1,3 +1,7 @@
+# switch to a new generation (recommended after setup)
+switch:
+    nh os switch .
+
 # apply the configuration
 rebuild:
 	sudo nixos-rebuild switch --show-trace --flake .

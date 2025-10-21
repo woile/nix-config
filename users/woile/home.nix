@@ -76,6 +76,10 @@
   programs.helix = {
     enable = true;
   };
+  # nix helper, replacement for nixos and home-manager
+  programs.nh = {
+    enable = true;
+  };
   programs.uv = {
     enable = true;
     settings = {
