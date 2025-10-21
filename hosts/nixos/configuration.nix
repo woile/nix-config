@@ -150,6 +150,9 @@
     dedicatedServer.openFirewall = true;
     # Open ports in the firewall for Steam Local Network Game Transfers
     localNetworkGameTransfers.openFirewall = true;
+    extraCompatPackages = with pkgs; [
+      proton-ge-bin
+    ];
   };
   programs.partition-manager.enable = true;
 
@@ -189,6 +192,9 @@
     nss_latest
 
     inputs.temporis.packages.${system}.temporis-desktop
+
+    # For steam games
+    protonup-qt
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -308,4 +314,7 @@
     };
   };
 
+  # nixpkgs.config.permittedInsecurePackages = [
+  #   "qtwebengine-5.15.19"
+  # ];
 }
