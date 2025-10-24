@@ -1,14 +1,16 @@
+hostname := `hostname`
+
 # switch to a new generation (recommended after setup)
-switch:
-    nh os switch .
+switch host=hostname:
+    nh os switch ".#{{host}}"
 
 # apply the configuration
-rebuild:
-	sudo nixos-rebuild switch --show-trace --flake .
+rebuild host=hostname:
+	sudo nixos-rebuild switch --show-trace --flake ".#{{host}}"
 
 # rebuild but keep the old generation until reboot
-rebuild__boot:
-	sudo nixos-rebuild boot --flake .
+rebuild__boot host=hostname:
+	sudo nixos-rebuild boot --flake ".#{{host}}"
 
 # update the lock
 update input='':
