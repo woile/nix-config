@@ -97,7 +97,6 @@ cat <<EOF > "$CONFIG_TARGET_PATH/home.nix"
   # home.packages = with pkgs; [];
   # home.shellAliases = {};
 }
-
 EOF
 
 echo "Creating system.nix..."
@@ -118,12 +117,11 @@ cat <<EOF > "$CONFIG_TARGET_PATH/system.nix"
   ];
   specialArgs = { inherit inputs; };
 }
-
 EOF
 
 
 # Store multiline string in variable
-read -r -d '' NEW_NIXOS_CONFIG << EOM
+NEW_NIXOS_CONFIG=$(cat <<'EOM'
 nixosConfigurations.$NEW_HOSTNAME = nixpkgs.lib.nixosSystem (
           import ./$CONFIG_TARGET_PATH/system.nix {
             home-manager = home-manager;
@@ -131,6 +129,7 @@ nixosConfigurations.$NEW_HOSTNAME = nixpkgs.lib.nixosSystem (
           }
         );
 EOM
+)
 
 echo "Adding host '$NEW_HOSTNAME' to flake.nix..."
 # Append "foo" before the line # id: new-cfg-targets in flake.nix
