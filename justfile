@@ -2,7 +2,7 @@ hostname := `hostname`
 
 # switch to a new generation (recommended after setup)
 switch host=hostname:
-    nh os switch ".#{{host}}"
+    nh os switch --ask --hostname "{{host}}" .
 
 # apply the configuration
 rebuild host=hostname:
