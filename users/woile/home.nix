@@ -109,6 +109,7 @@
       nodejs
       tofu-ls
       opentofu
+      ruff
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
