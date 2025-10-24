@@ -121,7 +121,7 @@ EOF
 
 
 # Store multiline string in variable
-NEW_NIXOS_CONFIG=$(cat <<'EOM'
+NEW_NIXOS_CONFIG=$(cat <<EOM
 nixosConfigurations.$NEW_HOSTNAME = nixpkgs.lib.nixosSystem (
           import ./$CONFIG_TARGET_PATH/system.nix {
             home-manager = home-manager;
