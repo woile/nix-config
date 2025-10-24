@@ -72,14 +72,13 @@
             inputs = inputs;
           }
         );
+        # id: new-cfg-targets
         homeConfigurations = {
-
           woile-ubuntu = import ./hosts/ubuntu/system.nix {
             home-manager = home-manager;
             nixpkgs = nixpkgs;
             inputs = inputs;
           };
-
         };
         specialArgs = { inherit inputs; };
       };
