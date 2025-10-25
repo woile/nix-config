@@ -1,3 +1,4 @@
+# Use this with Home Manager only
 {
   pkgs,
   ...
@@ -59,10 +60,13 @@
   ];
 
   programs.starship.enable = true;
+
   programs.firefox.enable = true;
   programs.firefox.nativeMessagingHosts = [
     pkgs.firefoxpwa
+    pkgs.kdePackages.plasma-browser-integration
   ];
+
   programs.poetry = {
     enable = true;
     settings = {

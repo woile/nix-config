@@ -1,3 +1,4 @@
+# Membrane connecting everything together
 { home-manager, inputs, ... }:
 {
   system = "x86_64-linux";

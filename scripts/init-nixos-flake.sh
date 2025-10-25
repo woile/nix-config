@@ -102,6 +102,7 @@ EOF
 echo "Creating system.nix..."
 # Add a `system.nix` file for the new host
 cat <<EOF > "$CONFIG_TARGET_PATH/system.nix"
+# Membrane connecting everything together
 { home-manager, inputs, ... }:
 {
   system = $CURRENT_SYSTEM;
@@ -140,7 +141,15 @@ sudo mv /etc/nixos/configuration.nix /etc/nixos/configuration.nix.original
 sudo mv /etc/nixos/hardware-configuration.nix /etc/nixos/hardware-configuration.nix.original
 
 echo "Migration completed."
-echo "Don't forget to add the 'nix.settings.experimental-features' to the configuration.nix!"
+echo ""
+echo "Consider adding a user and profile:"
+echo "    imports = ["
+echo "        # other configs before"
+echo "        ../../users/woile/user.nix"
+echo "        ../../profiles/laptop"
+echo "    ]"
+echo ""
+echo "Don't forget to add the 'nix.settings.experimental-features' to the 'configuration.nix' if necessary!"
 echo ""
 echo "Run this command to apply the changes on the next boot:"
 echo "    git add $CONFIG_TARGET_PATH $HW_CONFIG_PATH flake.nix"
