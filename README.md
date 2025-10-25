@@ -2,9 +2,41 @@
 
 > This repository contains my personal Nix configuration files.
 
-## Hosts
+## Structure
 
-> Host running nixos
+- `flake.nix`: The main Nix flake file.
+- `hardware`: Hardware configuration files.
+- [hosts](./hosts/README.md): Host-specific configuration files.
+- [profiles](./profiles/README.md): Profile-specific configuration files (e.g: laptop, developer).
+- `programs`: Program-specific configuration files, doesn't involve nix (e.g: zeditor).
+- `users`: User-specific configuration files.
+- [templates](./templates/README.md): Reusable templates for coding projects.
+- [scripts](./scripts/README.md): Scripts for managing the configuration.
+
+This repository doesn't do any kind of magic, it's mainly for structure and organization.
+I try to keep standards, conventions and simplicity. A few values are repeated here and there.
+
+```sh
+.
+├── flake.nix
+├── hardware/
+├── hosts/                     # where the combination that makes the actual host happen
+│   └── <hostname>/            # the hostname of the machine
+│       ├── configuration.nix  # a nixos configuration.nix
+│       ├── home.nix           # a home-manager configuration.nix
+│       └── system.nix         # glues everything together and it's used by flake.nix
+├── justfile                   # reusable commands
+├── profiles/                  # allows grouping configurations together
+│   └── laptop/                # example profile
+│       └── configuration.nix  # indicates that it's for a NixOs host
+├── programs/
+├── scripts/
+├── templates/
+└── users
+    └── <username>
+        ├── home.nix           # home-manager configuration.nix
+        └── user.nix           # nixos user configuration.nix
+```
 
 ### First run
 
@@ -19,7 +51,7 @@ direnv allow
 
 ```sh
 just update
-just rebuild
+just switch
 ```
 
 ## Home manager
