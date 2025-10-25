@@ -67,20 +67,20 @@
           };
         };
         nixosConfigurations.nixos = nixpkgs.lib.nixosSystem (
-          import ./hosts/nixos/system.nix {
+          import ./hosts/nixos {
             home-manager = home-manager;
             inputs = inputs;
           }
         );
         nixosConfigurations.aconcagua = nixpkgs.lib.nixosSystem (
-          import ./hosts/aconcagua/system.nix {
+          import ./hosts/aconcagua {
             home-manager = home-manager;
             inputs = inputs;
           }
         );
         # id: new-cfg-targets
         homeConfigurations = {
-          woile-ubuntu = import ./hosts/ubuntu/system.nix {
+          woile-ubuntu = import ./hosts/ubuntu {
             home-manager = home-manager;
             nixpkgs = nixpkgs;
             inputs = inputs;

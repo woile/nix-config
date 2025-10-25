@@ -22,13 +22,14 @@ I try to keep standards, conventions and simplicity. A few values are repeated h
 ├── hardware/
 ├── hosts/                     # where the combination that makes the actual host happen
 │   └── <hostname>/            # the hostname of the machine
-│       ├── configuration.nix  # a nixos configuration.nix
+│       ├── configuration.nix  # a nixos configuration.nix (without it, it's for home-manager)
 │       ├── home.nix           # a home-manager configuration.nix
-│       └── system.nix         # glues everything together and it's used by flake.nix
+│       └── default.nix        # glues everything together and it's used by flake.nix
 ├── justfile                   # reusable commands
 ├── profiles/                  # allows grouping configurations together
 │   └── laptop/                # example profile
-│       └── configuration.nix  # indicates that it's for a NixOs host
+│       ├── configuration.nix  # indicates that it's for a NixOs host
+│       └── default.nix        # glues everything together and it's used by flake.nix
 ├── programs/
 ├── scripts/
 ├── templates/

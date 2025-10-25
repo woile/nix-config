@@ -60,7 +60,7 @@ echo "##### FILE LOCATIONS #####"
 echo "##########################"
 echo "M hardware-configuration.nix -> $HW_CONFIG_PATH/hardware-configuration.nix"
 echo "MU configuration.nix -> $CONFIG_TARGET_PATH/configuration.nix"
-echo "+ $CONFIG_TARGET_PATH/system.nix"
+echo "+ $CONFIG_TARGET_PATH/default.nix"
 echo "+ $CONFIG_TARGET_PATH/home.nix"
 echo "U flake.nix"
 echo ""
@@ -99,9 +99,9 @@ cat <<EOF > "$CONFIG_TARGET_PATH/home.nix"
 }
 EOF
 
-echo "Creating system.nix..."
-# Add a `system.nix` file for the new host
-cat <<EOF > "$CONFIG_TARGET_PATH/system.nix"
+echo "Creating default.nix..."
+# Add a `default.nix` file for the new host
+cat <<EOF > "$CONFIG_TARGET_PATH/default.nix"
 # Membrane connecting everything together
 { home-manager, inputs, ... }:
 {
@@ -124,7 +124,7 @@ EOF
 # Store multiline string in variable
 NEW_NIXOS_CONFIG=$(cat <<EOM
 nixosConfigurations.$NEW_HOSTNAME = nixpkgs.lib.nixosSystem (
-          import ./$CONFIG_TARGET_PATH/system.nix {
+          import ./$CONFIG_TARGET_PATH {
             home-manager = home-manager;
             inputs = inputs;
           }
