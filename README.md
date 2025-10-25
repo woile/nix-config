@@ -6,12 +6,12 @@
 
 - `flake.nix`: The main Nix flake file.
 - `hardware`: Hardware configuration files.
-- [hosts](./hosts/README.md): Host-specific configuration files.
-- [profiles](./profiles/README.md): Profile-specific configuration files (e.g: laptop, developer).
+- [hosts](./hosts): Host-specific configuration files.
+- [profiles](./profiles): Profile-specific configuration files (e.g: laptop, developer).
 - `programs`: Program-specific configuration files, doesn't involve nix (e.g: zeditor).
 - `users`: User-specific configuration files.
-- [templates](./templates/README.md): Reusable templates for coding projects.
-- [scripts](./scripts/README.md): Scripts for managing the configuration.
+- [templates](./templates): Reusable templates for coding projects.
+- [scripts](./scripts): Scripts for managing the configuration.
 
 This repository doesn't do any kind of magic, it's mainly for structure and organization.
 I try to keep standards, conventions and simplicity. A few values are repeated here and there.
