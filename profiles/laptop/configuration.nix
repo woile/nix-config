@@ -72,6 +72,22 @@
   };
   services.flatpak.enable = true;
 
+  # Open ports in the firewall.
+  networking.firewall = rec {
+    allowedTCPPorts = [
+      51413 # transmission
+    ];
+    allowedTCPPortRanges = [
+      # KDE Connect
+      {
+        from = 1714;
+        to = 1764;
+      }
+    ];
+    allowedUDPPortRanges = allowedTCPPortRanges;
+  };
+  networking.nameservers = [ "1.1.1.1" ];
+
   virtualisation.docker = {
     # Consider disabling the system wide Docker daemon
     enable = false;

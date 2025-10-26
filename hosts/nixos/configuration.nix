@@ -98,26 +98,10 @@
     inputs.temporis.packages.${system}.temporis-desktop
   ];
 
-  # Open ports in the firewall.
-  networking.firewall = rec {
-    allowedTCPPorts = [
-      51413 # transmission
-    ];
-    allowedTCPPortRanges = [
-      # KDE Connect
-      {
-        from = 1714;
-        to = 1764;
-      }
-    ];
-    allowedUDPPortRanges = allowedTCPPortRanges;
-    enable = false;
-  };
+  networking.firewall.enable = false;
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
-  networking.nameservers = [ "1.1.1.1" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
