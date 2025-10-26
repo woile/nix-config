@@ -99,6 +99,10 @@
       "pt-PT"
       "nl"
     ];
+    nativeMessagingHosts = [
+      pkgs.firefoxpwa
+      pkgs.kdePackages.plasma-browser-integration
+    ];
   };
   programs.zed-editor = {
     enable = true;
