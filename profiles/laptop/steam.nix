@@ -13,6 +13,7 @@
       proton-ge-bin
     ];
   };
+  programs.steam.protontricks.enable = true;
 
   # GameMode
   # Add to game launch options in steam:
