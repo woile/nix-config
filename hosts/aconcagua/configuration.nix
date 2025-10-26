@@ -56,24 +56,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.woile = {
-  #   isNormalUser = true;
-  #   description = "Santiago Fraire";
-  #   extraGroups = [
-  #     "networkmanager"
-  #     "wheel"
-  #     "kvm"
-  #     "adbusers"
-  #     "libvirtd"
-  #   ];
-  #   packages = with pkgs; [
-  #     vim
-  #     rng-tools
-  #     #  thunderbird
-  #   ];
-  # };
-
   # Virtualisation
   programs.virt-manager.enable = true;
   virtualisation.libvirtd.enable = true;
@@ -92,6 +74,10 @@
     variant = "";
   };
 
+  services.ollama.acceleration = "rocm";
+  services.ollama.loadModels = [
+    "qwen3-coder:30b"
+  ];
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];

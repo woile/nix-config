@@ -65,7 +65,6 @@
     enable = true;
     acceleration = "rocm";
     loadModels = [
-      "qwen3-coder:30b"
       "qwen3:8b"
       "gemma3n:e4b"
     ];
