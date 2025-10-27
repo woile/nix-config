@@ -69,6 +69,8 @@
     variant = "altgr-intl";
   };
 
+  services.openssh.settings.PermitRootLogin = "yes";
+
   # Enable bluetooth
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
