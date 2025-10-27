@@ -60,6 +60,7 @@
   };
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  services.rsyncd.enable = true;
 
   services.ollama = {
     enable = true;
