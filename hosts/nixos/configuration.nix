@@ -16,6 +16,8 @@
     ../../users/woile/user.nix
 
     ../../profiles/laptop
+
+    ../../profiles/homelab
   ];
 
   # register 'pkgsUnstable' to access anywhere in the config
