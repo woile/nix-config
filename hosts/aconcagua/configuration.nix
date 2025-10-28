@@ -77,6 +77,7 @@
   services.ollama.loadModels = [
     "qwen3-coder:30b"
     "hf.co/unsloth/medgemma-27b-text-it-GGUF:Q4_K_M"
+    "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M"
   ];
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
