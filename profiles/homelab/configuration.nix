@@ -71,12 +71,11 @@
   services.jellyseerr = {
     enable = true;
     openFirewall = true;
-    group = "media";
   };
 
   fileSystems = {
     "/media/media-store" = {
-      device = "/dev/sda2"; # TODO: Place the correct one here
+      device = "/sda/sda2"; # TODO: Place the correct one here
       fsType = "exfat";
       options = [
         "defaults"
@@ -87,5 +86,6 @@
     };
   };
 
-  users.user.woile.extraGroups = [ "media" ];
+  users.users.woile.extraGroups = [ "media" ];
+  users.groups.media = { };
 }
