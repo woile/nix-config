@@ -75,6 +75,7 @@
   networking.firewall = rec {
     allowedTCPPorts = [
       51413 # transmission
+      5900 # SPICE
     ];
     allowedTCPPortRanges = [
       # KDE Connect

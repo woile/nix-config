@@ -61,8 +61,7 @@
   virtualisation.libvirtd.enable = true;
   virtualisation.spiceUSBRedirection.enable = true;
   services.spice-vdagentd.enable = true; # enable copy and paste between host and guest
-
-  # List services that you want to enable:
+  networking.firewall.trustedInterfaces = [ "virbr0" ];
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
@@ -83,7 +82,7 @@
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  networking.firewall.enable = false;
+  networking.firewall.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
