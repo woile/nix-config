@@ -71,18 +71,19 @@
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
-    variant = "";
+    variant = "altgr-intl";
   };
 
   services.ollama.acceleration = "rocm";
   services.ollama.loadModels = [
     "qwen3-coder:30b"
+    "hf.co/unsloth/medgemma-27b-text-it-GGUF:Q4_K_M"
   ];
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
