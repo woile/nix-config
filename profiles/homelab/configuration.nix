@@ -21,15 +21,17 @@
   };
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     publish.enable = true;
     publish.addresses = true;
     publish.workstation = true;
   };
+
   # indexer manager
   services.prowlarr = {
     enable = true;
     openFirewall = true;
+    # port = 9696;
   };
 
   # movies
@@ -37,6 +39,7 @@
     enable = true;
     openFirewall = true;
     group = "media";
+    # port = 7878;
   };
 
   # TV series
@@ -44,6 +47,7 @@
     enable = true;
     openFirewall = true;
     group = "media";
+    # port = 8989;
   };
 
   # music
@@ -51,6 +55,7 @@
     enable = true;
     openFirewall = true;
     group = "media";
+    # port = 8686;
   };
 
   # books
@@ -58,6 +63,7 @@
     enable = true;
     openFirewall = true;
     group = "media";
+    # port = 8787;
   };
 
   # subtitles
@@ -65,20 +71,24 @@
     enable = true;
     openFirewall = true;
     group = "media";
+    # port = 6767;
   };
 
   # user management
   services.jellyseerr = {
     enable = true;
     openFirewall = true;
+    # port = 5055;
   };
 
   fileSystems = {
+    # Mount the external drive with 5TB
     "/media/media-store" = {
-      device = "/sda/sda2"; # TODO: Place the correct one here
+      device = "/dev/disk/by-uuid/000D-92D4"; # TODO: Place the correct one here
       fsType = "exfat";
       options = [
         "defaults"
+        "nofail" # Prevent system from failing if this drive doesn't mount
         "gid=media" # for non-root access
         "dmask=007"
         "fmask=117" # not having everything be executable
