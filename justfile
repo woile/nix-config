@@ -4,6 +4,9 @@ hostname := `hostname`
 switch host=hostname:
     nh os switch --ask --hostname "{{host}}" .
 
+boot host=hostname:
+    nh os boot --ask --hostname "{{host}}" .
+
 # apply the configuration
 rebuild host=hostname:
 	sudo nixos-rebuild switch --show-trace --flake ".#{{host}}"
