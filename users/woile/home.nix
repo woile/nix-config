@@ -118,6 +118,7 @@
       tofu-ls
       opentofu
       ruff
+      typos-lsp
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
@@ -138,6 +139,7 @@
       "slint"
       "mcp-server-puppeteer"
       "opentofu"
+      "typos"
     ];
     userSettings = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/settings.json));
     userKeymaps = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/keymaps.json));
