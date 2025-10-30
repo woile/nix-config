@@ -90,7 +90,7 @@
         "defaults"
         "nofail" # Prevent system from failing if this drive doesn't mount
         "gid=media" # for non-root access
-        "dmask=007"
+        "dmask=007" # Set directory permissions to 770 (rwxrwx---) excluding execute for others
         "fmask=117" # not having everything be executable
       ];
     };
