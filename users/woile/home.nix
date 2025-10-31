@@ -132,7 +132,6 @@
       "kdl"
       "mermaid"
       "nickel"
-      "ruff"
       "toml"
       "sql"
       "git-firefly"
