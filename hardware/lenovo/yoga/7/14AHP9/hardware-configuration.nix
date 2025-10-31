@@ -92,7 +92,8 @@
     #   usePersistenced = false;
     # };
     package = config.boot.kernelPackages.nvidiaPackages.latest;
-    # Use proprietary drivers
+
+    # Use open source drivers
     open = true;
 
     # Enable the NVIDIA kernel module

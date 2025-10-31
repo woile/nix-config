@@ -69,14 +69,6 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.rsyncd.enable = true;
-
-  services.ollama = {
-    enable = true;
-    loadModels = [
-      "qwen3:8b"
-      "gemma3n:e4b"
-    ];
-  };
   services.flatpak.enable = true;
 
   # Open ports in the firewall.
