@@ -41,6 +41,14 @@
     };
   };
 
+  # mDNS (service discovery on a local network)
+  services.avahi = {
+    enable = true;
+
+    # Provide info to the Name Service Switch (NSS) of the host about the local network
+    nssmdns4 = true;
+  };
+
   # disable pulseaudio
   services.pulseaudio.enable = false;
   # Enable sound with pipewire.
