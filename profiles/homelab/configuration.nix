@@ -1,15 +1,16 @@
 { pkgs, ... }:
 {
-  services.jellyfin = {
+
+  # mDNS for local services discovery
+  services.avahi = {
     enable = true;
-    openFirewall = true;
-    group = "media";
+    nssmdns4 = true;
+    publish.enable = true;
+    publish.addresses = true;
+    publish.workstation = true;
   };
-  environment.systemPackages = with pkgs; [
-    jellyfin
-    jellyfin-web
-    jellyfin-ffmpeg
-  ];
+
+  # Torrenting client
   services.transmission = {
     enable = true;
     openFirewall = true;
@@ -19,19 +20,25 @@
       incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
     };
   };
-  services.avahi = {
+
+  # media center: collect, manage, and stream media
+  services.jellyfin = {
     enable = true;
-    nssmdns4 = true;
-    publish.enable = true;
-    publish.addresses = true;
-    publish.workstation = true;
+    openFirewall = true;
+    group = "media";
+    # port: 8096;
   };
+  environment.systemPackages = with pkgs; [
+    jellyfin
+    jellyfin-web
+    jellyfin-ffmpeg
+  ];
 
   # indexer manager
   services.prowlarr = {
     enable = true;
     openFirewall = true;
-    # port = 9696;
+    # port: 9696;
   };
 
   # movies
@@ -39,7 +46,7 @@
     enable = true;
     openFirewall = true;
     group = "media";
-    # port = 7878;
+    # port: 7878;
   };
 
   # TV series
@@ -47,7 +54,7 @@
     enable = true;
     openFirewall = true;
     group = "media";
-    # port = 8989;
+    # port: 8989;
   };
 
   # music
@@ -55,7 +62,7 @@
     enable = true;
     openFirewall = true;
     group = "media";
-    # port = 8686;
+    # port: 8686;
   };
 
   # books
@@ -63,7 +70,7 @@
     enable = true;
     openFirewall = true;
     group = "media";
-    # port = 8787;
+    # port: 8787;
   };
 
   # subtitles
@@ -71,14 +78,14 @@
     enable = true;
     openFirewall = true;
     group = "media";
-    # port = 6767;
+    # port: 6767;
   };
 
   # user management
   services.jellyseerr = {
     enable = true;
     openFirewall = true;
-    # port = 5055;
+    # port: 5055;
   };
 
   fileSystems = {
