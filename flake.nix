@@ -66,8 +66,8 @@
             description = "A basic nix shell for rust development";
           };
         };
-        nixosConfigurations.nixos = nixpkgs.lib.nixosSystem (
-          import ./hosts/nixos {
+        nixosConfigurations.purmamarca = nixpkgs.lib.nixosSystem (
+          import ./hosts/purmamarca {
             home-manager = home-manager;
             inputs = inputs;
           }
