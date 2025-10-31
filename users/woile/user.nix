@@ -1,5 +1,14 @@
 # Use this with NixOS
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+
+let
+  sshPubFiles = lib.filterAttrs (k: v: v == "regular" && lib.hasSuffix ".pub" k) (
+    builtins.readDir ../../crypto/authorized_keys
+  );
+  authorizedKeys = lib.mapAttrsToList (
+    k: v: builtins.readFile "${../../crypto/authorized_keys}/${k}"
+  ) sshPubFiles;
+in
 {
   users.users.woile = {
     isNormalUser = true;
@@ -16,5 +25,6 @@
       rng-tools
       #  thunderbird
     ];
+    openssh.authorizedKeys.keys = authorizedKeys;
   };
 }
