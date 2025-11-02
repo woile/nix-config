@@ -88,6 +88,18 @@
     # port: 5055;
   };
 
+  xdg.desktopEntries.jellyfin-desktop = {
+    name = "Jellyfin Desktop";
+    genericName = "Media Center";
+    exec = "firefox --kiosk --new-window http://localhost:8096";
+    terminal = false;
+    type = "Application";
+    categories = [
+      "AudioVideo"
+      "Video"
+    ];
+  };
+
   fileSystems = {
     # Mount the external drive with 5TB
     "/media/media-store" = {
