@@ -77,6 +77,9 @@
   programs.wezterm = {
     enable = true;
   };
+  programs.nushell = {
+    enable = true;
+  };
   programs.helix = {
     enable = true;
   };
