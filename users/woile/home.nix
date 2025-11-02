@@ -47,6 +47,7 @@
   programs.eza = {
     enable = true;
     icons = "auto";
+    enableNushellIntegration = true;
   };
   programs.bat = {
     enable = true;
@@ -78,6 +79,9 @@
     enable = true;
   };
   programs.nushell = {
+    enable = true;
+  };
+  programs.fd = {
     enable = true;
   };
   programs.helix = {
