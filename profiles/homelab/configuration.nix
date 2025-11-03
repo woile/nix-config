@@ -15,6 +15,7 @@
     enable = true;
     openFirewall = true;
     group = "media";
+    package = pkgs.transmission_4;
     settings = {
       download-dir = "/media/media-store/media-center/transmission/download";
       incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
@@ -86,18 +87,6 @@
     enable = true;
     openFirewall = true;
     # port: 5055;
-  };
-
-  xdg.desktopEntries.jellyfin-desktop = {
-    name = "Jellyfin Desktop";
-    genericName = "Media Center";
-    exec = "firefox --kiosk --new-window http://localhost:8096";
-    terminal = false;
-    type = "Application";
-    categories = [
-      "AudioVideo"
-      "Video"
-    ];
   };
 
   fileSystems = {
