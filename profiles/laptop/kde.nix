@@ -18,5 +18,8 @@
     kdePackages.calligra # office suite
     kdePackages.akonadi # contacts
     kdePackages.plasma-browser-integration
+
+    # allow customization of panel colors
+    plasma-panel-colorizer
   ];
 }
