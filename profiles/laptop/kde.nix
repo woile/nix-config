@@ -12,7 +12,6 @@
     kdePackages.kgpg
     kdePackages.merkuro # calendar
     kdePackages.francis # pomodoro
-    kdePackages.koi # dark/light auto-switch
     kdePackages.okular # PDF viewer
     kdePackages.kontrast # color contrast
     kdePackages.calligra # office suite
