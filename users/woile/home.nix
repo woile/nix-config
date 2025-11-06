@@ -120,7 +120,6 @@
       wayland
       libxkbcommon
       libinput
-      slint-lsp
       nodejs
       tofu-ls
       opentofu
@@ -162,7 +161,6 @@
     btop
     bottom
     dysk
-
     gpg-tui
 
     # TUI

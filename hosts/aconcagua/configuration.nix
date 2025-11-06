@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
   imports = [
@@ -62,6 +62,10 @@
   virtualisation.spiceUSBRedirection.enable = true;
   services.spice-vdagentd.enable = true; # enable copy and paste between host and guest
   networking.firewall.trustedInterfaces = [ "virbr0" ];
+
+  environment.systemPackages = with pkgs; [
+    inputs.temporis.packages.${system}.temporis-desktop
+  ];
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
