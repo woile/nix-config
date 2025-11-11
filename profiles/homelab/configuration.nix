@@ -10,85 +10,6 @@
     publish.enable = true;
     publish.addresses = true;
     publish.workstation = true;
-    extraServiceFiles = {
-      "media-http" = ''
-        <?xml version="1.0" standalone='no'?>
-        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-        <service-group>
-          <name replace-wildcards="yes">media on %h</name>
-          <service>
-            <type>_http._tcp</type>
-            <port>8096</port>
-          </service>
-        </service-group>
-      '';
-      "feed-http" = ''
-        <?xml version="1.0" standalone='no'?>
-        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-        <service-group>
-          <name replace-wildcards="yes">feed on %h</name>
-          <service>
-            <type>_http._tcp</type>
-            <port>5055</port>
-          </service>
-        </service-group>
-      '';
-      "prowlarr-http" = ''
-        <?xml version="1.0" standalone='no'?>
-        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-        <service-group>
-          <name replace-wildcards="yes">prowlarr on %h</name>
-          <service>
-            <type>_http._tcp</type>
-            <port>9696</port>
-          </service>
-        </service-group>
-      '';
-      "radarr-http" = ''
-        <?xml version="1.0" standalone='no'?>
-        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-        <service-group>
-          <name replace-wildcards="yes">radarr on %h</name>
-          <service>
-            <type>_http._tcp</type>
-            <port>7878</port>
-          </service>
-        </service-group>
-      '';
-      "sonarr-http" = ''
-        <?xml version="1.0" standalone='no'?>
-        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-        <service-group>
-          <name replace-wildcards="yes">sonarr on %h</name>
-          <service>
-            <type>_http._tcp</type>
-            <port>8989</port>
-          </service>
-        </service-group>
-      '';
-      "lidarr-http" = ''
-        <?xml version="1.0" standalone='no'?>
-        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-        <service-group>
-          <name replace-wildcards="yes">lidarr on %h</name>
-          <service>
-            <type>_http._tcp</type>
-            <port>8686</port>
-          </service>
-        </service-group>
-      '';
-      "jackett-http" = ''
-        <?xml version="1.0" standalone='no'?>
-        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
-        <service-group>
-          <name replace-wildcards="yes">jackett on %h</name>
-          <service>
-            <type>_http._tcp</type>
-            <port>9117</port>
-          </service>
-        </service-group>
-      '';
-    };
   };
 
   # Torrenting client
@@ -170,6 +91,12 @@
     # port: 5055;
   };
 
+  services.caddy = {
+    enable = true;
+    virtualHosts."jellyfin.purmamarca.local".extraConfig = ''
+      reverse_proxy 127.0.0.1:8096
+    '';
+  };
   fileSystems = {
     # Mount the external drive with 5TB
     "/media/media-store" = {
