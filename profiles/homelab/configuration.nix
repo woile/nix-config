@@ -6,7 +6,7 @@
     enable = true;
     nssmdns4 = true;
     nssmdns6 = true;
-    openfirewall = true;
+    openFirewall = true;
     publish.enable = true;
     publish.addresses = true;
     publish.workstation = true;
