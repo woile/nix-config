@@ -91,12 +91,6 @@
     # port: 5055;
   };
 
-  services.caddy = {
-    enable = true;
-    virtualHosts."jellyfin.purmamarca.local".extraConfig = ''
-      reverse_proxy 127.0.0.1:8096
-    '';
-  };
   fileSystems = {
     # Mount the external drive with 5TB
     "/media/media-store" = {
