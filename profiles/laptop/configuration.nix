@@ -47,6 +47,8 @@
 
     # Provide info to the Name Service Switch (NSS) of the host about the local network
     nssmdns4 = true;
+    nssmdns6 = true;
+    openFirewall = true;
   };
 
   # disable pulseaudio

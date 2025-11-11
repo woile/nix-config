@@ -5,9 +5,69 @@
   services.avahi = {
     enable = true;
     nssmdns4 = true;
+    nssmdns6 = true;
+    openfirewall = true;
     publish.enable = true;
     publish.addresses = true;
     publish.workstation = true;
+    services = {
+
+      "media-http" = {
+        service = "_http._tcp"; # The service type (for web servers)
+        port = 8096;
+        name = "media"; # This is the "Instance Name" clients will see
+        txt = [ "path=/" ]; # Optional: provides extra info (e.g., a path)
+      };
+
+      "feed-http" = {
+        service = "_http._tcp";
+        port = 5055;
+        name = "feed";
+        txt = [ "path=/" ];
+      };
+
+      "prowlarr-http" = {
+        service = "_http._tcp";
+        port = 9696;
+        name = "prowlarr";
+        txt = [ "path=/" ];
+      };
+
+      "radarr-http" = {
+        service = "_http._tcp";
+        port = 7878;
+        name = "radarr";
+        txt = [ "path=/" ];
+      };
+
+      "sonarr-http" = {
+        service = "_http._tcp";
+        port = 8989;
+        name = "sonarr";
+        txt = [ "path=/" ];
+      };
+
+      "lidarr-http" = {
+        service = "_http._tcp";
+        port = 8686;
+        name = "lidarr";
+        txt = [ "path=/" ];
+      };
+
+      "readarr-http" = {
+        service = "_http._tcp";
+        port = 8787;
+        name = "readarr";
+        txt = [ "path=/" ];
+      };
+
+      "bazarr-http" = {
+        service = "_http._tcp";
+        port = 6767;
+        name = "bazarr";
+        txt = [ "path=/" ];
+      };
+    };
   };
 
   # Torrenting client
