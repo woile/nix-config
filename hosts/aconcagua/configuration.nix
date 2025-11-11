@@ -64,7 +64,7 @@
   networking.firewall.trustedInterfaces = [ "virbr0" ];
 
   environment.systemPackages = with pkgs; [
-    inputs.temporis.packages.${system}.temporis-desktop
+    inputs.temporis.packages.${stdenv.hostPlatform.system}.temporis-desktop
   ];
 
   # Enable the X11 windowing system.

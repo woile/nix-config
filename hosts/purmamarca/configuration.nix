@@ -92,7 +92,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    inputs.temporis.packages.${system}.temporis-desktop
+    inputs.temporis.packages.${stdenv.hostPlatform.system}.temporis-desktop
   ];
 
   networking.firewall.enable = false;
