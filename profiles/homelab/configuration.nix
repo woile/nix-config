@@ -10,63 +10,84 @@
     publish.enable = true;
     publish.addresses = true;
     publish.workstation = true;
-    services = {
-
-      "media-http" = {
-        service = "_http._tcp"; # The service type (for web servers)
-        port = 8096;
-        name = "media"; # This is the "Instance Name" clients will see
-        txt = [ "path=/" ]; # Optional: provides extra info (e.g., a path)
-      };
-
-      "feed-http" = {
-        service = "_http._tcp";
-        port = 5055;
-        name = "feed";
-        txt = [ "path=/" ];
-      };
-
-      "prowlarr-http" = {
-        service = "_http._tcp";
-        port = 9696;
-        name = "prowlarr";
-        txt = [ "path=/" ];
-      };
-
-      "radarr-http" = {
-        service = "_http._tcp";
-        port = 7878;
-        name = "radarr";
-        txt = [ "path=/" ];
-      };
-
-      "sonarr-http" = {
-        service = "_http._tcp";
-        port = 8989;
-        name = "sonarr";
-        txt = [ "path=/" ];
-      };
-
-      "lidarr-http" = {
-        service = "_http._tcp";
-        port = 8686;
-        name = "lidarr";
-        txt = [ "path=/" ];
-      };
-
-      "readarr-http" = {
-        service = "_http._tcp";
-        port = 8787;
-        name = "readarr";
-        txt = [ "path=/" ];
-      };
-
-      "bazarr-http" = {
-        service = "_http._tcp";
-        port = 6767;
-        name = "bazarr";
-        txt = [ "path=/" ];
-      };
+    extraServiceFiles = {
+      "media-http" = ''
+        <?xml version="1.0" standalone='no'?>
+        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+        <service-group>
+          <name replace-wildcards="yes">media on %h</name>
+          <service>
+            <type>_http._tcp</type>
+            <port>8096</port>
+          </service>
+        </service-group>
+      '';
+      "feed-http" = ''
+        <?xml version="1.0" standalone='no'?>
+        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+        <service-group>
+          <name replace-wildcards="yes">feed on %h</name>
+          <service>
+            <type>_http._tcp</type>
+            <port>5055</port>
+          </service>
+        </service-group>
+      '';
+      "prowlarr-http" = ''
+        <?xml version="1.0" standalone='no'?>
+        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+        <service-group>
+          <name replace-wildcards="yes">prowlarr on %h</name>
+          <service>
+            <type>_http._tcp</type>
+            <port>9696</port>
+          </service>
+        </service-group>
+      '';
+      "radarr-http" = ''
+        <?xml version="1.0" standalone='no'?>
+        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+        <service-group>
+          <name replace-wildcards="yes">radarr on %h</name>
+          <service>
+            <type>_http._tcp</type>
+            <port>7878</port>
+          </service>
+        </service-group>
+      '';
+      "sonarr-http" = ''
+        <?xml version="1.0" standalone='no'?>
+        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+        <service-group>
+          <name replace-wildcards="yes">sonarr on %h</name>
+          <service>
+            <type>_http._tcp</type>
+            <port>8989</port>
+          </service>
+        </service-group>
+      '';
+      "lidarr-http" = ''
+        <?xml version="1.0" standalone='no'?>
+        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+        <service-group>
+          <name replace-wildcards="yes">lidarr on %h</name>
+          <service>
+            <type>_http._tcp</type>
+            <port>8686</port>
+          </service>
+        </service-group>
+      '';
+      "jackett-http" = ''
+        <?xml version="1.0" standalone='no'?>
+        <!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+        <service-group>
+          <name replace-wildcards="yes">jackett on %h</name>
+          <service>
+            <type>_http._tcp</type>
+            <port>9117</port>
+          </service>
+        </service-group>
+      '';
     };
   };
 
