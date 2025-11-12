@@ -162,6 +162,7 @@
     bottom
     dysk
     gpg-tui
+    unrar
 
     # TUI
     systemctl-tui
