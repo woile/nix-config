@@ -183,7 +183,6 @@
     signal-desktop-bin
     vlc
     digital
-    element-desktop
     # stremio
 
     onlyoffice-desktopeditors
