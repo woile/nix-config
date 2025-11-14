@@ -18,6 +18,10 @@
     kdePackages.akonadi # contacts
     kdePackages.plasma-browser-integration
 
+    # art
+    pinta
+    krita
+
     # allow customization of panel colors
     plasma-panel-colorizer
   ];
