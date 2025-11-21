@@ -163,6 +163,7 @@
     dysk
     gpg-tui
     unrar
+    bitwarden-desktop
 
     # TUI
     systemctl-tui
