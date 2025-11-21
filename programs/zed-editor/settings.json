@@ -35,16 +35,6 @@
       "api_url": "http://localhost:11434",
       "available_models": [
         {
-          "name": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M",
-          "display_name": "zeta-8b",
-          "max_tokens": 11264
-        },
-        {
-          "name": "qwen2.5-coder",
-          "display_name": "qwen 2.5 coder 32K",
-          "max_tokens": 11264
-        },
-        {
           "name": "hf.co/unsloth/Qwen3-8B-GGUF:Q4_K_XL",
           "display_name": "qwen3:8b",
           "max_tokens": 11264,
@@ -52,13 +42,7 @@
         },
         {
           "name": "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M",
-          "display_name": "unsloth-qwen3-coder:30b-a3b",
-          "max_tokens": 11264,
-          "supports_tools": true
-        },
-        {
-          "name": "qwen3-coder:30b",
-          "display_name": "qwen3-coder:30b",
+          "display_name": "unsloth-qwen3-coder-1M:30b-a3b",
           "max_tokens": 11264,
           "supports_tools": true
         }
