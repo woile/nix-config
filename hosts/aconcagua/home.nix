@@ -6,6 +6,7 @@
 
   home.packages = with pkgs; [
     google-chrome
+    finamp
   ];
   # home.shellAliases = {};
 }
