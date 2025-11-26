@@ -89,8 +89,6 @@
     ++ [
       "hf.co/unsloth/medgemma-27b-text-it-GGUF:Q4_K_M"
       "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M" # tools
-      "hf.co/unsloth/Qwen3-VL-30B-A3B-Instruct-GGUF:Q4_K_M" # Vision, no tooling
-      "hf.co/unsloth/Olmo-3-7B-Instruct-GGUF:Q4_K_M"
     ];
   };
   services.ollama.acceleration = "rocm";
