@@ -15,12 +15,18 @@
   xdg.desktopEntries.jellyfin-desktop = {
     name = "Jellyfin Desktop";
     genericName = "Media Center";
-    exec = "firefox --kiosk --new-window http://localhost:8096";
+    exec = "chromium --app=http://localhost:8096 --start-fullscreen";
     terminal = false;
     type = "Application";
     categories = [
       "AudioVideo"
       "Video"
+    ];
+  };
+  programs.chromium = {
+    enable = true;
+    nativeMessagingHosts = [
+      pkgs.kdePackages.plasma-browser-integration
     ];
   };
 }
