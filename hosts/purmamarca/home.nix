@@ -15,7 +15,7 @@
   xdg.desktopEntries.jellyfin-desktop = {
     name = "Jellyfin Desktop";
     genericName = "Media Center";
-    exec = "chromium --app=http://localhost:8096 --start-fullscreen";
+    exec = "${pkgs.google-chrome}/bin/google-chrome-stable --app=http://localhost:8096 --start-fullscreen";
     terminal = false;
     type = "Application";
     categories = [
@@ -23,6 +23,7 @@
       "Video"
     ];
   };
+
   programs.chromium = {
     enable = true;
     nativeMessagingHosts = [
