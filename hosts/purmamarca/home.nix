@@ -6,7 +6,8 @@
   ];
 
   home.packages = with pkgs; [
-    vscode-fhs # FHS variant, which allows installing extensions
+    jellyflix
+    delfin
   ];
   home.shellAliases = {
     "kde-restart" = "plasmashell --replace";
