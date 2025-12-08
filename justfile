@@ -32,3 +32,6 @@ generations__home-manager:
 
 generations_expire__home-manager host='woile-ubuntu':
 	home-manager expire-generations "-7 days" --flake ".#{{host}}"
+
+store__optimize:
+    nix-store --optimise --log-format bar-with-logs
