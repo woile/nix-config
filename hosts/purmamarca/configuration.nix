@@ -58,7 +58,6 @@
     LC_TIME = "nl_NL.UTF-8";
   };
 
-  services.ollama.acceleration = "cuda";
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
