@@ -85,12 +85,10 @@
     loadModels = [
       "qwen3:8b"
       "gemma3n:e4b"
-    ]
-    # aconcagua specific ones
-    ++ [
+      "ministral-3:14b"
+      "rnj-1"
       "hf.co/unsloth/medgemma-27b-text-it-GGUF:Q4_K_M"
       "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M" # tools
-      "ministral-3:14b"
     ];
   };
   # services.ollama.acceleration = "rocm";
