@@ -85,8 +85,8 @@
     loadModels = [
       "qwen3:8b"
       "gemma3n:e4b"
-      "ministral-3:14b"
-      "rnj-1"
+      # "ministral-3:14b"
+      # "rnj-1:8b"
       "hf.co/unsloth/medgemma-27b-text-it-GGUF:Q4_K_M"
       "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M" # tools
     ];
