@@ -23,5 +23,6 @@
   environment.systemPackages = with pkgs; [
     # For steam games
     protonup-qt
+    mangohud
   ];
 }
