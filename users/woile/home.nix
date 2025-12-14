@@ -59,6 +59,8 @@
       trust = 5;
     }
   ];
+  # network diagnostics
+  programs.trippy.enable = true;
 
   programs.starship.enable = true;
 
@@ -153,18 +155,20 @@
   home.packages = with pkgs; [
     # custom coreutils
     just # make alternative
-    rage # age encryption
     macchina # neofetch alternative
     d2 # diagrams
-    dig
     dust # du replacement
+    dysk
+
     btop
     bottom
-    dysk
-    gpg-tui
+
     unrar
     bitwarden-desktop
 
+    # network
+    dig # dns lookup tool
+    sniffnet # network diagnostics
     # TUI
     systemctl-tui
     gitui # tig alternative
@@ -173,6 +177,8 @@
     python312
 
     # security
+    gpg-tui
+    rage # age encryption
     gopass
     gopass-jsonapi
     openssl
@@ -213,6 +219,7 @@
     cat = "bat -pp";
     du = "dust";
     htop = "btm";
+
   };
 
   fonts = {
