@@ -5,20 +5,24 @@
   services.desktopManager.plasma6.enable = true;
 
   environment.systemPackages = with pkgs; [
-    # kde
+    # core
     kdePackages.kcalc
-    catppuccin-kde
+    kdePackages.kcontacts
     kdePackages.kate # text-editor
     kdePackages.kgpg
     kdePackages.merkuro # calendar
-    kdePackages.francis # pomodoro
     kdePackages.okular # PDF viewer
-    kdePackages.kontrast # color contrast
-    kdePackages.calligra # office suite
     kdePackages.akonadi # contacts
+
+    kdePackages.calligra # office suite
     kdePackages.plasma-browser-integration
+    fluffychat # matrix chat client
+
+    # Theme
+    catppuccin-kde
 
     # art
+    kdePackages.kontrast # color contrast
     pinta
     krita
 
