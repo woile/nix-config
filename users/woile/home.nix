@@ -168,7 +168,8 @@
 
     # network
     dig # dns lookup tool
-    sniffnet # network diagnostics
+    netscanner # network diagnostics
+
     # TUI
     systemctl-tui
     gitui # tig alternative
