@@ -13,21 +13,30 @@
   };
 
   # Torrenting client
-  services.transmission = {
+  # services.transmission = {
+  #   enable = true;
+  #   openFirewall = true;
+  #   group = "media";
+  #   package = pkgs.transmission_4;
+  #   settings = {
+  #     download-dir = "/media/media-store/media-center/transmission/download";
+  #     incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
+  #   };
+  # };
+
+  nixarr.transmission = {
     enable = true;
-    openFirewall = true;
-    group = "media";
-    package = pkgs.transmission_4;
-    settings = {
-      download-dir = "/media/media-store/media-center/transmission/download";
-      incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
-    };
+    vpn.enable = true;
+    peerPort = 51820;
+    mediaDir = "/media/media-store/media-center/transmission";
   };
 
   nixarr.vpn = {
     enable = true;
     wgConf = "/data/.secret/vpn/purmamarca-PT-62.conf";
   };
+
+  nixarr.mediaUsers = [ "woile" ];
 
   # media center: collect, manage, and stream media
   services.jellyfin = {
