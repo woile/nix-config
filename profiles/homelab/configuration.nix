@@ -28,14 +28,13 @@
     enable = true;
     vpn.enable = true;
     peerPort = 51820;
-    mediaDir = "/media/media-store/media-center/transmission";
   };
 
   nixarr.vpn = {
     enable = true;
     wgConf = "/data/.secret/vpn/purmamarca-PT-62.conf";
   };
-
+  nixarr.mediaDir = "/media/media-store/media-center/transmission";
   nixarr.mediaUsers = [ "woile" ];
 
   # media center: collect, manage, and stream media
