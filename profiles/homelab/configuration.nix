@@ -29,6 +29,11 @@
     vpn.enable = true;
     peerPort = 51820;
     openFirewall = true;
+    extraSettings = {
+      download-dir = "/media/media-store/media-center/transmission/download";
+      rpc-port = 9091;
+      # incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
+    };
   };
 
   nixarr.vpn = {
