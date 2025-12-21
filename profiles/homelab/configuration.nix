@@ -28,6 +28,7 @@
     enable = true;
     vpn.enable = true;
     peerPort = 51820;
+    openFirewall = true;
   };
 
   nixarr.vpn = {
