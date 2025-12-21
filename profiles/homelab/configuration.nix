@@ -24,6 +24,11 @@
     };
   };
 
+  nixarr.vpn = {
+    enable = true;
+    wgConf = "/data/.secret/vpn/purmamarca-PT-62.conf";
+  };
+
   # media center: collect, manage, and stream media
   services.jellyfin = {
     enable = true;
