@@ -13,10 +13,15 @@
       inputs.nixpkgs.follows = "nixpkgs"; # Use system packages list where available
     };
 
-    ## Packages
+    ## Other
 
     temporis = {
       url = "github:reciperium/temporis";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixarr = {
+      url = "github:rasmus-kirk/nixarr";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -26,6 +31,7 @@
       flake-parts,
       nixpkgs,
       home-manager,
+      nixarr,
       ...
     }:
     # https://flake.parts/
@@ -70,6 +76,7 @@
           import ./hosts/purmamarca {
             home-manager = home-manager;
             inputs = inputs;
+            nixarr = nixarr;
           }
         );
         nixosConfigurations.aconcagua = nixpkgs.lib.nixosSystem (

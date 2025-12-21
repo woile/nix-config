@@ -1,9 +1,15 @@
 # Membrane connecting everything together
-{ home-manager, inputs, ... }:
+{
+  home-manager,
+  inputs,
+  nixarr,
+  ...
+}:
 {
   system = "x86_64-linux";
   modules = [
     ./configuration.nix
+    nixarr.nixosModules.default
     home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
