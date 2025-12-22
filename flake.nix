@@ -20,10 +20,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixarr = {
-      url = "github:rasmus-kirk/nixarr";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs =
@@ -31,7 +27,6 @@
       flake-parts,
       nixpkgs,
       home-manager,
-      nixarr,
       ...
     }:
     # https://flake.parts/
@@ -76,7 +71,6 @@
           import ./hosts/purmamarca {
             home-manager = home-manager;
             inputs = inputs;
-            nixarr = nixarr;
           }
         );
         nixosConfigurations.aconcagua = nixpkgs.lib.nixosSystem (
