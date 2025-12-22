@@ -2,12 +2,14 @@
 {
   home-manager,
   inputs,
+  vpn-confinement,
   ...
 }:
 {
   system = "x86_64-linux";
   modules = [
     ./configuration.nix
+    vpn-confinement.nixosModules.default
     home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;

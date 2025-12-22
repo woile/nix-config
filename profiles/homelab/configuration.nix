@@ -21,8 +21,58 @@
     settings = {
       download-dir = "/media/media-store/media-center/transmission/download";
       incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
+      "rpc-bind-address" = "0.0.0.0"; # Bind RPC/WebUI to VPN network namespace address
+
+      # RPC-whitelist examples
+      "rpc-whitelist" = "127.0.0.1,192.168.100.*,192.168.15.*"; # Access from other machines on specific subnet
+
     };
   };
+
+  vpnNamespaces.wg = {
+    enable = true;
+    wireguardConfigFile = /. + "/data/.secret/vpn/purmamarca-PT-62.conf";
+    accessibleFrom = [
+      "192.168.100.0/24"
+    ];
+    portMappings = [
+      {
+        from = 9091;
+        to = 9091;
+      }
+    ];
+    openVPNPorts = [
+      {
+        port = 51820;
+        protocol = "both";
+      }
+    ];
+  };
+
+  # Add systemd service to VPN network namespace
+  systemd.services.transmission.vpnConfinement = {
+    enable = true;
+    vpnNamespace = "wg";
+  };
+
+  # nixarr.transmission = {
+  #   enable = true;
+  #   vpn.enable = true;
+  #   peerPort = 51820;
+  #   openFirewall = true;
+  #   extraSettings = {
+  #     download-dir = "/media/media-store/media-center/transmission/download";
+  #     rpc-port = 9091;
+  #     # incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
+  #   };
+  # };
+
+  # nixarr.vpn = {
+  #   enable = true;
+  #   wgConf = "/data/.secret/vpn/purmamarca-PT-62.conf";
+  # };
+  # nixarr.mediaDir = "/media/media-store/media-center/transmission";
+  # nixarr.mediaUsers = [ "woile" ];
 
   # media center: collect, manage, and stream media
   services.jellyfin = {

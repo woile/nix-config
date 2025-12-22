@@ -20,6 +20,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    vpn-confinement = {
+      url = "github:Maroka-chan/VPN-Confinement";
+    };
+
   };
 
   outputs =
@@ -27,6 +31,7 @@
       flake-parts,
       nixpkgs,
       home-manager,
+      vpn-confinement,
       ...
     }:
     # https://flake.parts/
@@ -71,6 +76,7 @@
           import ./hosts/purmamarca {
             home-manager = home-manager;
             inputs = inputs;
+            vpn-confinement = vpn-confinement;
           }
         );
         nixosConfigurations.aconcagua = nixpkgs.lib.nixosSystem (
