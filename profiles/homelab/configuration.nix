@@ -31,7 +31,7 @@
 
   vpnNamespaces.wg = {
     enable = true;
-    wireguardConfigFile = /. + "/data/.secret/vpn/purmamarca-PT-62.conf";
+    wireguardConfigFile = "/data/.secret/vpn/purmamarca-PT-62.conf";
     accessibleFrom = [
       "192.168.100.0/24"
     ];
