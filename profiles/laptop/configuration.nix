@@ -78,6 +78,7 @@
     allowedTCPPorts = [
       51413 # transmission
       5900 # SPICE
+      21118 # RustDesk
     ];
     allowedTCPPortRanges = [
       # KDE Connect
