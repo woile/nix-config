@@ -193,6 +193,8 @@
     digital
     # stremio
 
+    rustdesk-flutter
+
     onlyoffice-desktopeditors
     # ventoy-full-gtk  # marked insecure as of now
 
