@@ -64,8 +64,9 @@ with lib;
             port_file="/tmp/${n}-$protocol-port"
             touch $port_file
 
-            # Open port 5351 for NAT-PMP
-            ${pkgs.iptables}/bin/iptables -I INPUT -p udp --sport 5351 -j ACCEPT -i ${v.vpnNamespace}0
+            # 1. Allow NAT-PMP responses (The fix we found earlier)
+            # This opens the door for the "Resource temporarily unavailable" fix
+            ${pkgs.iptables}/bin/iptables -C INPUT -p udp --sport 5351 -j ACCEPT -i ${v.vpnNamespace}0 2>/dev/null || ${pkgs.iptables}/bin/iptables -I INPUT -p udp --sport 5351 -j ACCEPT -i ${v.vpnNamespace}0
 
             result="$(${pkgs.libnatpmp}/bin/natpmpc -a 1 0 "$protocol" 60 -g 10.2.0.1)"
             echo "$result"
