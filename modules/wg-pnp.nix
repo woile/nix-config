@@ -64,6 +64,9 @@ with lib;
             port_file="/tmp/${n}-$protocol-port"
             touch $port_file
 
+            # Open port 5351 for NAT-PMP
+            ${pkgs.iptables}/bin/iptables -I INPUT -p udp --sport 5351 -j ACCEPT -i ${v.vpnNamespace}0
+
             result="$(${pkgs.libnatpmp}/bin/natpmpc -a 1 0 "$protocol" 60 -g 10.2.0.1)"
             echo "$result"
 
