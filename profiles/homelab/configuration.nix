@@ -53,6 +53,10 @@
     wireguardConfigFile = "/data/.secret/vpn/purmamarca-PT-62.conf";
     accessibleFrom = [
       "192.168.100.0/24"
+
+      #
+      "100.100.0.0/16"
+
       "127.0.0.1/32"
     ];
 
@@ -63,12 +67,6 @@
         to = 9091;
       }
     ];
-    # openVPNPorts = [
-    #   {
-    #     port = 51820;
-    #     protocol = "both";
-    #   }
-    # ];
   };
 
   # Add systemd service to VPN network namespace
@@ -108,6 +106,9 @@
     jellyfin-web
     jellyfin-ffmpeg
     jellyfin-media-player
+
+    libnatpmp # natpmp
+
   ];
 
   # indexer manager
