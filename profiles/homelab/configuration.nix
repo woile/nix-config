@@ -71,6 +71,10 @@
     # ];
   };
 
+  networking.firewall.allowedUDPPortRanges = [
+    5351 # WireGuard
+  ];
+
   # Add systemd service to VPN network namespace
   systemd.services.transmission.vpnConfinement = {
     enable = true;
