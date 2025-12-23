@@ -24,35 +24,37 @@
       "rpc-bind-address" = "0.0.0.0"; # Bind RPC/WebUI to VPN network namespace address
 
       # RPC-whitelist examples
-      "rpc-whitelist" = "127.0.0.1,192.168.100.*,192.168.15.*"; # Access from other machines on specific subnet
-
+      "rpc-whitelist" = "127.0.0.1,192.168.100.*,192.168.15.*,localhost,::1"; # Access from other machines on specific subnet
+      "port-forwarding-enabled" = true;
     };
   };
 
-  vpnNamespaces.wg = {
+  vpnNamespaces.proton = {
     enable = true;
     wireguardConfigFile = "/data/.secret/vpn/purmamarca-PT-62.conf";
     accessibleFrom = [
       "192.168.100.0/24"
+      "127.0.0.1/32"
     ];
+
     portMappings = [
       {
         from = 9091;
         to = 9091;
       }
     ];
-    openVPNPorts = [
-      {
-        port = 51820;
-        protocol = "both";
-      }
-    ];
+    # openVPNPorts = [
+    #   {
+    #     port = 51820;
+    #     protocol = "both";
+    #   }
+    # ];
   };
 
   # Add systemd service to VPN network namespace
   systemd.services.transmission.vpnConfinement = {
     enable = true;
-    vpnNamespace = "wg";
+    vpnNamespace = "proton";
   };
 
   # nixarr.transmission = {
