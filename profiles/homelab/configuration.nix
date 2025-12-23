@@ -43,8 +43,8 @@
     runScript = ''
       if [ "$protocol" = tcp ]
       then
-        echo "Telling transmission to listen on peer port $new_port."
-        ${pkgs.transmission_4}/bin/transmission-remote 192.168.15.1 --port "$new_port"
+        echo "Telling transmission to listen on peer port $public_port."
+        ${pkgs.transmission_4}/bin/transmission-remote 192.168.15.1 --port "$public_port"
       fi
     '';
   };
