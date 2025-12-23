@@ -29,6 +29,7 @@
       "port-forwarding-enabled" = false;
       "rpc-whitelist-enabled" = true;
       "rpc-host-whitelist" = "*";
+      "utp-enabled" = false;
     };
     extraFlags = [
       "-M" # disable upnp
