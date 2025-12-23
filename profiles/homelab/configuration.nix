@@ -15,20 +15,38 @@
   # Torrenting client
   services.transmission = {
     enable = true;
-    openFirewall = true;
+    openRPCPort = true;
     group = "media";
     package = pkgs.transmission_4;
     settings = {
       download-dir = "/media/media-store/media-center/transmission/download";
       incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
-      "rpc-bind-address" = "0.0.0.0"; # Bind RPC/WebUI to VPN network namespace address
+      incomplete-dir-enabled = true;
+      "rpc-bind-address" = "192.168.15.1"; # Bind RPC/WebUI to VPN network namespace address
 
       # RPC-whitelist examples
-      "rpc-whitelist" = "127.0.0.1,192.168.100.*,192.168.15.*,localhost,::1"; # Access from other machines on specific subnet
-      "port-forwarding-enabled" = true;
+      "rpc-whitelist" = "127.0.0.1,192.168.100.*,192.168.15.*,localhost,::1,*.local"; # Access from other machines on specific subnet
+      "port-forwarding-enabled" = false;
+      "rpc-whitelist-enabled" = true;
+      "rpc-host-whitelist" = "*";
     };
+    extraFlags = [
+      "-M" # disable upnp
+    ];
   };
-
+  imports = [
+    ../../modules/wg-pnp.nix
+  ];
+  uri.wg-pnp.transmission = {
+    vpnNamespace = "proton";
+    runScript = ''
+      if [ "$protocol" = tcp ]
+      then
+        echo "Telling transmission to listen on peer port $new_port."
+        ${pkgs.transmission_4}/bin/transmission-remote 192.168.15.1 --port "$new_port"
+      fi
+    '';
+  };
   vpnNamespaces.proton = {
     enable = true;
     wireguardConfigFile = "/data/.secret/vpn/purmamarca-PT-62.conf";
@@ -37,6 +55,7 @@
       "127.0.0.1/32"
     ];
 
+    # Make the WebUI accessible outside the namespace
     portMappings = [
       {
         from = 9091;
