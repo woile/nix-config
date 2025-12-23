@@ -107,8 +107,10 @@
     jellyfin-ffmpeg
     jellyfin-media-player
 
+    # network tools
+    net-tools
     libnatpmp # natpmp
-
+    tcpdump
   ];
 
   # indexer manager
