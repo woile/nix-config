@@ -62,7 +62,9 @@ with lib;
             protocol="$1"
             port_file="/tmp/${n}-$protocol-port"
             GATEWAY="${v.vpnNamespace}0"
-            FIXED_INTERNAL_PORT=0
+            # ⚠️ Port 0 is invalid for redirection.
+            # Use a static port like 51413 so iptables knows what to redirect.
+            FIXED_INTERNAL_PORT=51413
 
             touch $port_file
 
