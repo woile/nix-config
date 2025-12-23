@@ -22,7 +22,7 @@
       download-dir = "/media/media-store/media-center/transmission/download";
       incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
       incomplete-dir-enabled = true;
-      "rpc-bind-address" = "192.168.15.5"; # Bind RPC/WebUI to VPN network namespace address
+      "rpc-bind-address" = "192.168.15.1"; # Bind RPC/WebUI to VPN network namespace address
 
       # RPC-whitelist examples
       "rpc-whitelist" = "127.0.0.1,192.168.100.*,192.168.15.*,localhost,::1,*.local"; # Access from other machines on specific subnet
@@ -43,7 +43,7 @@
       if [ "$protocol" = tcp ]
       then
         echo "Telling transmission to listen on peer port $new_port."
-        ${pkgs.transmission_4}/bin/transmission-remote 192.168.15.5 --port "$new_port"
+        ${pkgs.transmission_4}/bin/transmission-remote 192.168.15.1 --port "$new_port"
       fi
     '';
   };
