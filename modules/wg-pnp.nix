@@ -86,7 +86,7 @@ with lib;
             echo "Mapped new $protocol port $public_port, old one was $old_port."
             echo "$public_port" >"$port_file"
 
-            # --- INPUT Rule (Open the Public Port) --- d
+            # --- INPUT Rule (Open the Public Port) ---
             if ${pkgs.iptables}/bin/iptables -C INPUT -p "$protocol" --dport "$public_port" -j ACCEPT -i $GATEWAY
             then
               echo "New $protocol port $public_port already open, not opening again."
