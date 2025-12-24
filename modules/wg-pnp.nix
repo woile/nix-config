@@ -86,7 +86,48 @@ with lib;
         script = ''
           set -u
 
-          # --- Helper Function ---
+          # Run the user provided script, we isolate it so the users can depend on the variables created here.
+          user_script() {
+            # Check if all parameters are provided
+            if [[ $# -ne 3 ]]; then
+                echo "Error: Missing parameters. Usage: check_port_change <protocol> <new_port> <old_port>"
+                echo "Example: check_port_change tcp 8443 443"
+                exit 1
+            fi
+            local protocol="$1"
+            local new_port="$2"
+            local old_port="$3"
+            # Check if all parameters are provided
+            if [[ -z "$protocol" || -z "$new_port" || -z "$old_port" ]]; then
+                echo "Error: Missing parameters. Usage: update_service_port <protocol> <new_port> <old_port>"
+                return 1
+            fi
+            # Check if ports are valid numbers
+            if ! [[ "$new_port" =~ ^[0-9]+$ ]] || ! [[ "$old_port" =~ ^[0-9]+$ ]]; then
+                echo "Error: Ports must be numbers."
+                exit 1
+            fi
+
+            # Check if ports are within valid range (1-65535)
+            if [[ "$new_port" -lt 1 || "$new_port" -gt 65535 || "$old_port" -lt 1 || "$old_port" -gt 65535 ]]; then
+                echo "Error: Ports must be between 1 and 65535."
+                exit 1
+            fi
+
+            # Check if protocol is valid (tcp or udp)
+            if [[ "$protocol" != "tcp" && "$protocol" != "udp" ]]; then
+                echo "Error: Protocol must be either 'tcp' or 'udp'."
+                exit 1
+            fi
+
+            # Display the variables
+            echo "Protocol: $protocol"
+            echo "Old Port: $old_port"
+            echo "New Port: $new_port"
+
+            ${v.runScript}
+          }
+
           # `renew_port`: Attempts to map a port (TCP/UDP) via NAT-PMP.
           # Updates iptables rules and triggers any post-renewal script.
           renew_port() {
@@ -138,7 +179,11 @@ with lib;
             fi
 
             # --- Run Custom Post-Renew Script ---
-            ${v.runScript}
+            if [ "$public_port" -ne "$old_port" ]; then
+              user_script "$protocol" "$public_port" "$old_port"
+            else
+              echo "Port unchanged, skipping custom script."
+            fi
 
             # --- Cleanup ---
             # Close the old port if it changed.
