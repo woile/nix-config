@@ -5,6 +5,23 @@
 # - Some servers, even under the same provider, may not support NAT-PMP even if they claim to do so.
 # - Proton VPN: PT didn't work, but NL did work.
 # Original: https://github.com/ImUrX/nixfiles/blob/b94ed89a7025b68b60ed7cb4254b5512d1ec0f25/modules/wg-pnp.nix
+# Usage:
+#
+# ```nix
+# imports = [
+#   ../../modules/wg-pnp.nix
+# ];
+# uri.wg-pnp.transmission = {
+#  vpnNamespace = "proton";
+#  runScript = ''
+#    if [ "$protocol" = tcp ]
+#    then
+#      echo "Telling transmission to listen on peer port $new_port."
+#      ${pkgs.transmission_4}/bin/transmission-remote 192.168.15.1 --port "$new_port"
+#    fi
+#  '';
+# };
+# ```
 {
   config,
   lib,
@@ -136,18 +153,20 @@ with lib;
             # Stores mapped port for this peer/protocol.
             port_file="/tmp/${n}-$protocol-port"
             # Interface for WireGuard's namespace.
-            GATEWAY="${v.vpnNamespace}0"
+            VPN_IFACE="${v.vpnNamespace}0"
+
             # Static internal port (always redirected to this).
             FIXED_INTERNAL_PORT=51413
 
             # VPN DNS Server, usually in wg.conf
-            VPN_DNS_SERVER="10.2.0.1"
+            # default is generally used by VPNs
+            VPN_GATEWAY_IP="10.2.0.1"
 
             touch $port_file
 
             # --- NAT-PMP: Get a Public Port ---
-            # Request a port from the router (timeout: 60s, lease to VPN_DNS_SERVER).
-            result="$(${pkgs.libnatpmp}/bin/natpmpc -a 1 $FIXED_INTERNAL_PORT "$protocol" 60 -g "$VPN_DNS_SERVER")"
+            # Request a port from the router (timeout: 60s, lease to VPN_GATEWAY_IP).
+            result="$(${pkgs.libnatpmp}/bin/natpmpc -a 1 $FIXED_INTERNAL_PORT "$protocol" 60 -g "$VPN_GATEWAY_IP")"
             echo "$result"
 
             # Extract the mapped public port from the output.
@@ -163,12 +182,12 @@ with lib;
             echo "$public_port" >"$port_file"
 
             # --- INPUT Rule (Open the Public Port) ---
-            if ${pkgs.iptables}/bin/iptables -C INPUT -p "$protocol" --dport "$public_port" -j ACCEPT -i $GATEWAY
+            if ${pkgs.iptables}/bin/iptables -C INPUT -p "$protocol" --dport "$public_port" -j ACCEPT -i $VPN_IFACE
             then
               echo "New $protocol port $public_port already open, not opening again."
             else
-              echo "Opening new $protocol port $public_port."
-              ${pkgs.iptables}/bin/iptables -I INPUT -p "$protocol" --dport "$public_port" -j ACCEPT -i $GATEWAY
+              echo "<5>Opening new $protocol port $public_port."
+              ${pkgs.iptables}/bin/iptables -I INPUT -p "$protocol" --dport "$public_port" -j ACCEPT -i $VPN_IFACE
             fi
 
             # --- REDIRECT Rule (Internal Fixed -> Public) ---
@@ -191,10 +210,10 @@ with lib;
             then
               echo "New $protocol port $public_port is the same as old port $old_port, not closing old port."
             else
-              if ${pkgs.iptables}/bin/iptables -C INPUT -p "$protocol" --dport "$old_port" -j ACCEPT -i $GATEWAY
+              if ${pkgs.iptables}/bin/iptables -C INPUT -p "$protocol" --dport "$old_port" -j ACCEPT -i $VPN_IFACE
               then
                 echo "Closing old $protocol port $old_port."
-                ${pkgs.iptables}/bin/iptables -D INPUT -p "$protocol" --dport "$old_port" -j ACCEPT -i $GATEWAY
+                ${pkgs.iptables}/bin/iptables -D INPUT -p "$protocol" --dport "$old_port" -j ACCEPT -i $VPN_IFACE
               else
                 echo "Old $protocol port $old_port not open, not attempting to close."
               fi
