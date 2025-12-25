@@ -105,7 +105,7 @@
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
-    jellyfin-media-player
+    jellyfin-desktop
 
     # network tools
     net-tools
