@@ -104,6 +104,7 @@ with lib;
           set -u
 
           # Run the user provided script, we isolate it so the users can depend on the variables created here.
+          # Warning: The user script will always run to prevent "state desynchronization"
           user_script() {
             # Check if all parameters are provided
             if [[ $# -ne 3 ]]; then
@@ -138,9 +139,7 @@ with lib;
             fi
 
             # Display the variables
-            echo "Protocol: $protocol"
-            echo "Old Port: $old_port"
-            echo "New Port: $new_port"
+            echo "Protocol: $protocol, Old Port: $old_port, New Port: $new_port"
 
             ${v.runScript}
           }
@@ -198,11 +197,8 @@ with lib;
             fi
 
             # --- Run Custom Post-Renew Script ---
-            if [ "$public_port" -ne "$old_port" ]; then
-              user_script "$protocol" "$public_port" "$old_port"
-            else
-              echo "Port unchanged, skipping custom script."
-            fi
+            # Runs always to prevent "state desynchronization"
+            user_script "$protocol" "$public_port" "$old_port"
 
             # --- Cleanup ---
             # Close the old port if it changed.
