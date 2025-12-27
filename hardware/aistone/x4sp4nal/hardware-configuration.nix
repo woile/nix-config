@@ -25,7 +25,18 @@
   boot.initrd.kernelModules = [ "amdgpu" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [
+    # 1. The Memory Fix: Prevents VPE/Ring crashes (Essential for Strix Point)
+    "amdgpu.sg_display=0"
 
+    # 2. The Scheduler Fix: Disables the new hardware scheduler that is timing out (-110 error)
+    "amdgpu.mes=0"
+
+    # 3. The Display Fix: Disables Panel Self Refresh (0x10) AND Display Stream Compression (0x4)
+    # 0x10 (16) + 0x4 (4) = 0x14.
+    # This is safer than 0x104 because it explicitly disables PSR, which 0x104 does NOT do.
+    "amdgpu.dcdebugmask=0x14"
+  ];
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/610f9caa-d492-41d8-80a5-1ba3bf7b7ba6";
     fsType = "btrfs";
