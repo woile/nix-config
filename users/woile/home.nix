@@ -132,6 +132,7 @@
     # extension list:
     # https://github.com/zed-industries/extensions/tree/main/extensions
     extensions = [
+      "assembly"
       "zed-python-refactoring"
       "nix"
       "http"
