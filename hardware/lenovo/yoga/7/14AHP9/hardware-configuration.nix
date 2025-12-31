@@ -5,6 +5,7 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }:
 
@@ -79,6 +80,9 @@
 
   # Nvidia secondary graphics
   hardware.graphics.enable = true;
+  hardware.graphics.extraPackages = with pkgs; [
+    rocmPackages.clr.icd # OpenCL Runtime
+  ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
