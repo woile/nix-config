@@ -185,6 +185,9 @@
     gopass-jsonapi
     openssl
 
+    # AI
+    mistral-vibe
+
     # GUI
     obsidian
     telegram-desktop
@@ -194,7 +197,7 @@
     digital
     # stremio
 
-    rustdesk-flutter
+    # rustdesk-flutter
 
     onlyoffice-desktopeditors
     # ventoy-full-gtk  # marked insecure as of now
