@@ -26,6 +26,7 @@ I try to keep standards, conventions and simplicity. A few values are repeated h
 │       ├── home.nix           # a home-manager configuration.nix
 │       └── default.nix        # glues everything together and it's used by flake.nix
 ├── justfile                   # reusable commands
+├── modules/                   # custom NixOS modules 
 ├── profiles/                  # allows grouping configurations together
 │   └── laptop/                # example profile
 │       ├── configuration.nix  # indicates that it's for a NixOs host
