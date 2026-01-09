@@ -22,9 +22,10 @@
 
   home.packages = with pkgs; [
     kubectl
-    helm
+    kubernetes-helm
     k9s
     rancher
+    kubeseal
   ];
 
   # load home-manager untracked functions
