@@ -14,6 +14,7 @@
       "cursor"
       "code"
       "vscode"
+      "textual-speedups"
     ];
   # programs.zed-editor.enable = lib.mkForce false;
   imports = [
