@@ -80,8 +80,6 @@
   # automatically switch to newly-connected devices, is this lenovo specific?
   services.pulseaudio.extraConfig = "load-module module-switch-on-connect";
 
-  programs.adb.enable = true;
-
   # Virtualization
   programs.virt-manager.enable = true;
   virtualisation.libvirtd.enable = true;
