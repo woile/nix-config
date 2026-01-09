@@ -164,7 +164,7 @@
     btop
     bottom
 
-    unrar
+    unrar-free
     bitwarden-desktop
 
     # network
