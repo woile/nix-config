@@ -9,6 +9,10 @@ switch host=hostname:
 remote-switch host=hostname:
     nh os switch --show-trace --ask --build-host "{{ host }}.local" --target-host "{{ host }}.local" --hostname "{{ host }}" .
 
+# switch to a new generation on home-manager host
+home-switch host='woile-ubuntu':
+    nh home switch --ask . -c "{{ host }}"
+
 # create new generation for next boot
 boot host=hostname:
     nh os boot --show-trace --ask --hostname "{{ host }}" .
@@ -41,3 +45,7 @@ generations_expire__home-manager host='woile-ubuntu':
 
 store__optimize:
     nix-store --optimise --log-format bar-with-logs
+
+# clean up old generations and store
+clean:
+    nh clean all --keep 3  --keep-since 7d --ask
