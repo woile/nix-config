@@ -4,18 +4,14 @@ hostname := `hostname`
 switch host=hostname:
     nh os switch --show-trace --ask --hostname "{{ host }}" .
 
-# switch to a new generation on a remote host
-[arg('host', pattern='purmamarca|aconcagua')]
-remote-switch host=hostname:
-    nh os switch --show-trace --ask --build-host "{{ host }}.local" --target-host "{{ host }}.local" --hostname "{{ host }}" .
+# create new generation for next boot
+boot host=hostname:
+    nh os boot --show-trace --ask --hostname "{{ host }}" .
 
 # switch to a new generation on home-manager host
 home-switch host='woile-ubuntu':
     nh home switch --ask . -c "{{ host }}"
 
-# create new generation for next boot
-boot host=hostname:
-    nh os boot --show-trace --ask --hostname "{{ host }}" .
 
 # apply the configuration
 rebuild host=hostname:
@@ -49,3 +45,13 @@ store__optimize:
 # clean up old generations and store
 clean:
     nh clean all --keep 3  --keep-since 7d --ask
+
+# switch to a new generation on a remote host
+[arg('host', pattern='purmamarca|aconcagua')]
+remote-switch host=hostname:
+    nh os switch --show-trace --ask --build-host "{{ host }}.local" --target-host "{{ host }}.local" --hostname "{{ host }}" .
+
+# create new generation on a remote host
+[arg('host', pattern='purmamarca|aconcagua')]
+remote-boot host=hostname:
+    nh os boot --show-trace --ask --build-host "{{ host }}.local" --target-host "{{ host }}.local" --hostname "{{ host }}" .
