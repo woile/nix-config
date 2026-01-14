@@ -39,6 +39,9 @@
 
     # Ensures the laptop uses the modern standby mode (S0ix) supported by this chip
     "mem_sleep_default=s2idle"
+
+    # Fix: mes ring buffer is full
+    "amdgpu.cwsr_enable=0"
   ];
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/610f9caa-d492-41d8-80a5-1ba3bf7b7ba6";
