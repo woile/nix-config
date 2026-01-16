@@ -22,7 +22,7 @@
     "sd_mod"
     "sdhci_pci"
   ];
-  boot.initrd.kernelModules = [ "amdgpu" ];
+
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.kernelParams = [
@@ -75,6 +75,12 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  hardware.amdgpu.opencl.enable = true;
+  hardware.amdgpu.initrd.enable = true;
 
   services.lact.enable = true;
 
