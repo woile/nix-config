@@ -70,7 +70,7 @@ with lib;
       n: v: # `n` = peer name, `v` = peer config.
       nameValuePair "${n}-port-forwarding" {
         wantedBy = [ "timers.target" ];
-        after = [ "${n}.service" ]; # Waits for WireGuard service to be active.
+        after = [ "${n}.service" ]; # Waits for transmission service to be active.
         timerConfig = {
           OnBootSec = "45s"; # Refresh on boot.
           OnUnitActiveSec = "45s"; # Refresh whenever WireGuard updates.
