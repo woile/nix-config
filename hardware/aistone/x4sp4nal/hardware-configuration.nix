@@ -26,8 +26,15 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.kernelParams = [
-    # CRITICAL: Fixes "Ring test failed" / VPE timeout (-110)
+    # Nuclear option: disable IO Memory Management Unit
+    # "amd_iommu=off"
+
+    # Passthrough, useful for KVM and QEMU
+    "amd_iommu=pt"
     "iommu=pt"
+
+    # assign more VRAM to the GPU (32GB)
+    # "ttm.pages_limit=8388608"
 
     # The Memory Fix: Prevents VPE/Ring crashes (Essential for Strix Point)
     "amdgpu.sg_display=0"

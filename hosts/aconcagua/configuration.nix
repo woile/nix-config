@@ -80,7 +80,8 @@
   # I keep this weird in case I move it back to laptop/configuration
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-rocm;
+    package = pkgs.ollama-vulkan;
+    # package = pkgs.ollama-rocm;
     # imported by all
     loadModels = [
       "qwen3:8b"
@@ -93,6 +94,13 @@
       "hf.co/unsloth/medgemma-27b-text-it-GGUF:Q4_K_M"
       "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M" # tools
     ];
+    rocmOverrideGfx = "11.5.1";
+    environmentVariables = {
+      # Hopefully helps with offloading layers to GPU
+      # HSA_ENABLE_SDMA = "0";
+      # ROCR_VISIBLE_DEVICES = "0";
+      # OLLAMA_DEBUG = "1";
+    };
   };
   # services.ollama.acceleration = "rocm";
 
