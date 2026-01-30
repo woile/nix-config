@@ -118,7 +118,7 @@
     extraPackages = with pkgs; [
       nixd
       package-version-server
-      nixfmt-rfc-style
+      nixfmt
       wayland
       libxkbcommon
       libinput
@@ -203,7 +203,7 @@
     # ventoy-full-gtk  # marked insecure as of now
 
     # nix tooling
-    nixfmt-rfc-style
+    nixfmt
     nixd
     nil
 
