@@ -90,9 +90,20 @@
       "ministral-3:8b"
       "ministral-3:3b"
       "devstral-small-2:24b"
-      "rnj-1:8b"
+      "nemotron-3-nano:30b"
+
+      "qwen3-coder:30b-a3b-q4_K_M"
+
+      # advanced autocomplete
+      "hf.co/sweepai/sweep-next-edit-1.5B"
+
+      "translategemma:4b"
+      "translategemma:12b"
+
       "hf.co/unsloth/medgemma-27b-text-it-GGUF:Q4_K_M"
       "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M" # tools
+      "hf.co/unsloth/GLM-4.7-Flash-REAP-23B-A3B-GGUF:Q4_K_XL"
+
     ];
     rocmOverrideGfx = "11.5.1";
     environmentVariables = {
