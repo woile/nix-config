@@ -19,7 +19,8 @@ I try to keep standards, conventions and simplicity. A few values are repeated h
 ```sh
 .
 ├── flake.nix
-├── hardware/
+├── .infra/                    # terraform configuration files
+├── hardware/                  # machine specific configs
 ├── hosts/                     # where the combination that makes the actual host happen
 │   └── <hostname>/            # the hostname of the machine
 │       ├── configuration.nix  # a nixos configuration.nix (without it, it's for home-manager)
