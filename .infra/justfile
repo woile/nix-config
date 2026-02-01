@@ -1,0 +1,31 @@
+# Initialize project
+init:
+    #!/usr/bin/env bash
+    set -euxo pipefail
+    if [ ! -d .terraform ]; then
+        printf "Initializing tofu...\n"
+        tofu init \
+            -backend-config="access_key=$(yq --input-format toml -o toml '.scw_access_key' terraform.tfvars)" \
+            -backend-config="secret_key=$(yq --input-format toml -o toml '.scw_secret_key' terraform.tfvars)"
+    else
+        printf "tofu already up, maybe try run upgrade\n"
+    fi
+    if [ ! -f terraform.tfvars ]; then
+        printf "Initializing tofu variables...\n"
+        terraform-docs tfvars hcl . > terraform.tfvars
+        printf "Fill the variables with the correct info\n"
+    else
+        printf "tofu variables already initialized.\n"
+    fi
+
+# Run tofu plan
+plan:
+    tofu plan
+
+# Create or update infrastructure
+apply:
+    tofu apply
+
+# Update drivers (scaleway, porkbun, etc)
+upgrade:
+    tofu init -upgrade
