@@ -57,8 +57,14 @@
         {
           devShells.default = pkgs.mkShell {
             name = "dev";
-            buildInputs = [
-              pkgs.just
+            buildInputs = with pkgs; [
+              just
+              terraform-docs
+              jq
+              opentofu
+              yq-go
+              scaleway-cli
+              tofu-ls
             ];
 
             shellHook = ''
