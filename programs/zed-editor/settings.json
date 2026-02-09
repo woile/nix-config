@@ -2,13 +2,13 @@
   "agent": {
     "commit_message_model": {
       "provider": "ollama",
-      "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
+      "model": "hf.co/sweepai/sweep-next-edit-1.5B:latest"
     },
     "dock": "left",
     "enabled": true,
     "inline_assistant_model": {
       "provider": "ollama",
-      "model": "hf.co/bartowski/zed-industries_zeta-GGUF:Q5_K_M"
+      "model": "hf.co/sweepai/sweep-next-edit-1.5B:latest"
     }
   },
 
@@ -33,20 +33,7 @@
   "language_models": {
     "ollama": {
       "api_url": "http://localhost:11434",
-      "available_models": [
-        {
-          "name": "hf.co/unsloth/Qwen3-8B-GGUF:Q4_K_XL",
-          "display_name": "qwen3:8b",
-          "max_tokens": 11264,
-          "supports_tools": true
-        },
-        {
-          "name": "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M",
-          "display_name": "unsloth-qwen3-coder-1M:30b-a3b",
-          "max_tokens": 11264,
-          "supports_tools": true
-        }
-      ]
+      "available_models": []
     }
   },
 
@@ -72,7 +59,7 @@
         "path": "nixd"
       }
     },
-    "slint-lsp": {
+    "slint": {
       "binary": {
         "path": "slint-lsp"
       }
