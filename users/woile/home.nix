@@ -175,6 +175,7 @@
     # TUI
     systemctl-tui
     gitui # tig alternative
+    bluetui
 
     # python development
     python312
@@ -187,7 +188,8 @@
     openssl
 
     # AI
-    mistral-vibe
+    # mistral-vibe
+    opencode
 
     # GUI
     obsidian

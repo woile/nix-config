@@ -24,7 +24,7 @@
     # art
     kdePackages.kontrast # color contrast
     pinta
-    krita
+    # krita
 
     # allow customization of panel colors
     plasma-panel-colorizer

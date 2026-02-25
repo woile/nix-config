@@ -9,6 +9,7 @@
     finamp
     jellyfin-desktop
     mistral-rs
+    llama-cpp-vulkan
   ];
   # home.shellAliases = {};
 }
