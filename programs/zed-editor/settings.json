@@ -27,9 +27,6 @@
   "project_panel": {
     "dock": "right"
   },
-  "features": {
-    "edit_prediction_provider": "zed"
-  },
   "language_models": {
     "ollama": {
       "api_url": "http://localhost:11434",
