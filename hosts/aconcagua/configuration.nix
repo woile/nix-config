@@ -102,8 +102,9 @@
 
       "hf.co/unsloth/medgemma-27b-text-it-GGUF:Q4_K_M"
       "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M" # tools
-      "hf.co/unsloth/GLM-4.7-Flash-REAP-23B-A3B-GGUF:Q4_K_XL"
-
+      "hf.co/noctrex/Qwen3-Coder-30B-A3B-Instruct-MXFP4_MOE-GGUF:MXFP4_MOE"
+      "hf.co/Fortytwo-Network/Strand-Rust-Coder-14B-v1-GGUF:Q4_K_M"
+      "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:UD-Q4_K_XL"
     ];
     rocmOverrideGfx = "11.5.1";
     environmentVariables = {
