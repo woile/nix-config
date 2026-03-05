@@ -2,6 +2,7 @@
 {
   imports = [
     ../../users/woile/home.nix
+    ../../profiles/development
   ];
 
   home.packages = with pkgs; [

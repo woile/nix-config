@@ -12,7 +12,6 @@ boot host=hostname:
 home-switch host='woile-ubuntu':
     nh home switch --ask . -c "{{ host }}"
 
-
 # apply the configuration
 rebuild host=hostname:
     sudo nixos-rebuild switch --show-trace --flake ".#{{ host }}"
