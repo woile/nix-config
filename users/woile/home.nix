@@ -195,7 +195,7 @@
     obsidian
     telegram-desktop
     transmission_4-qt
-    signal-desktop-bin
+    signal-desktop
     vlc
     digital
     # stremio
