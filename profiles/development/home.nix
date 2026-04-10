@@ -17,6 +17,8 @@
       opentofu
       ruff
       typos-lsp
+      tombi
+      harper
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
@@ -31,10 +33,11 @@
       "kdl"
       "mermaid"
       "nickel"
-      "toml"
+      "tombi"
       "sql"
       "git-firefly"
       "slint"
+      "harper"
       "mcp-server-puppeteer"
       "opentofu"
       "typos"
