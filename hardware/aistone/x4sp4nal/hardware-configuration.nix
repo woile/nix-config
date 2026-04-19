@@ -26,29 +26,63 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.kernelParams = [
-    # Nuclear option: disable IO Memory Management Unit
-    # "amd_iommu=off"
-
-    # Passthrough, useful for KVM and QEMU
+    # ─── IOMMU ───────────────────────────────────────────────────────────────────
+    # Passthrough mode: required for KVM/QEMU, keeps IOMMU active but non-strict.
+    # Note: this keeps IOMMU active during suspend — acceptable tradeoff for virt.
     "amd_iommu=pt"
     "iommu=pt"
 
-    # assign more VRAM to the GPU (32GB)
-    # "ttm.pages_limit=8388608"
+    # ─── MEMORY LIMIT ────────────────────────────────────────────────────────────
+    # Caps pinned memory to 112 GiB (16GiB left for the OS)
+    "ttm.pages_limit=29360128"
 
-    # The Memory Fix: Prevents VPE/Ring crashes (Essential for Strix Point)
+    # ─── AMDGPU STABILITY (Strix Halo / Strix Point essential fixes) ──────────────
+    # Disables scatter-gather display — REQUIRED on systems with >16GB RAM.
+    # Without this you get VPE/Ring crashes and memory corruption.
     "amdgpu.sg_display=0"
 
-    # The Display Fix: Disables Panel Self Refresh (0x10) AND Display Stream Compression (0x4)
-    # 0x10 (16) + 0x4 (4) = 0x14.
-    # This is safer than 0x104 because it explicitly disables PSR, which 0x104 does NOT do.
-    "amdgpu.dcdebugmask=0x14"
+    # Disable PSR (Panel Self Refresh, 0x10) and DSC (Display Stream Compression, 0x4).
+    # Fixes screen glitches on Strix Halo. Safer than 0x104 which skips PSR.
+    # Disabled for laptop battery life because it allows the GPU to sleep when the screen is static
+    # "amdgpu.dcdebugmask=0x14"
 
-    # Ensures the laptop uses the modern standby mode (S0ix) supported by this chip
+    # Ensure AMD Display Core is enabled (should be default, but explicit is safer).
+    "amdgpu.dc=1"
+
+    # Fixes "mes ring buffer is full" kernel errors on Strix.
+    # Tradeoff: disabling CWSR slightly impacts GPU power state transitions.
+    "amdgpu.cwsr_enable=0"
+
+    # ─── GPU POWER MANAGEMENT ────────────────────────────────────────────────────
+    # Enable GPU runtime power management — essential for proper suspend/resume.
+    "amdgpu.runpm=1"
+
+    # Bootstrap APM: improves APU-level power management on integrated graphics.
+    "amdgpu.bapm=1"
+
+    # Active State Power Management for the GPU's PCIe link.
+    "amdgpu.aspm=1"
+
+    # ─── SUSPEND / S0ix ──────────────────────────────────────────────────────────
+    # Use modern standby (S0ix / s2idle) — the only suspend mode Strix Halo supports.
+    # S3 (deep) is not available on this platform.
     "mem_sleep_default=s2idle"
 
-    # Fix: mes ring buffer is full
-    "amdgpu.cwsr_enable=0"
+    # Prevents NVMe drives from blocking S0ix entry.
+    # High latency tolerance on NVMe can stall the PMC from reaching deep sleep.
+    # "nvme_core.default_ps_max_latency_us=0"
+
+    # ─── PCIe POWER MANAGEMENT ───────────────────────────────────────────────────
+    # Force PCIe ASPM negotiation and use the most aggressive power policy.
+    # Helps all PCIe-attached devices (NVMe, WiFi, etc.) reach low-power states
+    # before the PMC can gate the SoC — directly addresses the S0ix blocker.
+    # "pcie_aspm=force"
+    # "pcie_aspm.policy=powersupersave"
+
+    # ─── USB AUTOSUSPEND ─────────────────────────────────────────────────────────
+    # Allow USB devices to autosuspend after 1 second of inactivity.
+    # XHCI controllers staying active is one of the most common S0ix blockers.
+    # "usbcore.autosuspend=1"
   ];
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/610f9caa-d492-41d8-80a5-1ba3bf7b7ba6";
@@ -81,6 +115,7 @@
   # networking.interfaces.wlp99s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  hardware.enableRedistributableFirmware = true;
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   hardware.graphics = {
     enable = true;
@@ -88,7 +123,10 @@
   };
   hardware.amdgpu.opencl.enable = true;
   hardware.amdgpu.initrd.enable = true;
-
+  # AI Environment Variables for Strix Point ROCm compatibility
+  environment.variables = {
+    HSA_OVERRIDE_GFX_VERSION = "11.5.0"; # Spoofs GPU for ROCm support
+  };
   services.lact.enable = true;
 
 }
