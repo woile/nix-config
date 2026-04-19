@@ -18,6 +18,7 @@
     kdePackages.plasma-browser-integration
     fluffychat # matrix chat client
 
+    foliate # e-book reader
     # Theme
     catppuccin-kde
 

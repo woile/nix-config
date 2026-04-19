@@ -91,19 +91,29 @@
   };
   networking.nameservers = [ "1.1.1.1" ];
 
-  virtualisation.docker = {
-    # Consider disabling the system wide Docker daemon
-    enable = false;
+  virtualisation = {
+    containers.enable = true;
 
-    rootless = {
+    podman = {
       enable = true;
-      setSocketVariable = true;
-      # Optionally customize rootless Docker daemon settings
-      daemon.settings = {
-        dns = [
-          "1.1.1.1"
-          "8.8.8.8"
-        ];
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true; # Required for containers under podman-compose to be able to talk to each other.
+    };
+
+    docker = {
+      # Consider disabling the system wide Docker daemon
+      enable = false;
+
+      rootless = {
+        enable = false;
+        setSocketVariable = true;
+        # Optionally customize rootless Docker daemon settings
+        daemon.settings = {
+          dns = [
+            "1.1.1.1"
+            "8.8.8.8"
+          ];
+        };
       };
     };
   };

@@ -18,7 +18,7 @@
       ruff
       typos-lsp
       tombi
-      harper
+      ts_query_ls
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
@@ -42,6 +42,7 @@
       "opentofu"
       "typos"
       "dependi"
+      "tree-sitter-query"
     ];
     userSettings = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/settings.json));
     userKeymaps = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/keymaps.json));

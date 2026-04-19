@@ -19,6 +19,7 @@ in
       "kvm"
       "adbusers"
       "libvirtd"
+      "podman"
     ];
     packages = with pkgs; [
       vim
