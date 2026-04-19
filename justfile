@@ -2,7 +2,7 @@ hostname := `hostname`
 
 # switch to a new generation (recommended after setup)
 switch host=hostname:
-    nh os switch --show-trace --ask --hostname "{{ host }}" .
+    nh os switch --diff always --show-trace --ask --hostname "{{ host }}" .
 
 # create new generation for next boot
 boot host=hostname:
@@ -53,4 +53,4 @@ remote-switch host=hostname:
 # create new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
 remote-boot host=hostname:
-    nh os boot --show-trace --ask --build-host "{{ host }}.local" --target-host "{{ host }}.local" --hostname "{{ host }}" .
+    nh os boot --diff always --show-trace --build-host "{{ host }}.local" --target-host "{{ host }}.local" --hostname "{{ host }}" .
