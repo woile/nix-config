@@ -61,7 +61,11 @@
     "amdgpu.bapm=1"
 
     # Active State Power Management for the GPU's PCIe link.
-    "amdgpu.aspm=1"
+    # Disabled to avoid input lag.
+    "amdgpu.aspm=0"
+
+    # Disable autosuspend for Bluetooth USB devices.
+    "btusb.enable_autosuspend=0"
 
     # ─── SUSPEND / S0ix ──────────────────────────────────────────────────────────
     # Use modern standby (S0ix / s2idle) — the only suspend mode Strix Halo supports.
