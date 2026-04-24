@@ -15,7 +15,7 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "24.11";
+  home.stateVersion = "26.05";
 
   # disable home-manager news
   news.display = "silent";
