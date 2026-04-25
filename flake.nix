@@ -24,10 +24,6 @@
     vpn-confinement = {
       url = "github:Maroka-chan/VPN-Confinement";
     };
-    ouro = {
-      url = "github:reo101/ouro";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
   };
 
@@ -37,7 +33,6 @@
       nixpkgs,
       home-manager,
       vpn-confinement,
-      ouro,
       ...
     }:
     # https://flake.parts/
@@ -93,7 +88,6 @@
             home-manager = home-manager;
             inputs = inputs;
             vpn-confinement = vpn-confinement;
-            ouro = ouro;
           }
         );
         nixosConfigurations.aconcagua = nixpkgs.lib.nixosSystem (

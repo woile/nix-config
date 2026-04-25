@@ -11,7 +11,7 @@
   modules = [
     ./configuration.nix
     vpn-confinement.nixosModules.default
-    ouro.nixosModules.default
+
     home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
