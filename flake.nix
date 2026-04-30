@@ -25,6 +25,12 @@
       url = "github:Maroka-chan/VPN-Confinement";
     };
 
+    # disk management
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -42,10 +48,6 @@
         "aarch64-darwin"
         "x86_64-darwin"
       ];
-      # imports = [
-      #       # Import home-manager's flake module
-      #       inputs.home-manager.flakeModules.home-manager
-      #   ];
 
       perSystem =
         { pkgs, ... }:
@@ -93,6 +95,11 @@
         nixosConfigurations.aconcagua = nixpkgs.lib.nixosSystem (
           import ./hosts/aconcagua {
             home-manager = home-manager;
+            inputs = inputs;
+          }
+        );
+        nixosConfigurations.amaru = nixpkgs.lib.nixosSystem (
+          import ./hosts/amaru {
             inputs = inputs;
           }
         );
