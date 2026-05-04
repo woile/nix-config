@@ -30,5 +30,8 @@
 
     # allow customization of panel colors
     plasma-panel-colorizer
+
+    # jellyfin client
+    fladder
   ];
 }
