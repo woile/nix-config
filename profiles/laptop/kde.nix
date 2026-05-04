@@ -13,9 +13,10 @@
     kdePackages.merkuro # calendar
     kdePackages.okular # PDF viewer
     kdePackages.akonadi # contacts
-
+    kdePackages.kontrast # color accessibility
     kdePackages.calligra # office suite
     kdePackages.plasma-browser-integration
+    kdePackages.kirigami-gallery # examples of Kirigami components
     fluffychat # matrix chat client
 
     foliate # e-book reader
