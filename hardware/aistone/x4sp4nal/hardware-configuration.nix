@@ -58,7 +58,7 @@
     "amdgpu.runpm=1"
 
     # Bootstrap APM: improves APU-level power management on integrated graphics.
-    "amdgpu.bapm=1"
+    "amdgpu.bapm=0"
 
     # Active State Power Management for the GPU's PCIe link.
     # Disabled to avoid input lag.
