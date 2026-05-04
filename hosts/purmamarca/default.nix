@@ -3,7 +3,6 @@
   home-manager,
   inputs,
   vpn-confinement,
-  ouro,
   ...
 }:
 {

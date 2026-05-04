@@ -25,6 +25,20 @@
     ];
   };
 
+  xdg.desktopEntries.jellyfin-desktop-xcb = {
+    name = "Jellyfin Desktop (X11)";
+    genericName = "Media Center";
+    exec = "env QT_QPA_PLATFORM=xcb jellyfin-desktop";
+    icon = "org.jellyfin.JellyfinDesktop";
+    comment = "Jellyfin Desktop forced to use X11/xcb";
+    terminal = false;
+    type = "Application";
+    categories = [
+      "AudioVideo"
+      "Video"
+    ];
+  };
+
   programs.chromium = {
     enable = true;
     nativeMessagingHosts = [
