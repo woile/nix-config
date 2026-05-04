@@ -24,8 +24,42 @@ plan:
 
 # Create or update infrastructure
 apply:
-    tofu apply
+    tofu apply -auto-approve
 
 # Update drivers (scaleway, porkbun, etc)
 upgrade:
     tofu init -upgrade
+
+destroy-server:
+    # tofu destroy -auto-approve
+    tofu destroy -target=scaleway_instance_server.amaru -auto-approve
+
+cloud-logs ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
+    ssh "root@{{ ip }}" cloud-init status --long
+    ssh "root@{{ ip }}" cat /var/log/cloud-init-output.log
+
+save-logs ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
+    ssh "root@{{ ip }}" "tail -f -n +1 /var/log/cloud-init-output.log" | tee .logs/cloud-init-output.log
+
+debug-nixos-bite ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
+    ssh "root@{{ ip }}" "bash /root/nixos-bite.sh reboot" 2>&1 | tee bite-logs
+
+ssh ip=`just outputs | jq -r '.public_ips.value[0].address'`:
+    ssh "woile@{{ ip }}"
+
+outputs:
+    @tofu output -json
+
+vm-nixify host='amaru' ip=`just outputs | jq -r '.public_ips.value[0].address'`:
+    @mkdir -p .logs
+    nix run github:nix-community/nixos-anywhere -- \
+      --flake "..#{{ host }}" \
+      --generate-hardware-config nixos-generate-config \
+      "../hosts/{{ host }}/hardware-vm.nix" \
+      "root@{{ ip }}" | tee .logs/vm.logs
+
+# Provision the VM with nixos-anywhere
+provision host='amaru':
+    just apply
+    sleep 10
+    just vm-nixify "{{ host }}"

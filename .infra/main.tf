@@ -120,12 +120,14 @@ resource "scaleway_instance_security_group" "www" {
   }
 }
 
-resource "scaleway_instance_server" "homenet_prime" {
+resource "scaleway_instance_server" "amaru" {
   project_id = data.scaleway_account_project.homenet.id
-  name       = "homenet_prime"
-  type       = "STARDUST1-S"
-  image      = "debian_trixie"
-  tags       = ["home", "vpn"]
+  name       = "amaru"
+  type       = "DEV1-S"
+  # command to run console.scaleway.com/:
+  # `scw marketplace image list`
+  image = "debian_trixie"
+  tags  = ["home", "vpn", "tofu"]
 
   ip_ids            = [scaleway_instance_ip.public_ipv6_routed.id]
   security_group_id = scaleway_instance_security_group.www.id
@@ -135,9 +137,10 @@ resource "scaleway_instance_server" "homenet_prime" {
     volume_type = "l_ssd"
   }
 
-  # user_data = {
-  #   cloud-init = templatefile("${path.module}/cloud-init.yaml", {})
-  # }
+  # # only executed on first boot
+  user_data = {
+    cloud-init = templatefile("${path.module}/cloud-init.yaml", {})
+  }
 }
 
 ####################

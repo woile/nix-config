@@ -1,4 +1,5 @@
 # Infrastructure
 
-This is terraform, it doesn't use nix, at least not yet. 
-I haven't figured out how to integrate it with nix properly.
+This is terraform, it doesn't use nix, at least not yet.
+
+Takes care of deploying VM in the cloud and then installing nix on them (via `nixos-anywhere`)

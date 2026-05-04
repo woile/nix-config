@@ -7,5 +7,5 @@ output "homenet_backup_bucket_endpoint" {
 }
 
 output "public_ips" {
-  value = scaleway_instance_server.homenet_prime.public_ips
+  value = scaleway_instance_server.amaru.public_ips
 }

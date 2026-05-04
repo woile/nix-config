@@ -1,0 +1,13 @@
+#cloud-config
+# create and enable a 2GB swapfile for nixos-anywhere
+swap:
+  filename: /swapfile
+  size: "auto"
+  maxsize: 3221225472 # 3GB in bytes
+
+# Run the cache-drop command at the very end of the boot sequence
+# to ensure maximum available RAM before nixos-anywhere.
+runcmd:
+  - sync
+  - echo 3 > /proc/sys/vm/drop_caches
+  - echo 1 > /proc/sys/vm/compact_memory
