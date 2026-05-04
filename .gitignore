@@ -4,3 +4,4 @@ result-*
 .direnv
 result
 tasks.md
+.logs
