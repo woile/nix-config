@@ -1,5 +1,8 @@
 hostname := `hostname`
 
+# Infrastructure recipes, use `just infra::<cmd>`
+mod infra '.infra/justfile'
+
 # switch to a new generation (recommended after setup)
 switch host=hostname:
     nh os switch --diff always --show-trace --ask --hostname "{{ host }}" .
@@ -44,6 +47,10 @@ store__optimize:
 # clean up old generations and store
 clean:
     nh clean all --keep 3  --keep-since 7d --ask
+
+# Apply a new generation to a remote VM
+vm-switch host='amaru' ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
+    nh os switch --show-trace --target-host "[{{ ip }}]" --hostname "{{ host }}" .
 
 # switch to a new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
