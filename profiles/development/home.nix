@@ -19,6 +19,7 @@
       typos-lsp
       tombi
       ts_query_ls
+      color-lsp
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
@@ -43,6 +44,8 @@
       "typos"
       "dependi"
       "tree-sitter-query"
+      "log"
+      "color-highlight"
     ];
     userSettings = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/settings.json));
     userKeymaps = (builtins.fromJSON (builtins.readFile ../../programs/zed-editor/keymaps.json));
