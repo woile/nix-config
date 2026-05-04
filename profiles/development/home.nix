@@ -38,7 +38,6 @@
       "sql"
       "git-firefly"
       "slint"
-      "harper"
       "mcp-server-puppeteer"
       "opentofu"
       "typos"
