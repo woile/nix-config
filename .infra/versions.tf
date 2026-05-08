@@ -19,8 +19,8 @@ terraform {
 }
 
 provider "scaleway" {
-  zone            = "fr-par-1"
-  region          = "fr-par"
+  zone            = "pl-waw-2"
+  region          = "pl-waw"
   access_key      = var.scw_access_key
   secret_key      = var.scw_secret_key
   organization_id = var.scw_default_organization_id

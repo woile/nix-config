@@ -8,7 +8,7 @@
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
 
-    ./disko.nix
+    ./disks.nix
     ../../users/woile/user.nix
   ];
   boot.kernelParams = [ "console=ttyS0" ]; # for scaleway serial connection
@@ -50,6 +50,7 @@
     dust
     gitui
     bottom
+    systemctl-tui
   ];
 
   programs.starship.enable = true;

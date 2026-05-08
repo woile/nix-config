@@ -34,15 +34,17 @@ destroy-server:
     # tofu destroy -auto-approve
     tofu destroy -target=scaleway_instance_server.amaru -auto-approve
 
-cloud-logs ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
+cloud-logs ip=`just outputs | jq -r '.public_ips.value[0].address'`:
     ssh "root@{{ ip }}" cloud-init status --long
     ssh "root@{{ ip }}" cat /var/log/cloud-init-output.log
 
-save-logs ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
-    ssh "root@{{ ip }}" "tail -f -n +1 /var/log/cloud-init-output.log" | tee .logs/cloud-init-output.log
+save-logs ip=`just outputs | jq -r '.public_ips.value[0].address'`:
+    sleep 60
+    ssh -o StrictHostKeyChecking=accept-new "root@{{ ip }}" "tail -f -n +1 /var/log/cloud-init-output.log" | tee .logs/cloud-init-output.log
 
-debug-nixos-bite ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
-    ssh "root@{{ ip }}" "bash /root/nixos-bite.sh reboot" 2>&1 | tee bite-logs
+debug-nixos-bite ip=`just outputs | jq -r '.public_ips.value[0].address'`:
+    sleep 60
+    ssh -o StrictHostKeyChecking=accept-new "root@{{ ip }}" "NIX_INSTALLER=experimental NIX_DNS=2a00:1098:2c::1 bash /root/nixos-bite.sh reboot" 2>&1 | tee .logs/bite-logs
 
 ssh ip=`just outputs | jq -r '.public_ips.value[0].address'`:
     ssh "woile@{{ ip }}"

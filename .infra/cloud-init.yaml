@@ -1,9 +1,28 @@
 #cloud-config
 # create and enable a 2GB swapfile for nixos-anywhere
-swap:
-  filename: /swapfile
-  size: "auto"
-  maxsize: 3221225472 # 3GB in bytes
+# swap:
+#   filename: /swapfile
+#   size: "auto"
+#   maxsize: 3221225472 # 3GB in bytes
+write_files:
+  - path: /root/init.sh
+    permissions: "0755"
+    owner: root:root
+    content: |
+      #!/run/current-system/sw/bin/sh
+      OLD_ROOT="/old-root"
+      if [ -d "$OLD_ROOT" ]; then
+          echo "Found $OLD_ROOT. Removing immutable flags..."
+          # Unlock any /var/empty directories preventing deletion
+          find "$OLD_ROOT" -type d -name "empty" -exec chattr -i {} + 2>/dev/null
+
+          echo "Deleting $OLD_ROOT to free up space..."
+          rm -rf "$OLD_ROOT"
+
+          echo "Cleanup complete."
+      else
+          echo "$OLD_ROOT not found. Nothing to do."
+      fi
 
 # Run the cache-drop command at the very end of the boot sequence
 # to ensure maximum available RAM before nixos-anywhere.
@@ -11,3 +30,8 @@ runcmd:
   - sync
   - echo 3 > /proc/sys/vm/drop_caches
   - echo 1 > /proc/sys/vm/compact_memory
+  - sleep 60
+  - "curl -o /root/nixos-bite.sh https://codeberg.org/woile/nixos-bite/raw/branch/feat/ipv6/nixos-bite.sh"
+  - "chmod +x /root/nixos-bite.sh"
+  - NIX_SETUP=/root/init.sh NIX_INSTALLER=experimental NIX_DNS=2a00:1098:2c::1 bash /root/nixos-bite.sh reboot
+  # - "curl https://codeberg.org/woile/nixos-bite/raw/branch/fix/swap/nixos-bite.sh | NIX_DNS=2a00:1098:2c::1 bash -s reboot"
