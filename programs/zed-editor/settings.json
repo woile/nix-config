@@ -18,9 +18,6 @@
   "collaboration_panel": {
     "dock": "left"
   },
-  "notification_panel": {
-    "dock": "left"
-  },
   "outline_panel": {
     "dock": "right"
   },
