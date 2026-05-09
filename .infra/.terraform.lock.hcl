@@ -1,6 +1,29 @@
 # This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
+provider "registry.opentofu.org/netlify/netlify" {
+  version     = "0.4.1"
+  constraints = "~> 0.4.0"
+  hashes = [
+    "h1:3NWddc5XKZmhMchnRaEc6AYVAkaOWFIN7pUu6O5oCVQ=",
+    "zh:16180602d6f0fd7614bcfd59c4c06cd9577a63644fe7f0827b4b5812f9ef0dc6",
+    "zh:472342fb70c64aada4a5c21f20baaef7839338721694db6746900cb17a0df302",
+    "zh:6362429df7c39ebda53ddd43298654d225e876a0c92bf2d24c6e3830f3d1ccb7",
+    "zh:6767a397633c0f59728064c837d205a0d14d3f94c48ecb34bbf37c5b7eb729cb",
+    "zh:70af364a39b9a0b6cddd35b9c4ca0f159a62e6126661b67c91c23dc2fb5c3cbb",
+    "zh:890df766e9b839623b1f0437355032a3c006226a6c200cd911e15ee1a9014e9f",
+    "zh:a19beb29387b64666ec0f67964b1d3eb8f618384b2a124a42d8410479880363d",
+    "zh:a3e3557b26f138fff0520636499dc65d467405b84090481cc1376b337987603b",
+    "zh:af499e10843189a1f9cda8af5e6665f1720662e19d2450b2ff67769e16e3374a",
+    "zh:b8dfb2b8c3accd0bb68a8121bdd180368828ed0ccd974f74180d4f5b37d37ba6",
+    "zh:cf45f4f953d55d2d893fd07af5c84d688fcd12390b83d18a45c9494aff0142a7",
+    "zh:cf7c2f0240a12f619af591df4a12519b4914fa06d99157accb0788ad6ff58a7f",
+    "zh:d8306d7dc89b0cb9c0fb579232d7e394a2882d2ec784bf018c5e9f3e35b260aa",
+    "zh:ef94a6408ea2cfeb67d4bb676c9fa20abcf06e7315670463136ab39b273d8f0e",
+    "zh:f8a694508831c8876a99741ff8c56b9746da6bbd823181ee65ce73bc37ea6661",
+  ]
+}
+
 provider "registry.opentofu.org/scaleway/scaleway" {
   version     = "2.68.0"
   constraints = "~> 2.68.0"

@@ -20,3 +20,8 @@ variable "scw_default_organization_id" {
   type        = string
   description = "Scaleway defaul organization id"
 }
+
+variable "netlify_api_token" {
+  type        = string
+  description = "Access to netlify"
+}

@@ -6,7 +6,17 @@ locals {
 # DNS CONFIGURATION #
 #####################
 
-# TODO
+data "netlify_dns_zone" "woile_dev" {
+  name = "woile.dev"
+}
+
+resource "netlify_dns_record" "auth_ipv6" {
+  zone_id  = data.netlify_dns_zone.woile_dev.id
+  hostname = "auth"
+  type     = "AAAA"
+  value    = scaleway_instance_ip.public_ipv6_routed.address
+  ttl      = 3600
+}
 
 ##########################
 # Scaleway configuration #
@@ -123,7 +133,9 @@ resource "scaleway_instance_security_group" "www" {
 resource "scaleway_instance_server" "amaru" {
   project_id = data.scaleway_account_project.homenet.id
   name       = "amaru"
-  type       = "DEV1-S"
+  type       = "STARDUST1-S"
+  # type = "DEV1-S"
+
   # command to run console.scaleway.com/:
   # `scw marketplace image list`
   image = "debian_trixie"

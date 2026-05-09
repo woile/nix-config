@@ -52,6 +52,7 @@ ssh ip=`just outputs | jq -r '.public_ips.value[0].address'`:
 outputs:
     @tofu output -json
 
+# Not used, I leave it for posterity
 vm-nixify host='amaru' ip=`just outputs | jq -r '.public_ips.value[0].address'`:
     @mkdir -p .logs
     nix run github:nix-community/nixos-anywhere -- \
@@ -60,8 +61,12 @@ vm-nixify host='amaru' ip=`just outputs | jq -r '.public_ips.value[0].address'`:
       "../hosts/{{ host }}/hardware-vm.nix" \
       "root@{{ ip }}" | tee .logs/vm.logs
 
+vm-apply-root host='amaru' ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
+    @mkdir -p .logs
+    nh os switch --show-trace --target-host "root@[{{ ip }}]" --hostname "{{ host }}" ../
+
 # Provision the VM with nixos-anywhere
 provision host='amaru':
     just apply
-    sleep 10
-    just vm-nixify "{{ host }}"
+    sleep 360 # 6 min
+    just vm-apply-root "{{ host }}"

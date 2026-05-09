@@ -4,6 +4,10 @@ terraform {
       source  = "scaleway/scaleway"
       version = "~> 2.68.0"
     }
+    netlify = {
+      source  = "netlify/netlify"
+      version = "~> 0.4.0" # Or the latest available version
+    }
   }
   required_version = ">= 0.13"
 
@@ -24,4 +28,8 @@ provider "scaleway" {
   access_key      = var.scw_access_key
   secret_key      = var.scw_secret_key
   organization_id = var.scw_default_organization_id
+}
+
+provider "netlify" {
+  token = var.netlify_api_token
 }
