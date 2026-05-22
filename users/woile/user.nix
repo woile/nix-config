@@ -3,10 +3,10 @@
 
 let
   sshPubFiles = lib.filterAttrs (k: v: v == "regular" && lib.hasSuffix ".pub" k) (
-    builtins.readDir ../../crypto/authorized_keys
+    builtins.readDir ../../security/authorized_keys
   );
   authorizedKeys = lib.mapAttrsToList (
-    k: v: builtins.readFile "${../../crypto/authorized_keys}/${k}"
+    k: v: builtins.readFile "${../../security/authorized_keys}/${k}"
   ) sshPubFiles;
 in
 {
@@ -20,6 +20,7 @@ in
       "adbusers"
       "libvirtd"
       "podman"
+      "tss" # Trusted Computing Group Software Stack
     ];
     packages = with pkgs; [
       vim

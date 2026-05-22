@@ -56,7 +56,7 @@
   programs.gpg.enable = true;
   programs.gpg.publicKeys = [
     {
-      source = ../../crypto/gpg-pubkeys.txt;
+      source = ../../security/gpg-pubkeys.txt;
       trust = 5;
     }
   ];
