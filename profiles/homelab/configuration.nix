@@ -69,30 +69,18 @@
     ];
   };
 
-  # Add systemd service to VPN network namespace
-  systemd.services.transmission.vpnConfinement = {
-    enable = true;
-    vpnNamespace = "proton";
+  systemd.services.transmission = {
+    # Add systemd service to VPN network namespace
+    vpnConfinement = {
+      enable = true;
+      vpnNamespace = "proton";
+    };
+    # Wait for drive to be mounted
+    unitConfig.RequiresMountsFor = "/media/media-store";
   };
 
-  # nixarr.transmission = {
-  #   enable = true;
-  #   vpn.enable = true;
-  #   peerPort = 51820;
-  #   openFirewall = true;
-  #   extraSettings = {
-  #     download-dir = "/media/media-store/media-center/transmission/download";
-  #     rpc-port = 9091;
-  #     # incomplete-dir = "/media/media-store/media-center/transmission/.incomplete";
-  #   };
-  # };
-
-  # nixarr.vpn = {
-  #   enable = true;
-  #   wgConf = "/data/.secret/vpn/purmamarca-PT-62.conf";
-  # };
-  # nixarr.mediaDir = "/media/media-store/media-center/transmission";
-  # nixarr.mediaUsers = [ "woile" ];
+  # Ensure the VPN namespace service also waits for the mount if the config is there
+  systemd.services.proton.unitConfig.RequiresMountsFor = "/media/media-store";
 
   # media center: collect, manage, and stream media
   services.jellyfin = {

@@ -91,7 +91,10 @@ with lib;
 
         # Dependencies: Must run after WireGuard's namespace is active
         bindsTo = [ "${v.vpnNamespace}.service" ];
-        after = [ "${v.vpnNamespace}.service" ];
+        after = [
+          "${v.vpnNamespace}.service"
+          "${n}.service"
+        ];
 
         # Confinement: Ensure service runs in the WireGuard namespace.
         vpnConfinement = {
@@ -106,36 +109,14 @@ with lib;
           # Run the user provided script, we isolate it so the users can depend on the variables created here.
           # Warning: The user script will always run to prevent "state desynchronization"
           user_script() {
-            # Check if all parameters are provided
-            if [[ $# -ne 3 ]]; then
-                echo "Error: Missing parameters. Usage: check_port_change <protocol> <new_port> <old_port>"
-                echo "Example: check_port_change tcp 8443 443"
-                exit 1
-            fi
             local protocol="$1"
             local new_port="$2"
             local old_port="$3"
+
             # Check if all parameters are provided
             if [[ -z "$protocol" || -z "$new_port" || -z "$old_port" ]]; then
-                echo "Error: Missing parameters. Usage: update_service_port <protocol> <new_port> <old_port>"
+                echo "Error: Missing parameters in user_script."
                 return 1
-            fi
-            # Check if ports are valid numbers
-            if ! [[ "$new_port" =~ ^[0-9]+$ ]] || ! [[ "$old_port" =~ ^[0-9]+$ ]]; then
-                echo "Error: Ports must be numbers."
-                exit 1
-            fi
-
-            # Check if ports are within valid range (1-65535)
-            if [[ "$new_port" -lt 1 || "$new_port" -gt 65535 || "$old_port" -lt 1 || "$old_port" -gt 65535 ]]; then
-                echo "Error: Ports must be between 1 and 65535."
-                exit 1
-            fi
-
-            # Check if protocol is valid (tcp or udp)
-            if [[ "$protocol" != "tcp" && "$protocol" != "udp" ]]; then
-                echo "Error: Protocol must be either 'tcp' or 'udp'."
-                exit 1
             fi
 
             # Display the variables
@@ -161,7 +142,22 @@ with lib;
             # default is generally used by VPNs
             VPN_GATEWAY_IP="10.2.0.1"
 
-            touch $port_file
+            # --- Wait for interface ---
+            echo "Checking for interface $VPN_IFACE..."
+            for i in {1..30}; do
+              if ${pkgs.iproute2}/bin/ip link show "$VPN_IFACE" >/dev/null 2>&1; then
+                break
+              fi
+              echo "Waiting for interface $VPN_IFACE... ($i/30)"
+              sleep 1
+            done
+
+            if ! ${pkgs.iproute2}/bin/ip link show "$VPN_IFACE" >/dev/null 2>&1; then
+              echo "Error: Interface $VPN_IFACE not found after 30 seconds."
+              return 1
+            fi
+
+            touch "$port_file"
 
             # --- NAT-PMP: Get a Public Port ---
             # Request a port from the router (timeout: 60s, lease to VPN_GATEWAY_IP).
@@ -172,21 +168,23 @@ with lib;
             public_port="$(echo "$result" | ${pkgs.ripgrep}/bin/rg --only-matching --replace '$1' "Mapped public port (\d+) protocol ... to local port $FIXED_INTERNAL_PORT lifetime 60")"
 
             if [ -z "$public_port" ]; then
-              echo "FAILED. Output: $result"
-              return
+              echo "FAILED to get public port. Output: $result"
+              return 1
             fi
 
-            old_port="$(cat "$port_file")"
+            # Get old port, default to 0 if empty/invalid
+            old_port="$(cat "$port_file" 2>/dev/null || echo "0")"
+            if [[ ! "$old_port" =~ ^[0-9]+$ ]]; then old_port="0"; fi
+
             echo "Mapped new $protocol port $public_port, old one was $old_port."
             echo "$public_port" >"$port_file"
 
             # --- INPUT Rule (Open the Public Port) ---
-            if ${pkgs.iptables}/bin/iptables -C INPUT -p "$protocol" --dport "$public_port" -j ACCEPT -i $VPN_IFACE
-            then
+            if ${pkgs.iptables}/bin/iptables -C INPUT -p "$protocol" --dport "$public_port" -j ACCEPT -i "$VPN_IFACE" 2>/dev/null; then
               echo "New $protocol port $public_port already open, not opening again."
             else
               echo "<5>Opening new $protocol port $public_port."
-              ${pkgs.iptables}/bin/iptables -I INPUT -p "$protocol" --dport "$public_port" -j ACCEPT -i $VPN_IFACE
+              ${pkgs.iptables}/bin/iptables -I INPUT -p "$protocol" --dport "$public_port" -j ACCEPT -i "$VPN_IFACE"
             fi
 
             # --- REDIRECT Rule (Internal Fixed -> Public) ---
@@ -197,25 +195,18 @@ with lib;
             fi
 
             # --- Run Custom Post-Renew Script ---
-            # Runs always to prevent "state desynchronization"
-            user_script "$protocol" "$public_port" "$old_port"
+            # We ignore errors from user script to ensure cleanup logic runs
+            user_script "$protocol" "$public_port" "$old_port" || true
 
             # --- Cleanup ---
-            # Close the old port if it changed.
-            if [ "$public_port" -eq "$old_port" ]
-            then
-              echo "New $protocol port $public_port is the same as old port $old_port, not closing old port."
-            else
-              if ${pkgs.iptables}/bin/iptables -C INPUT -p "$protocol" --dport "$old_port" -j ACCEPT -i $VPN_IFACE
-              then
+            # Close the old port if it changed and was valid.
+            if [ "$public_port" != "$old_port" ] && [ "$old_port" != "0" ]; then
+              if ${pkgs.iptables}/bin/iptables -C INPUT -p "$protocol" --dport "$old_port" -j ACCEPT -i "$VPN_IFACE" 2>/dev/null; then
                 echo "Closing old $protocol port $old_port."
-                ${pkgs.iptables}/bin/iptables -D INPUT -p "$protocol" --dport "$old_port" -j ACCEPT -i $VPN_IFACE
-              else
-                echo "Old $protocol port $old_port not open, not attempting to close."
+                ${pkgs.iptables}/bin/iptables -D INPUT -p "$protocol" --dport "$old_port" -j ACCEPT -i "$VPN_IFACE"
               fi
 
               # Remove old REDIRECT rule (Clean up the nat table)
-              # Note: We blindly try to delete the rule redirecting to the OLD port
               if ${pkgs.iptables}/bin/iptables -t nat -C PREROUTING -p "$protocol" --dport "$FIXED_INTERNAL_PORT" -j REDIRECT --to-port "$old_port" 2>/dev/null; then
                 echo "Removing old Redirect: $FIXED_INTERNAL_PORT -> $old_port"
                 ${pkgs.iptables}/bin/iptables -t nat -D PREROUTING -p "$protocol" --dport "$FIXED_INTERNAL_PORT" -j REDIRECT --to-port "$old_port"
@@ -224,7 +215,7 @@ with lib;
           }
 
           # --- MAIN ENTRYPOINT ---
-          renew_port udp
+          renew_port udp || true
           renew_port tcp
         '';
 
