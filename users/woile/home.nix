@@ -81,6 +81,7 @@
   };
   programs.helix = {
     enable = true;
+    defaultEditor = true;
   };
   # nix helper, replacement for nixos and home-manager
   programs.nh = {
