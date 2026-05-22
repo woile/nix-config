@@ -1,4 +1,5 @@
-# Initialize project
+# Initialize tofu keys and backends
+[group('setup')]
 init:
     #!/usr/bin/env bash
     set -euxo pipefail
@@ -19,25 +20,34 @@ init:
     fi
 
 # Run tofu plan
+[group('infra')]
 plan:
     tofu plan
 
 # Create or update infrastructure
+[group('infra')]
 apply:
     tofu apply -auto-approve
 
 # Update drivers (scaleway, porkbun, etc)
+[group('infra')]
 upgrade:
     tofu init -upgrade
 
+# Destroy all
+[group('infra')]
 destroy-server:
     # tofu destroy -auto-approve
     tofu destroy -target=scaleway_instance_server.amaru -auto-approve
 
+# Show cloud init logs
+[group('ops')]
 cloud-logs ip=`just outputs | jq -r '.public_ips.value[0].address'`:
     ssh "root@{{ ip }}" cloud-init status --long
     ssh "root@{{ ip }}" cat /var/log/cloud-init-output.log
 
+# Read and save the cloud-init logs, can run hot
+[group('ops')]
 save-logs ip=`just outputs | jq -r '.public_ips.value[0].address'`:
     sleep 60
     ssh -o StrictHostKeyChecking=accept-new "root@{{ ip }}" "tail -f -n +1 /var/log/cloud-init-output.log" | tee .logs/cloud-init-output.log
@@ -46,13 +56,19 @@ debug-nixos-bite ip=`just outputs | jq -r '.public_ips.value[0].address'`:
     sleep 60
     ssh -o StrictHostKeyChecking=accept-new "root@{{ ip }}" "NIX_INSTALLER=experimental NIX_DNS=2a00:1098:2c::1 bash /root/nixos-bite.sh reboot" 2>&1 | tee .logs/bite-logs
 
-ssh ip=`just outputs | jq -r '.public_ips.value[0].address'`:
-    ssh "woile@{{ ip }}"
+# SSH to host
+[group('ops')]
+ssh host='amaru':
+    @IP=$(just outputs | jq -r '.{{ host }}_ssh.value'); \
+    ssh "woile@${IP}"
 
+# Print tofu outputs
+[group('ops')]
 outputs:
     @tofu output -json
 
-# Not used, I leave it for posterity
+# UNUSED, I leave it for posterity
+[group('setup')]
 vm-nixify host='amaru' ip=`just outputs | jq -r '.public_ips.value[0].address'`:
     @mkdir -p .logs
     nix run github:nix-community/nixos-anywhere -- \
@@ -61,12 +77,24 @@ vm-nixify host='amaru' ip=`just outputs | jq -r '.public_ips.value[0].address'`:
       "../hosts/{{ host }}/hardware-vm.nix" \
       "root@{{ ip }}" | tee .logs/vm.logs
 
-vm-apply-root host='amaru' ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
+# Apply the Nix configuration as root (user will change, do it once)
+[group('setup')]
+vm-apply-as-root host='amaru':
+    #!/usr/bin/env sh
+    IP=$(just outputs | jq -r '.{{ host }}_ssh.value')
     @mkdir -p .logs
-    nh os switch --show-trace --target-host "root@[{{ ip }}]" --hostname "{{ host }}" ../
+    nh os switch --show-trace --target-host "root@[${IP}]" --hostname "{{ host }}" ../
 
-# Provision the VM with nixos-anywhere
+# Provision the VM
+[group('setup')]
 provision host='amaru':
     just apply
     sleep 360 # 6 min
-    just vm-apply-root "{{ host }}"
+    just vm-apply-as-root "{{ host }}"
+
+# Get SSH public key
+[group('sec')]
+pub-shh host='amaru':
+    #!/usr/bin/env sh
+    IP=$(just outputs | jq -r '.{{ host }}_ssh.value')
+    ssh "woile@${IP}" cat /etc/ssh/ssh_host_ed25519_key.pub

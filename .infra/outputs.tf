@@ -9,3 +9,7 @@ output "homenet_backup_bucket_endpoint" {
 output "public_ips" {
   value = scaleway_instance_server.amaru.public_ips
 }
+
+output "amaru_ssh" {
+  value = scaleway_instance_server.amaru.public_ips.0.address
+}
