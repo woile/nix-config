@@ -82,41 +82,91 @@
     variant = "altgr-intl";
   };
 
-  # I keep this weird in case I move it back to laptop/configuration
-  services.ollama = {
+  services.llama-cpp = {
     enable = true;
-    package = pkgs.ollama-vulkan;
-    # package = pkgs.ollama-rocm;
-    # imported by all
-    loadModels = [
-      "qwen3:8b"
-      "gemma3n:e4b"
-      "ministral-3:14b"
-      "ministral-3:8b"
-      "ministral-3:3b"
-      "devstral-small-2:24b"
-      "nemotron-3-nano:30b"
 
-      "qwen3-coder:30b-a3b-q4_K_M"
+    package = pkgs.llama-cpp-vulkan;
+    # package =
+    #   with pkgs;
+    # (llama-cpp-rocm.overrideAttrs (oldAttrs: {
+    #   DGFX_VERSION = "11.5.0";
+    #   # FORCE_REBUILD = builtins.currentTime;
+    #   # Adding a dummy attribute forces a local build
+    #   passthru = (oldAttrs.passthru or { }) // {
+    #     forceRebuild = 1;
+    #   };
+    # }));
+    port = 8093;
+    openFirewall = true;
+    modelsPreset = {
+      # TODO: Keep
+      # - nemotron
+      "medgemma-1.5-4b-it" = {
+        hf-repo = "unsloth/medgemma-1.5-4b-it-GGUF";
+        hf-file = "medgemma-1.5-4b-it-UD-Q8_K_XL.gguf";
+        alias = "unsloth/medgemma-1.5-4b-it";
+        fa = true;
+        ctx-size = "131072"; # 128K
+        temp = "0.0";
+        jinja = true;
+        special = true;
+        # chat-template = "chatml";
+        # <unused95>
+        # reasoning-format = "deepseek";
+      };
+      "gemma-4-26B-A4B" = {
+        hf-repo = "unsloth/gemma-4-26B-A4B-it-GGUF";
+        hf-file = "gemma-4-26B-A4B-it-UD-Q8_K_XL.gguf";
+        alias = "unsloth/gemma-4-26B-A4B-it";
+        ctx-size = "268288"; # 262K
+        temp = "1.0";
+        top-p = "0.95";
+        top-k = "64";
+      };
+      "translategemma-12b" = {
+        hf-repo = "bullerwins/translategemma-12b-it-GGUF";
+        hf-file = "translategemma-12b-it-Q8_0.gguf";
+        alias = "bullerwins/translategemma-12b-it";
+        ctx-size = "2048"; # 2K
+        temp = "1.0";
+        top-p = "0.95";
+        top-k = "64";
+      };
 
-      # advanced autocomplete
-      "hf.co/sweepai/sweep-next-edit-1.5B"
-
-      "translategemma:4b"
-      "translategemma:12b"
-
-      "hf.co/unsloth/medgemma-27b-text-it-GGUF:Q4_K_M"
-      "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-1M-GGUF:Q4_K_M" # tools
-      "hf.co/noctrex/Qwen3-Coder-30B-A3B-Instruct-MXFP4_MOE-GGUF:MXFP4_MOE"
-      "hf.co/Fortytwo-Network/Strand-Rust-Coder-14B-v1-GGUF:Q4_K_M"
-      "hf.co/unsloth/Qwen3-Coder-30B-A3B-Instruct-GGUF:UD-Q4_K_XL"
-    ];
-    rocmOverrideGfx = "11.5.1";
-    environmentVariables = {
-      # Hopefully helps with offloading layers to GPU
-      # HSA_ENABLE_SDMA = "0";
-      # ROCR_VISIBLE_DEVICES = "0";
-      # OLLAMA_DEBUG = "1";
+      "Qwen3.6-35B-A3B" = {
+        hf-repo = "unsloth/Qwen3.6-35B-A3B-GGUF";
+        hf-file = "Qwen3.6-35B-A3B-UD-Q8_K_XL.gguf";
+        alias = "unsloth/Qwen3.6-35B-A3B";
+        temp = "1.0";
+        top-p = "0.95";
+        top-k = "20";
+        min-p = "0.0";
+        presence-penalty = "0.0";
+        repeat-penalty = "1.0";
+        ctx-size = "90112";
+      };
+      "Qwen3-Coder-Next" = {
+        hf-repo = "unsloth/Qwen3-Coder-Next-GGUF";
+        hf-file = "Qwen3-Coder-Next-UD-Q4_K_XL.gguf";
+        alias = "unsloth/Qwen3-Coder-Next";
+        temp = "1.0";
+        top-p = "0.95";
+        top-k = "40";
+        ctx-size = "65536";
+      };
+      "sweep-next-edit" = {
+        hf-repo = "sweepai/sweep-next-edit-1.5B";
+        hf-file = "sweep-next-edit-1.5b.q8_0.v2.gguf";
+        alias = "sweepai/sweep-next-edit-1.5B";
+        ctx-size = "8192";
+      };
+    };
+  };
+  systemd.services.llama-cpp = {
+    environment = {
+      # 1. Direct the Vulkan driver to use systemd's pre-created writable cache
+      XDG_CACHE_HOME = "/var/cache/llama-cpp";
+      MESA_SHADER_CACHE_DIR = "/var/cache/llama-cpp";
     };
   };
   # services.ollama.acceleration = "rocm";
