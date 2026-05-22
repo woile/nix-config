@@ -62,9 +62,9 @@ secret__add name:
 # switch to a new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
 remote-switch host=hostname:
-    nh os switch --show-trace --ask --build-host "{{ host }}.local" --target-host "{{ host }}.local" --hostname "{{ host }}" .
+    nh os switch --show-trace --ask --target-host "{{ host }}.local" --hostname "{{ host }}" .
 
 # create new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
 remote-boot host=hostname:
-    nh os boot --diff always --show-trace --build-host "{{ host }}.local" --target-host "{{ host }}.local" --hostname "{{ host }}" .
+    nh os boot --diff always --show-trace --target-host "{{ host }}.local" --hostname "{{ host }}" .
