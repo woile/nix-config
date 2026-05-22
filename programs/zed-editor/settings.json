@@ -1,14 +1,22 @@
 {
+  "edit_predictions": {
+    "provider": "open_ai_compatible_api",
+    "open_ai_compatible_api": {
+      "model": "sweep-next-edit",
+      "api_url": "http://localhost:8093/v1/completions",
+      "prompt_format": "qwen"
+    }
+  },
   "agent": {
     "commit_message_model": {
-      "provider": "ollama",
-      "model": "hf.co/sweepai/sweep-next-edit-1.5B:latest"
+      "provider": "llama-server",
+      "model": "Qwen3.6-35B-A3B"
     },
     "dock": "left",
     "enabled": true,
     "inline_assistant_model": {
-      "provider": "ollama",
-      "model": "hf.co/sweepai/sweep-next-edit-1.5B:latest"
+      "provider": "llama-server",
+      "model": "Qwen3-Coder-Next"
     }
   },
 
@@ -25,9 +33,45 @@
     "dock": "right"
   },
   "language_models": {
-    "ollama": {
-      "api_url": "http://localhost:11434",
-      "available_models": []
+    "openai_compatible": {
+      "llama-server": {
+        "api_url": "http://localhost:8093/v1",
+        "available_models": [
+          {
+            "name": "Qwen3-Coder-Next",
+            "display_name": "Qwen3-Coder-Next",
+            "max_tokens": 65536,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false
+            }
+          },
+          {
+            "name": "Qwen3.6-35B-A3B",
+            "display_name": "Qwen3.6-35B-A3B",
+            "max_tokens": 90112,
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false
+            }
+          },
+          {
+            "name": "sweep-next-edit",
+            "display_name": "sweep-next-edit",
+            "max_tokens": 8192,
+            "capabilities": {
+              "tools": false,
+              "images": false,
+              "parallel_tool_calls": false,
+              "prompt_cache_key": false
+            }
+          }
+        ]
+      }
     }
   },
 
