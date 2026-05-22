@@ -31,6 +31,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # secret management
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+
+    };
   };
 
   outputs =
