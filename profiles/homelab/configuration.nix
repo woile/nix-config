@@ -35,6 +35,7 @@
       "-M" # disable upnp
     ];
   };
+
   imports = [
     ../../modules/wg-pnp.nix
   ];
@@ -53,10 +54,7 @@
     wireguardConfigFile = "/data/.secret/vpn/purmamarca-NL-749.conf";
     accessibleFrom = [
       "192.168.100.0/24"
-
-      #
       "100.100.0.0/16"
-
       "127.0.0.1/32"
     ];
 
@@ -93,7 +91,6 @@
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
-    jellyfin-desktop
 
     # network tools
     net-tools
