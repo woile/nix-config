@@ -1,3 +1,5 @@
+export RULES := 'security/secrets.nix'
+
 hostname := `hostname`
 
 # Infrastructure recipes, use `just infra::<cmd>`
@@ -50,7 +52,12 @@ clean:
 
 # Apply a new generation to a remote VM
 vm-switch host='amaru' ip=`just infra::outputs | jq -r '.public_ips.value[0].address'`:
-    nh os switch --show-trace --target-host "[{{ ip }}]" --hostname "{{ host }}" .
+    nh os switch --show-trace --target-host "woile@[{{ ip }}]" --hostname "{{ host }}" .
+
+# Add agenix secret, do not include .age extension
+[group('secrets')]
+secret__add name:
+    agenix -e 'security/secrets/{{ name }}.age'
 
 # switch to a new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]

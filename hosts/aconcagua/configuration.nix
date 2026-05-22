@@ -65,6 +65,11 @@
 
   environment.systemPackages = with pkgs; [
     inputs.temporis.packages.${stdenv.hostPlatform.system}.temporis-desktop
+    inputs.agenix.packages.${stdenv.hostPlatform.system}.agenix
+    # security
+    age
+    age-plugin-tpm
+    tpm2-tools # Useful for debugging
   ];
 
   # Enable the X11 windowing system.
@@ -122,6 +127,8 @@
   # Or disable the firewall altogether.
   networking.firewall.enable = true;
 
+  # Ensure the TPM2 resource manager daemon is running
+  security.tpm2.enable = true;
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
