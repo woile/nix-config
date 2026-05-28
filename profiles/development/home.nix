@@ -20,6 +20,7 @@
       tombi
       ts_query_ls
       color-lsp
+      d2
     ];
     # package = pkgsUnstable.zed-editor;
     # extension list:
@@ -27,6 +28,7 @@
     extensions = [
       "assembly"
       "zed-python-refactoring"
+      "d2"
       "nix"
       "http"
       "jinja2"
