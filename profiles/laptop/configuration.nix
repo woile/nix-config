@@ -25,9 +25,11 @@
   programs.captive-browser.enable = true;
   programs.captive-browser.interface = "wlp2s0";
 
-  # automatic timezone
-  services.automatic-timezoned.enable = true;
+  # automatic timezone, DISABLED: DIGI IP point to Romania
+  services.automatic-timezoned.enable = false;
   services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+
+  time.timeZone = "Europe/Lisbon";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
