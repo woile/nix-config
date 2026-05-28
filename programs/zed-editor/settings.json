@@ -1,11 +1,33 @@
 {
   "edit_predictions": {
     "provider": "open_ai_compatible_api",
+    "mode": "subtle",
     "open_ai_compatible_api": {
-      "model": "sweep-next-edit",
+      "model": "Qwen3.5-2B-MTP-no-thinking",
       "api_url": "http://localhost:8093/v1/completions",
-      "prompt_format": "qwen"
-    }
+      "prompt_format": "qwen",
+      "max_output_tokens": 512
+    },
+    "disabled_globs": [
+      "**/.git/**",
+      "**/*.min.js",
+
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/.next/**",
+      "**/.nuxt/**",
+
+      "**/target/**",
+      "**/.cargo/**",
+
+      "**/__pycache__/**",
+      "**/.venv/**",
+      "**/venv/**",
+      "**/.pytest_cache/**",
+      "**/.ruff_cache/**",
+      "**/.mypy_cache/**"
+    ]
   },
   "agent": {
     "commit_message_model": {
@@ -54,17 +76,6 @@
             "max_tokens": 90112,
             "capabilities": {
               "tools": true,
-              "images": false,
-              "parallel_tool_calls": false,
-              "prompt_cache_key": false
-            }
-          },
-          {
-            "name": "sweep-next-edit",
-            "display_name": "sweep-next-edit",
-            "max_tokens": 8192,
-            "capabilities": {
-              "tools": false,
               "images": false,
               "parallel_tool_calls": false,
               "prompt_cache_key": false
