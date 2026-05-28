@@ -66,13 +66,13 @@
               jq
               opentofu
               yq-go
-              scaleway-cli
+              # scaleway-cli
               tofu-ls
             ];
 
             shellHook = ''
               echo "woile nix config"
-              just --list
+              just --list --list-submodules
             '';
           };
         };
