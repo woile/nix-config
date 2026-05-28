@@ -17,6 +17,14 @@
     kdePackages.calligra # office suite
     kdePackages.plasma-browser-integration
     kdePackages.kirigami-gallery # examples of Kirigami components
+    (pkgs.kdePackages.spectacle.override {
+      tesseractLanguages = [
+        "eng"
+        "spa"
+        "por"
+        "nld"
+      ];
+    })
     fluffychat # matrix chat client
 
     foliate # e-book reader
