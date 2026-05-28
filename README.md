@@ -27,12 +27,14 @@ I try to keep standards, conventions and simplicity. A few values are repeated h
 │       ├── home.nix           # a home-manager configuration.nix
 │       └── default.nix        # glues everything together and it's used by flake.nix
 ├── justfile                   # reusable commands
-├── modules/                   # custom NixOS modules 
+├── modules/                   # custom NixOS modules
 ├── profiles/                  # allows grouping configurations together
 │   └── laptop/                # example profile
 │       ├── configuration.nix  # indicates that it's for a NixOs host
 │       └── default.nix        # glues everything together and it's used by flake.nix
 ├── programs/
+├── security                   # gpg, age, etc
+│   └── secrets/               # agenix encrypted secrets
 ├── scripts/
 ├── templates/
 └── users
@@ -41,7 +43,7 @@ I try to keep standards, conventions and simplicity. A few values are repeated h
         └── user.nix           # nixos user configuration.nix
 ```
 
-### First run
+### First Run
 
 ```sh
 sudo nixos-rebuild switch --flake .
@@ -50,20 +52,21 @@ direnv allow
 
 ### Update
 
-> At this point direnv and just will be installed
+> At this point `direnv` and `just` will be installed
 
 ```sh
 just update
 just switch
 ```
 
-## Home manager
+## Home-manager
 
 > Hosts running other distro with home-manager
 
-### First run
+### First Run
 
 Initialize
+
 ```sh
 nix run home-manager/master -- init --switch --flake ".#woile-ubuntu"
 direnv allow
@@ -71,7 +74,7 @@ direnv allow
 
 ### Update
 
-> At this point direnv and just will be installed
+> At this point `direnv` and `just` will be installed
 
 ```sh
 just update
