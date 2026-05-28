@@ -29,19 +29,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.kernelPackages = pkgs.linuxPackagesFor (
-    pkgs.linux_latest.override {
-      argsOverride = rec {
-        version = "7.0.6";
-        modDirVersion = "7.0.6";
-        src = pkgs.fetchurl {
-          url = "mirror://kernel/linux/kernel/v7.x/linux-${version}.tar.xz";
-          sha256 = "08vm18wx6399phzgr3wz94yga3ab4fyca79445ygvbspm904996b";
-        };
-      };
-    }
-  );
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "purmamarca";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
