@@ -183,9 +183,9 @@
         np = "1";
         spec-draft-n-max = "2";
         reasoning = "off";
-
+        n-predict = 64;
         # Focus on a single request and drop everything to process only the latest request
-        parallel = "2";
+        parallel = "1";
 
         # Force the server to calculate only the absolute newest letters just typed,
         # rather than reprocessing the entire prompt from scratch
@@ -197,10 +197,6 @@
         threads-batch = 12;
         # Offload all layers to the iGPU via ROCm for near-instant prefill
         n-gpu-layers = "99";
-
-        # Retain native, raw FP16 precision for short context speeds
-        cache-type-k = "f16";
-        cache-type-v = "f16";
       };
       "Qwen3-Coder-Next" = {
         hf-repo = "unsloth/Qwen3-Coder-Next-GGUF";
@@ -236,7 +232,7 @@
         batch-size = "4096";
 
         flash-attn = "on";
-
+        n-predict = 64;
         # Ensure the engine frequently hits structural "checkpoints" where it can see that Zed canceled the request, dropping it much faster
         ubatch-size = "512";
 
