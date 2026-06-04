@@ -11,6 +11,7 @@
 
     ./disks.nix
     ../../users/woile/user.nix
+    ./bastion.nix
   ];
   boot.kernelParams = [ "console=ttyS0" ]; # for scaleway serial connection
   boot.loader.grub = {
@@ -85,66 +86,4 @@
     settings.PermitRootLogin = "prohibit-password";
   };
 
-  networking.firewall.allowedTCPPorts = [
-    80
-    443
-  ];
-  services.traefik = {
-    enable = true;
-    staticConfigOptions = {
-      entryPoints = {
-        web = {
-          address = "[::]:80";
-          asDefault = true;
-          http.redirections.entrypoint = {
-            to = "websecure";
-            scheme = "https";
-          };
-        };
-
-        websecure = {
-          address = "[::]:443";
-          asDefault = true;
-          http.tls.certResolver = "letsencrypt";
-        };
-      };
-
-      log = {
-        level = "INFO";
-        format = "json";
-      };
-
-      certificatesResolvers.letsencrypt.acme = {
-        email = "santiwilly@gmail.com";
-        storage = "${config.services.traefik.dataDir}/acme.json";
-        httpChallenge.entryPoint = "web";
-      };
-
-      ping = {
-        manualRouting = true;
-      };
-      # Access the Traefik dashboard on <Traefik IP>:8080 of your server
-      # api.dashboard = true;
-      # api.insecure = true;
-    };
-    # Dynamic Configuration
-    dynamicConfigOptions = {
-      http = {
-        routers = {
-          auth-router = {
-            rule = "Host(`auth.woile.dev`)";
-            entryPoints = [ "websecure" ];
-            # Route traffic directly to Traefik's internal ping service
-            service = "ping@internal";
-            tls = {
-              certResolver = "letsencrypt";
-            };
-          };
-        };
-
-        # Notice we deleted the 'services' block entirely!
-        # Because ping@internal is built-in, we don't need to define it.
-      };
-    };
-  };
 }
