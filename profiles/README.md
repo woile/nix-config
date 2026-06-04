@@ -8,3 +8,5 @@ My convention is:
 - if it has a `configuration.nix` file, then it's a configuration for **NixOS**
 - if it has a `home.nix` file, then it's a configuration for **Nix Home Manager**
 - if it has a `darwin.nix` file, then it's a configuration for **NixOS on macOS** only
+
+Only add `profiles` if it's shared among hosts.
