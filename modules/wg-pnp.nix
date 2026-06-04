@@ -5,6 +5,8 @@
 # - Some servers, even under the same provider, may not support NAT-PMP even if they claim to do so.
 # - Proton VPN: PT didn't work, but NL did work.
 # Original: https://github.com/ImUrX/nixfiles/blob/b94ed89a7025b68b60ed7cb4254b5512d1ec0f25/modules/wg-pnp.nix
+# Test:
+#   Add magnet from https://ipleak.net/ and compare IPs
 # Usage:
 #
 # ```nix
