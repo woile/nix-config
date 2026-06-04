@@ -35,4 +35,6 @@
       source ~/.extrarc
     fi
   '';
+
+  programs.git.signing.signByDefault = false;
 }

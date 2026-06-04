@@ -32,7 +32,11 @@
   programs.bash.enable = true;
   programs.git = {
     enable = true;
-    signing.format = null;
+    signing = {
+      format = "ssh";
+      signByDefault = true;
+      key = "~/.ssh/santiwilly+git@gmail.com.pub";
+    };
     settings = {
       user.email = "santiwilly@gmail.com";
       user.name = "Santiago Fraire Willemoes";
