@@ -20,7 +20,7 @@
     device = "/dev/vda";
   };
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  system.stateVersion = "26.01";
+  system.stateVersion = "26.11";
 
   networking.hostName = "amaru";
   networking.enableIPv6 = true;
