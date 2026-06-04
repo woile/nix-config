@@ -76,6 +76,11 @@ vm-switch host='amaru':
 secret__add name:
     agenix -e 'security/secrets/{{ name }}.age'
 
+# Re-encrypt secrets
+[group('secrets')]
+secret__rekey:
+    agenix --rekey
+
 # switch to a new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
 [group("management")]
