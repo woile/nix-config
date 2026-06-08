@@ -23,7 +23,14 @@ write_files:
       else
           echo "$OLD_ROOT not found. Nothing to do."
       fi
-
+  # - path: /root/extra.nix
+  #   permissions: "0644"
+  #   owner: root:root
+  #   content: |
+  #     { config, ... }:
+  #     {
+  #       users.users.woile.openssh.authorizedKeys.keys = config.users.users.root.openssh.authorizedKeys.keys;
+  #     }
 # Run the cache-drop command at the very end of the boot sequence
 # to ensure maximum available RAM before nixos-anywhere.
 runcmd:
@@ -31,7 +38,6 @@ runcmd:
   - echo 3 > /proc/sys/vm/drop_caches
   - echo 1 > /proc/sys/vm/compact_memory
   - sleep 60
-  - "curl -o /root/nixos-bite.sh https://codeberg.org/woile/nixos-bite/raw/branch/feat/ipv6/nixos-bite.sh"
+  - "curl -o /root/nixos-bite.sh https://codeberg.org/woile/nixos-bite/raw/branch/fix/x-swap-scaleway/nixos-bite.sh"
   - "chmod +x /root/nixos-bite.sh"
-  - NIX_SETUP=/root/init.sh NIX_INSTALLER=experimental NIX_DNS=2a00:1098:2c::1 bash /root/nixos-bite.sh reboot
-  # - "curl https://codeberg.org/woile/nixos-bite/raw/branch/fix/swap/nixos-bite.sh | NIX_DNS=2a00:1098:2c::1 bash -s reboot"
+  - NIX_SETUP=/root/init.sh NIX_DNS=2a00:1098:2c::1 bash /root/nixos-bite.sh reboot

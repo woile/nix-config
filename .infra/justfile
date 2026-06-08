@@ -1,3 +1,5 @@
+user := env('user', 'root')
+
 # Initialize tofu keys and backends
 [group('setup')]
 init:
@@ -37,8 +39,8 @@ upgrade:
 # Destroy all
 [group('infra')]
 destroy-server:
-    # tofu destroy -auto-approve
-    tofu destroy -target=scaleway_instance_server.amaru -auto-approve
+    tofu destroy -auto-approve
+    # tofu destroy -target=scaleway_instance_server.amaru -auto-approve
 
 # Show cloud init logs
 [group('ops')]
@@ -58,9 +60,9 @@ debug-nixos-bite ip=`just outputs | jq -r '.public_ips.value[0].address'`:
 
 # SSH to host
 [group('ops')]
-ssh host='amaru':
+ssh host='amaru' user=user:
     @IP=$(just outputs | jq -r '.{{ host }}_ssh.value'); \
-    ssh "woile@${IP}"
+    ssh -o StrictHostKeyChecking=accept-new "{{ user }}@${IP}"
 
 # Print tofu outputs
 [group('ops')]
@@ -79,11 +81,11 @@ vm-nixify host='amaru' ip=`just outputs | jq -r '.public_ips.value[0].address'`:
 
 # Apply the Nix configuration as root (user will change, do it once)
 [group('setup')]
-vm-apply-as-root host='amaru':
+vm-apply-as-root host='amaru' user=user:
     #!/usr/bin/env sh
     IP=$(just outputs | jq -r '.{{ host }}_ssh.value')
     @mkdir -p .logs
-    nh os switch --show-trace --target-host "root@[${IP}]" --hostname "{{ host }}" ../
+    nh os switch --show-trace --target-host "{{ user }}@[${IP}]" --hostname "{{ host }}" ../
 
 # Provision the VM
 [group('setup')]
@@ -94,7 +96,7 @@ provision host='amaru':
 
 # Get SSH public key
 [group('sec')]
-pub-shh host='amaru':
+pub-shh host='amaru' user=user:
     #!/usr/bin/env sh
     IP=$(just outputs | jq -r '.{{ host }}_ssh.value')
-    ssh "woile@${IP}" cat /etc/ssh/ssh_host_ed25519_key.pub
+    ssh "{{ user }}@${IP}" cat /etc/ssh/ssh_host_ed25519_key.pub
