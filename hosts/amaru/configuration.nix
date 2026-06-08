@@ -75,7 +75,7 @@
   # Essential swap for 2GB RAM instance
   swapDevices = [
     {
-      device = "/swapfile";
+      device = "/swap";
       size = 2048;
     }
   ];
@@ -86,4 +86,5 @@
     settings.PermitRootLogin = "prohibit-password";
   };
 
+  users.users.root.openssh.authorizedKeys.keys = config.users.users.woile.openssh.authorizedKeys.keys;
 }
