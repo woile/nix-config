@@ -8,7 +8,7 @@ mod infra '.infra/justfile'
 # switch to a new generation (recommended after setup)
 [group("management")]
 switch host=hostname:
-    nh os switch --diff always --show-trace --ask --hostname "{{ host }}" .
+    nh os switch --offline --diff always --show-trace --ask --hostname "{{ host }}" .
 
 # create new generation for next boot
 [group("management")]
@@ -66,10 +66,10 @@ clean:
 
 # Apply a new generation to a remote VM
 [group("management")]
-vm-switch host='amaru':
+vm-switch host='amaru' user=env('user', 'woile'):
     #!/usr/bin/env sh
     IP=$(just infra::outputs | jq -r '.{{ host }}_ssh.value')
-    nh os switch --show-trace --target-host "woile@[${IP}]" --hostname "{{ host }}" .
+    nh os switch --elevation-strategy passwordless --show-trace --target-host "{{ user }}@[${IP}]" --hostname "{{ host }}" .
 
 # Add agenix secret, do not include .age extension
 [group('secrets')]
@@ -79,13 +79,13 @@ secret__add name:
 # Re-encrypt secrets
 [group('secrets')]
 secret__rekey:
-    agenix --rekey
+    agenix --rekey --identity ~/.config/agenix/tpm-identity.txt
 
 # switch to a new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
 [group("management")]
 remote-switch host=hostname:
-    nh os switch --show-trace --ask --target-host "{{ host }}.local" --hostname "{{ host }}" .
+    nh os switch --show-trace --target-host "{{ host }}.local" --hostname "{{ host }}" .
 
 # create new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
