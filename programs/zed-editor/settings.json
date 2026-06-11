@@ -1,6 +1,6 @@
 {
   "edit_predictions": {
-    "provider": "open_ai_compatible_api",
+    "provider": "none",
     "mode": "subtle",
     "open_ai_compatible_api": {
       "model": "Qwen3.5-2B-MTP-no-thinking",
