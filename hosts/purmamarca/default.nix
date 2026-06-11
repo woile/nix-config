@@ -11,7 +11,6 @@
     ./configuration.nix
     inputs.agenix.nixosModules.default
     vpn-confinement.nixosModules.default
-
     home-manager.nixosModules.home-manager
     {
       home-manager.useGlobalPkgs = true;
