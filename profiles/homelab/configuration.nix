@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
 
   # mDNS for local services discovery
@@ -146,7 +146,7 @@
   };
 
   # user management
-  services.jellyseerr = {
+  services.seerr = {
     enable = true;
     openFirewall = true;
     # port: 5055;
