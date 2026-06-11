@@ -152,6 +152,50 @@
     # port: 5055;
   };
 
+  age.secrets.netbird_purmamarca_setup_key = {
+    file = ../../security/secrets/netbird_purmamarca_setup_key.age;
+    owner = "netbird-wt0";
+    group = "netbird-wt0";
+    mode = "0440";
+  };
+  services.netbird.clients.wt0 = {
+    environment = {
+      # Forces the client to communicate with the self-hosted control plane
+      NB_MANAGEMENT_URL = "https://vpn.woile.dev";
+    };
+    # environment = {
+    #   HOME = "/var/lib/netbird-wt0";
+    # };
+
+    # dir = {
+    #   state = "/var/lib/netbird-wt0";
+    # };
+
+    # Automatically login to your Netbird network with a setup key
+    # This is mostly useful for server computers.
+    # For manual setup instructions, see the wiki page section below.
+    login = {
+      enable = true;
+
+      # Path to a file containing the setup key for your peer
+      # NOTE: if your setup key is reusable, make sure it is not copied to the Nix store.
+      setupKeyFile = config.age.secrets.netbird_purmamarca_setup_key.path;
+    };
+
+    # Port used to listen to wireguard connections
+    port = 51821;
+
+    # Set this to true if you want the GUI client
+    ui.enable = false;
+
+    # This opens ports required for direct connection without a relay
+    openFirewall = true;
+
+    # This opens necessary firewall ports in the Netbird client's network interface
+    openInternalFirewall = true;
+  };
+  services.resolved.enable = true;
+
   fileSystems = {
     # Mount the external drive with 5TB
     "/media/media-store" = {

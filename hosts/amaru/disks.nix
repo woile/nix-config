@@ -4,7 +4,7 @@
     device = "/dev/vda1";
     fsType = "ext4";
   };
-  fileSystems."/boot" = {
+  fileSystems."/boot/efi" = {
     device = "/dev/vda15";
     fsType = "vfat";
   };

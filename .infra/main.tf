@@ -18,6 +18,14 @@ resource "netlify_dns_record" "auth_ipv6" {
   ttl      = 3600
 }
 
+resource "netlify_dns_record" "vpn_ipv6" {
+  zone_id  = data.netlify_dns_zone.woile_dev.id
+  hostname = "vpn"
+  type     = "AAAA"
+  value    = scaleway_instance_ip.public_ipv6_routed.address
+  ttl      = 3600
+}
+
 ##########################
 # Scaleway configuration #
 ##########################

@@ -18,9 +18,13 @@
     enable = true;
     efiSupport = true;
     efiInstallAsRemovable = true;
-    device = "/dev/vda";
+    device = "nodev";
   };
+  boot.tmp.cleanOnBoot = true;
+  boot.loader.timeout = 30;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  zramSwap.enable = true;
+
   system.stateVersion = "26.11";
 
   networking.hostName = "amaru";
