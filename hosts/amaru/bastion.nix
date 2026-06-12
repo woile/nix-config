@@ -41,12 +41,10 @@ in
   networking.firewall.allowedTCPPorts = [
     80
     443
-    3000
-    3478 # netbird
   ];
   networking.firewall.allowedUDPPorts = [
-    3478 # netbird
     51821 # netbird client
+    3478 # STUN port (UDP) for NetBird NAT discovery
   ];
 
   # Register Secrets
@@ -68,8 +66,9 @@ in
   };
   age.secrets.netbird_turn_password = {
     file = ../../security/secrets/netbird_turn_password.age;
-    owner = "turnserver";
-    group = "turnserver";
+    owner = "netbird-management";
+    group = "netbird-management";
+    mode = "0400";
   };
 
   # Authentication
@@ -105,6 +104,17 @@ in
       adminPasswordFile = config.age.secrets.kanidm_admin_password.path;
       # Identity Management Administrator: for regular use, bound to kanidm acl rules
       idmAdminPasswordFile = config.age.secrets.kanidm_idm_admin_password.path;
+      persons = {
+        woile = {
+          displayName = "Santi";
+          mailAddresses = [ "santiwilly@gmail.com" ];
+          groups = [
+            "media"
+            "vpn_users"
+          ];
+        };
+      };
+
       groups = {
         media = {
           overwriteMembers = false;
@@ -113,7 +123,6 @@ in
           overwriteMembers = false;
         };
       };
-
       systems.oauth2.netbird = {
         displayName = "Netbird VPN";
         originLanding = "https://${vpnDomain}";
@@ -121,6 +130,7 @@ in
           "https://${vpnDomain}/auth"
           "https://${vpnDomain}/silent-renew"
         ];
+        enableLocalhostRedirects = true;
         public = true; # Required for Netbird's Single Page App (Dashboard)
         scopeMaps = {
           vpn_users = [
@@ -156,6 +166,7 @@ in
       enable = true;
       domain = vpnDomain;
       dnsDomain = vpnDomain;
+      turnDomain = vpnDomain;
 
       enableNginx = false; # Handled by Traefik
 
@@ -170,6 +181,9 @@ in
           _secret = config.age.secrets.netbird_mgmt_secret.path;
         };
         TURNConfig = {
+          Secret = {
+            _secret = config.age.secrets.netbird_turn_password.path;
+          };
           Turns = [
             {
               Proto = "udp";
@@ -177,10 +191,20 @@ in
             }
           ];
           CredentialsTTL = "12h";
+        };
+        Relay = {
+          Addresses = [ "rels://${vpnDomain}:443/relay" ];
+          CredentialsTTL = "24h0m0s";
           Secret = {
             _secret = config.age.secrets.netbird_turn_password.path;
           };
         };
+        Stuns = [
+          {
+            URI = "stun:${vpnDomain}:3478";
+            Proto = "udp";
+          }
+        ];
       };
     };
 
@@ -196,13 +220,67 @@ in
         AUTH_SILENT_REDIRECT_URI = "/silent-renew";
       };
     };
-
-    coturn = {
-      enable = true;
-      domain = vpnDomain;
-      passwordFile = config.age.secrets.netbird_turn_password.path;
-    };
   };
+
+  systemd.services.netbird-management = {
+    serviceConfig = {
+      User = "netbird-management";
+      Group = "netbird-management";
+    };
+    after = [
+      "traefik.service"
+      "kanidm.service"
+    ];
+    wants = [
+      "traefik.service"
+      "kanidm.service"
+    ];
+  };
+
+  age.secrets.netbird_amaru_setup_key = {
+    file = ../../security/secrets/netbird_amaru_setup_key.age;
+    owner = "netbird-wt0";
+    group = "netbird-wt0";
+    mode = "0440";
+  };
+  services.netbird.clients.wt0 = {
+    environment = {
+      # Forces the client to communicate with the self-hosted control plane
+      NB_MANAGEMENT_URL = "https://${vpnDomain}";
+    };
+    # environment = {
+    #   HOME = "/var/lib/netbird-wt0";
+    # };
+
+    # dir = {
+    #   state = "/var/lib/netbird-wt0";
+    # };
+
+    # Automatically login to your Netbird network with a setup key
+    # This is mostly useful for server computers.
+    # For manual setup instructions, see the wiki page section below.
+    login = {
+      enable = true;
+
+      # Path to a file containing the setup key for your peer
+      # NOTE: if your setup key is reusable, make sure it is not copied to the Nix store.
+      setupKeyFile = config.age.secrets.netbird_amaru_setup_key.path;
+    };
+
+    # Port used to listen to wireguard connections
+    port = 51821;
+
+    # Set this to true if you want the GUI client
+    ui.enable = false;
+
+    # This opens ports required for direct connection without a relay
+    openFirewall = true;
+
+    # This opens necessary firewall ports in the Netbird client's network interface
+    openInternalFirewall = true;
+  };
+  services.resolved.enable = true;
+
   # Reverse proxy
   services.traefik = {
     enable = true;
@@ -305,6 +383,14 @@ in
             service = "vpn-dashboard-svc";
             tls = { };
           };
+
+          # Netbird Relay
+          vpn-relay = {
+            rule = "Host(`${vpnDomain}`) && PathPrefix(`/relay`)";
+            entryPoints = [ "websecure" ];
+            service = "vpn-relay-svc";
+            tls = { };
+          };
         };
 
         services = {
@@ -333,13 +419,18 @@ in
 
           # Signal Service (Peer brokering)
           vpn-signal-svc = {
-            # 10000 is Netbird's default Signal port.
-            loadBalancer.servers = [ { url = "h2c://[::1]:10000"; } ];
+            # 8012 is Netbird's default Signal port.
+            loadBalancer.servers = [ { url = "h2c://[::1]:8012"; } ];
           };
 
           # Dashboard Nginx Static Server
           vpn-dashboard-svc = {
             loadBalancer.servers = [ { url = "http://[::1]:8080"; } ];
+          };
+
+          # Netbird Relay Service
+          vpn-relay-svc = {
+            loadBalancer.servers = [ { url = "http://127.0.0.1:33080"; } ];
           };
         };
       };
@@ -356,9 +447,43 @@ in
     group = "netbird-management";
   };
 
-  users.groups.turnserver = { };
-  users.users.turnserver = {
-    isSystemUser = true;
-    group = "turnserver";
+  # Enable Podman virtualization for NetBird Relay
+  virtualisation.oci-containers = {
+    backend = "podman";
+  };
+  virtualisation.podman = {
+    enable = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
+  # NetBird Relay container
+  virtualisation.oci-containers.containers.netbird-relay = {
+    image = "netbirdio/relay:latest";
+    ports = [
+      "127.0.0.1:33080:33080" # Loopback for Traefik proxy
+      "3478:3478/udp" # Public STUN port
+    ];
+    environment = {
+      NB_LISTEN_ADDRESS = ":33080";
+      NB_EXPOSED_ADDRESS = "rels://${vpnDomain}:443/relay";
+      NB_LOG_LEVEL = "info";
+      NB_ENABLE_STUN = "true";
+      NB_STUN_PORTS = "3478";
+    };
+    environmentFiles = [
+      "/run/netbird-relay.env"
+    ];
+  };
+
+  # systemd service to generate the env file containing the decrypted secret
+  systemd.services.podman-netbird-relay = {
+    preStart = ''
+      password=$(cat ${config.age.secrets.netbird_turn_password.path})
+      echo "NB_AUTH_SECRET=$password" > /run/netbird-relay.env
+      chmod 600 /run/netbird-relay.env
+    '';
+    # Make sure the decrypted age secret is present
+    wants = [ "netbird-management.service" ];
+    after = [ "netbird-management.service" ];
   };
 }
