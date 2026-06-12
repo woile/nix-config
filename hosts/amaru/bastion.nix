@@ -16,6 +16,7 @@ in
 
     certs = {
       "${authDomain}" = {
+        extraDomainNames = [ vpnDomain ];
         # Run the ACME challenge server on an internal port
         listenHTTP = "[::1]:3000";
 
@@ -28,11 +29,11 @@ in
           "kanidm.service"
         ];
       };
-      "${vpnDomain}" = {
-        listenHTTP = "[::1]:3000";
-        group = "acme";
-        reloadServices = [ "traefik.service" ];
-      };
+      # "${vpnDomain}" = {
+      #   listenHTTP = "[::1]:3000";
+      #   group = "acme";
+      #   reloadServices = [ "traefik.service" ];
+      # };
     };
   };
 
@@ -219,7 +220,7 @@ in
         websecure = {
           address = "[::]:443";
           asDefault = true;
-          http.tls.certResolver = "letsencrypt";
+          # http.tls.certResolver = "letsencrypt";
         };
       };
 
@@ -248,10 +249,10 @@ in
           certFile = "/var/lib/acme/${authDomain}/fullchain.pem";
           keyFile = "/var/lib/acme/${authDomain}/key.pem";
         }
-        {
-          certFile = "/var/lib/acme/${vpnDomain}/fullchain.pem";
-          keyFile = "/var/lib/acme/${vpnDomain}/key.pem";
-        }
+        # {
+        #   certFile = "/var/lib/acme/${vpnDomain}/fullchain.pem";
+        #   keyFile = "/var/lib/acme/${vpnDomain}/key.pem";
+        # }
       ];
       http = {
         serversTransports.kanidm-transport = {
