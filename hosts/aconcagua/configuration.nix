@@ -166,6 +166,8 @@
         spec-draft-n-max = "2";
         reasoning-budget = "1024";
         reasoning-budget-message = "Proceed to final answer.";
+        cache-type-k = "q8_0";
+        cache-type-v = "q8_0";
       };
       "Qwen3.5-2B-MTP-no-thinking" = {
         hf-repo = "unsloth/Qwen3.5-2B-MTP-GGUF";
