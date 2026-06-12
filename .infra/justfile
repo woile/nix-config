@@ -60,9 +60,9 @@ debug-nixos-bite ip=`just outputs | jq -r '.public_ips.value[0].address'`:
 
 # SSH to host
 [group('ops')]
-ssh host='amaru' user=user:
+ssh host='amaru' user=user cmd=env('cmd', ''):
     @IP=$(just outputs | jq -r '.{{ host }}_ssh.value'); \
-    ssh -o StrictHostKeyChecking=accept-new "{{ user }}@${IP}"
+    ssh -o StrictHostKeyChecking=accept-new "{{ user }}@${IP}" {{ cmd }}
 
 # Print tofu outputs
 [group('ops')]
@@ -84,14 +84,14 @@ vm-nixify host='amaru' ip=`just outputs | jq -r '.public_ips.value[0].address'`:
 vm-apply-as-root host='amaru' user=user:
     #!/usr/bin/env sh
     IP=$(just outputs | jq -r '.{{ host }}_ssh.value')
-    @mkdir -p .logs
-    nh os switch --show-trace --target-host "{{ user }}@[${IP}]" --hostname "{{ host }}" ../
+    mkdir -p .logs
+    nh os switch --show-trace --elevation-strategy passwordless --target-host "{{ user }}@[${IP}]" --hostname "{{ host }}" ../
 
 # Provision the VM
 [group('setup')]
 provision host='amaru':
     just apply
-    sleep 360 # 6 min
+    sleep 720 # 6 min
     just vm-apply-as-root "{{ host }}"
 
 # Get SSH public key
