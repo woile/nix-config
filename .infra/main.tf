@@ -95,6 +95,13 @@ resource "scaleway_instance_security_group" "www" {
     ip_range = "::/0"
   }
 
+  # Kanidm LDAPS
+  inbound_rule {
+    action   = "accept"
+    port     = "3636"
+    ip_range = "::/0"
+  }
+
   # ICMP: used for ping
   inbound_rule {
     action   = "accept"
