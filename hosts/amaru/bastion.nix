@@ -41,6 +41,7 @@ in
   networking.firewall.allowedTCPPorts = [
     80
     443
+    3636 # Kanidm LDAP (LDAPS)
   ];
   networking.firewall.allowedUDPPorts = [
     51821 # netbird client
@@ -81,6 +82,7 @@ in
         domain = authDomain;
         origin = "https://${authDomain}";
         bindaddress = "[::]:8443";
+        ldapbindaddress = "[::]:3636";
 
         # db_path = "/var/lib/kanidm/kanidm.db";
         # Point directly to the NixOS ACME certificates
