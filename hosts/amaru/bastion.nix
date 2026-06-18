@@ -109,17 +109,33 @@ in
           displayName = "Santi";
           mailAddresses = [ "santiwilly@gmail.com" ];
           groups = [
-            "media"
+            "media_users"
+            "media_admin"
+            "vpn_users"
+            "ldap_users"
+          ];
+        };
+        larita = {
+          displayName = "Laris";
+          mailAddresses = [ "larasitruk@gmail.com" ];
+          groups = [
+            "media_users"
             "vpn_users"
           ];
         };
       };
 
       groups = {
-        media = {
+        media_users = {
+          overwriteMembers = false;
+        };
+        media_admin = {
           overwriteMembers = false;
         };
         vpn_users = {
+          overwriteMembers = false;
+        };
+        ldap_users = {
           overwriteMembers = false;
         };
       };
