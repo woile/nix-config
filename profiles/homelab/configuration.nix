@@ -10,6 +10,7 @@
     publish.enable = true;
     publish.addresses = true;
     publish.workstation = true;
+    allowInterfaces = [ "enp99s0f3u1u2c2" ];
   };
 
   # Torrenting client
