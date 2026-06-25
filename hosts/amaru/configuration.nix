@@ -23,7 +23,6 @@
   boot.tmp.cleanOnBoot = true;
   boot.loader.timeout = 30;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  zramSwap.enable = true;
 
   system.stateVersion = "26.11";
 
@@ -77,10 +76,11 @@
   security.sudo.wheelNeedsPassword = false;
 
   # Essential swap for 2GB RAM instance
+  zramSwap.enable = true;
   swapDevices = [
     {
       device = "/swap";
-      size = 2048;
+      size = 1536; # 1.5 GB
     }
   ];
 
@@ -91,4 +91,20 @@
   };
 
   users.users.root.openssh.authorizedKeys.keys = config.users.users.woile.openssh.authorizedKeys.keys;
+
+  ################
+  # Size Control #
+  ################
+
+  documentation.enable = false;
+  nix.settings.auto-optimise-store = true;
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 2d";
+  };
+  services.journald.extraConfig = ''
+    SystemMaxUse=50M
+    SystemMaxFileSize=10M
+  '';
 }
