@@ -26,6 +26,14 @@ resource "netlify_dns_record" "vpn_ipv6" {
   ttl      = 3600
 }
 
+resource "netlify_dns_record" "vpn_atproto_eurosky" {
+  zone_id  = data.netlify_dns_zone.woile_dev.id
+  hostname = "_atproto"
+  type     = "TXT"
+  value    = "did=did:plc:76loxjswafa7wb4r6zbiii4e"
+  ttl      = 3600
+}
+
 ##########################
 # Scaleway configuration #
 ##########################
