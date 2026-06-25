@@ -74,7 +74,10 @@
     age
     age-plugin-tpm
     tpm2-tools # Useful for debugging
+    yubikey-manager
+    yubioath-flutter
   ];
+  # services.udev.packages = [ pkgs.yubikey-personalization ];
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
