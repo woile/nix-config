@@ -125,6 +125,14 @@ in
             "vpn_users"
           ];
         };
+        susana = {
+          displayName = "Susi";
+          mailAddresses = [ "susanawx@gmail.com" ];
+          groups = [
+            "media_users"
+            "vpn_users"
+          ];
+        };
       };
 
       groups = {
