@@ -8,7 +8,7 @@ mod infra '.infra/justfile'
 # switch to a new generation (recommended after setup)
 [group("management")]
 switch host=hostname:
-    nh os switch --offline --diff always --show-trace --ask --hostname "{{ host }}" .
+    nh os switch --diff always --show-trace --ask --hostname "{{ host }}" .
 
 # create new generation for next boot
 [group("management")]
