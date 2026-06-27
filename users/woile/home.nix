@@ -124,7 +124,6 @@
     bottom
 
     unrar-free
-    bitwarden-desktop
 
     # network
     dig # dns lookup tool
