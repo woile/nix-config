@@ -203,6 +203,16 @@ in
           AuthAudience = "netbird";
           AuthIssuer = "https://${authDomain}/oauth2/openid/netbird";
         };
+        PKCEAuthorizationFlow = {
+          ProviderConfig = {
+            UseIDToken = true;
+          };
+        };
+        DeviceAuthorizationFlow = {
+          ProviderConfig = {
+            UseIDToken = true;
+          };
+        };
         DataStoreEncryptionKey = {
           _secret = config.age.secrets.netbird_mgmt_secret.path;
         };
