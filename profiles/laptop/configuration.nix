@@ -81,6 +81,7 @@
       51413 # transmission
       5900 # SPICE
       21118 # RustDesk
+      8080 # local
     ];
     allowedTCPPortRanges = [
       # KDE Connect
@@ -165,4 +166,9 @@
       allowUnfreePredicate = _: true;
     };
   };
+  nixpkgs.config.permittedInsecurePackages = [
+    "librewolf-unwrapped-151.0.2-1"
+    "librewolf-151.0.2-1"
+    "electron-39.8.10"
+  ];
 }
