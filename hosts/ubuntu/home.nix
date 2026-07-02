@@ -27,6 +27,7 @@
     k9s
     rancher
     kubeseal
+    bashInteractive
   ];
 
   # load home-manager untracked functions
