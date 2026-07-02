@@ -34,6 +34,7 @@
       "jinja2"
       "just"
       "kdl"
+      "make"
       "mermaid"
       "nickel"
       "tombi"
