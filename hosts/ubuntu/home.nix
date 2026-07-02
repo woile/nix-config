@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   nixpkgs.config.allowUnfreePredicate =
     pkg:
@@ -36,6 +36,6 @@
       source ~/.extrarc
     fi
   '';
-
-  programs.git.signing.signByDefault = false;
+  # Disable signing in this vm
+  programs.git.signing.signByDefault = lib.mkForce false;
 }
