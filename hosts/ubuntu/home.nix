@@ -32,7 +32,6 @@
     rancher
     kubeseal
     bashInteractive
-    python314
   ];
 
   # load home-manager untracked functions
