@@ -21,6 +21,10 @@
     ../../users/woile/home.nix
   ];
 
+  home.sessionVariables = {
+    PATH = "$HOME/bin:$PATH";
+  };
+
   home.packages = with pkgs; [
     kubectl
     kubernetes-helm
