@@ -89,6 +89,7 @@
     settings.PasswordAuthentication = false;
     settings.PermitRootLogin = "prohibit-password";
   };
+  services.bastion.enable = true;
 
   users.users.root.openssh.authorizedKeys.keys = config.users.users.woile.openssh.authorizedKeys.keys;
 

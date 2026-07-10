@@ -7,7 +7,7 @@ locals {
 #####################
 
 data "netlify_dns_zone" "woile_dev" {
-  name = "woile.dev"
+  name = local.domain
 }
 
 resource "netlify_dns_record" "auth_ipv6" {
@@ -23,6 +23,22 @@ resource "netlify_dns_record" "vpn_ipv6" {
   hostname = "vpn"
   type     = "AAAA"
   value    = scaleway_instance_ip.public_ipv6_routed.address
+  ttl      = 3600
+}
+
+resource "netlify_dns_record" "auth_ipv4" {
+  zone_id  = data.netlify_dns_zone.woile_dev.id
+  hostname = "auth"
+  type     = "A"
+  value    = scaleway_instance_ip.public_ip_routed.address
+  ttl      = 3600
+}
+
+resource "netlify_dns_record" "vpn_ipv4" {
+  zone_id  = data.netlify_dns_zone.woile_dev.id
+  hostname = "vpn"
+  type     = "A"
+  value    = scaleway_instance_ip.public_ip_routed.address
   ttl      = 3600
 }
 
@@ -51,6 +67,10 @@ resource "scaleway_iam_ssh_key" "ssh_keys" {
   public_key = each.value
 }
 
+resource "scaleway_instance_ip" "public_ip_routed" {
+  project_id = data.scaleway_account_project.homenet.id
+  type       = "routed_ipv4"
+}
 
 resource "scaleway_instance_ip" "public_ipv6_routed" {
   project_id = data.scaleway_account_project.homenet.id
@@ -164,7 +184,7 @@ resource "scaleway_instance_server" "amaru" {
   image = "debian_trixie"
   tags  = ["home", "vpn", "tofu"]
 
-  ip_ids            = [scaleway_instance_ip.public_ipv6_routed.id]
+  ip_ids            = [scaleway_instance_ip.public_ip_routed.id, scaleway_instance_ip.public_ipv6_routed.id]
   security_group_id = scaleway_instance_security_group.www.id
 
   root_volume {
