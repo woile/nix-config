@@ -17,6 +17,7 @@
     kdePackages.calligra # office suite
     kdePackages.plasma-browser-integration
     kdePackages.kirigami-gallery # examples of Kirigami components
+    kdePackages.plasma-bigscreen # media center
     (pkgs.kdePackages.spectacle.override {
       tesseractLanguages = [
         "eng"
@@ -34,12 +35,13 @@
     # art
     kdePackages.kontrast # color contrast
     pinta
-    # krita
+    krita
 
     # allow customization of panel colors
     plasma-panel-colorizer
 
     # jellyfin client
     fladder
+    gelly
   ];
 }
