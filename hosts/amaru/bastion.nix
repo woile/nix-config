@@ -8,6 +8,7 @@ let
   cfg = config.services.bastion;
   authDomain = "${cfg.settings.authPrefix}.${cfg.settings.rootDomain}";
   vpnDomain = "${cfg.settings.vpnPrefix}.${cfg.settings.rootDomain}";
+  oldVpnDomain = "${cfg.settings.vpnPrefix}.woile.dev";
 in
 {
   options = {
@@ -23,7 +24,7 @@ in
             };
             "rootDomain" = lib.mkOption {
               type = lib.types.str;
-              default = "woile.dev";
+              default = "woile.eu";
               description = "Base domain from which the VPN and Auth subdomains will be generated, it's not used for anything else";
             };
             "vpnPrefix" = lib.mkOption {
@@ -50,7 +51,11 @@ in
 
       certs = {
         "${authDomain}" = {
-          extraDomainNames = [ vpnDomain ];
+          extraDomainNames = [
+            vpnDomain
+            oldVpnDomain
+            # newAuthDomain
+          ];
           # Run the ACME challenge server on an internal port
           # Using :3000 is dual stack: ipv6 and ipv4
           listenHTTP = ":3000";
@@ -200,6 +205,9 @@ in
           originUrl = [
             "https://${vpnDomain}/auth"
             "https://${vpnDomain}/silent-renew"
+            "https://${oldVpnDomain}/auth"
+            "https://${oldVpnDomain}/silent-renew"
+
           ];
           enableLocalhostRedirects = true;
           public = true; # Required for Netbird's Single Page App (Dashboard)
@@ -221,6 +229,7 @@ in
       virtualHosts."${vpnDomain}" = {
         enableACME = lib.mkForce false;
         forceSSL = lib.mkForce false;
+        serverAliases = [ oldVpnDomain ];
         listen = lib.mkForce [
           {
             addr = "[::1]";
@@ -415,7 +424,7 @@ in
         ];
         http = {
           serversTransports.kanidm-transport = {
-            serverName = "auth.woile.dev";
+            serverName = authDomain;
           };
           routers = {
             # Intercept Let's Encrypt ACME challenges and route them internally
@@ -424,6 +433,7 @@ in
               entryPoints = [ "websecure" ];
               service = "acme-client";
               tls = { }; # Use the default TLS cert config above
+              priority = 99999;
             };
 
             auth-router = {
@@ -436,14 +446,14 @@ in
 
             # Netbird HTTP API
             vpn-api = {
-              rule = "Host(`${vpnDomain}`) && PathPrefix(`/api`)";
+              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`)) && PathPrefix(`/api`)";
               entryPoints = [ "websecure" ];
               service = "vpn-api-svc";
               tls = { };
             };
             # Netbird gRPC API (Management)
             vpn-grpc-mgmt = {
-              rule = "Host(`${vpnDomain}`) && PathPrefix(`/management.ManagementService/`)";
+              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`)) && PathPrefix(`/management.ManagementService/`)";
               entryPoints = [ "websecure" ];
               service = "vpn-grpc-mgmt-svc";
               tls = { };
@@ -451,7 +461,7 @@ in
 
             # Netbird Signal (gRPC) - Handles peer-to-peer connection brokering
             vpn-grpc-signal = {
-              rule = "Host(`${vpnDomain}`) && PathPrefix(`/signalexchange.SignalExchange/`)";
+              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`)) && PathPrefix(`/signalexchange.SignalExchange/`)";
               entryPoints = [ "websecure" ];
               service = "vpn-signal-svc";
               tls = { };
@@ -459,7 +469,7 @@ in
 
             # Netbird Dashboard Web UI
             vpn-dashboard = {
-              rule = "Host(`${vpnDomain}`)";
+              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`))";
               entryPoints = [ "websecure" ];
               service = "vpn-dashboard-svc";
               tls = { };
@@ -467,7 +477,7 @@ in
 
             # Netbird Relay
             vpn-relay = {
-              rule = "Host(`${vpnDomain}`) && PathPrefix(`/relay`)";
+              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`)) && PathPrefix(`/relay`)";
               entryPoints = [ "websecure" ];
               service = "vpn-relay-svc";
               tls = { };

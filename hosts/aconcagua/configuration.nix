@@ -99,7 +99,7 @@
   services.netbird.clients.wt0 = {
     environment = {
       # Forces the client to communicate with the self-hosted control plane
-      NB_MANAGEMENT_URL = "https://vpn.woile.dev";
+      NB_MANAGEMENT_URL = "https://vpn.woile.eu";
     };
     # environment = {
     #   HOME = "/var/lib/netbird-wt0";
