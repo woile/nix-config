@@ -14,7 +14,7 @@
     kdePackages.okular # PDF viewer
     kdePackages.akonadi # contacts
     kdePackages.kontrast # color accessibility
-    kdePackages.calligra # office suite
+    # kdePackages.calligra # office suite
     kdePackages.plasma-browser-integration
     kdePackages.kirigami-gallery # examples of Kirigami components
     kdePackages.plasma-bigscreen # media center

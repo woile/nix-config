@@ -9,6 +9,6 @@
     chromium
     finamp
     jellyfin-desktop
-    mistral-rs
+    # mistral-rs
   ];
 }
