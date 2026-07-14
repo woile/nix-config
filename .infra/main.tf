@@ -42,17 +42,73 @@ resource "netlify_dns_record" "vpn_ipv4" {
   ttl      = 3600
 }
 
-resource "netlify_dns_record" "vpn_atproto_eurosky" {
-  zone_id  = data.netlify_dns_zone.woile_dev.id
-  hostname = "_atproto"
+################
+# Scaleway DNS #
+################
+data "scaleway_domain_zone" "woile_eu_root" {
+  domain    = "woile.eu"
+  subdomain = ""
+}
+
+resource "scaleway_domain_record" "woile_eu_ownership" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "_git-pages-repository"
   type     = "TXT"
-  value    = "did=did:plc:76loxjswafa7wb4r6zbiii4e"
+  data     = "https://codeberg.org/woile/blog.git"
   ttl      = 3600
 }
 
-##########################
-# Scaleway configuration #
-##########################
+resource "scaleway_domain_record" "woile_eu_apex" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = ""
+  type     = "ALIAS"
+  data     = "grebedoc.dev."
+  ttl      = 3600
+}
+
+resource "scaleway_domain_record" "vpn_ipv4_eu_tld" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "vpn"
+  type     = "A"
+  data     = scaleway_instance_ip.public_ip_routed.address
+  ttl      = 3600
+}
+
+resource "scaleway_domain_record" "vpn_ipv6_eu_tld" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "vpn"
+  type     = "AAAA"
+  data     = scaleway_instance_ip.public_ipv6_routed.address
+  ttl      = 3600
+}
+
+resource "scaleway_domain_record" "auth_ipv4_eu_tld" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "auth"
+  type     = "A"
+  data     = scaleway_instance_ip.public_ip_routed.address
+  ttl      = 3600
+}
+
+resource "scaleway_domain_record" "auth_ipv6_eu_tld" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "auth"
+  type     = "AAAA"
+  data     = scaleway_instance_ip.public_ipv6_routed.address
+  ttl      = 3600
+}
+
+resource "scaleway_domain_record" "at_proto_woile_eu" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "_atproto"
+  type     = "TXT"
+  data     = "did=did:plc:76loxjswafa7wb4r6zbiii4e"
+  ttl      = 3600
+}
+
+###################
+# Scaleway Server #
+###################
 
 data "scaleway_account_project" "homenet" {
   name            = "homenet"
