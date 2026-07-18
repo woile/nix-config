@@ -10,38 +10,6 @@ data "netlify_dns_zone" "woile_dev" {
   name = local.domain
 }
 
-resource "netlify_dns_record" "auth_ipv6" {
-  zone_id  = data.netlify_dns_zone.woile_dev.id
-  hostname = "auth"
-  type     = "AAAA"
-  value    = scaleway_instance_ip.public_ipv6_routed.address
-  ttl      = 3600
-}
-
-resource "netlify_dns_record" "vpn_ipv6" {
-  zone_id  = data.netlify_dns_zone.woile_dev.id
-  hostname = "vpn"
-  type     = "AAAA"
-  value    = scaleway_instance_ip.public_ipv6_routed.address
-  ttl      = 3600
-}
-
-resource "netlify_dns_record" "auth_ipv4" {
-  zone_id  = data.netlify_dns_zone.woile_dev.id
-  hostname = "auth"
-  type     = "A"
-  value    = scaleway_instance_ip.public_ip_routed.address
-  ttl      = 3600
-}
-
-resource "netlify_dns_record" "vpn_ipv4" {
-  zone_id  = data.netlify_dns_zone.woile_dev.id
-  hostname = "vpn"
-  type     = "A"
-  value    = scaleway_instance_ip.public_ip_routed.address
-  ttl      = 3600
-}
-
 ################
 # Scaleway DNS #
 ################
@@ -52,9 +20,17 @@ data "scaleway_domain_zone" "woile_eu_root" {
 
 resource "scaleway_domain_record" "woile_eu_ownership" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
-  name     = "_git-pages-repository"
+  name     = "_git-pages-forge-allowlist"
   type     = "TXT"
   data     = "https://codeberg.org/woile/blog.git"
+  ttl      = 3600
+}
+
+resource "scaleway_domain_record" "woile_eu_google_search" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = ""
+  type     = "TXT"
+  data     = "google-site-verification=qxzwwc0uZ_zGM5wbDyUvBRXSLnpl71hJLv2YC2vFrG8"
   ttl      = 3600
 }
 
