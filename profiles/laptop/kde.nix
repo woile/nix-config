@@ -27,6 +27,7 @@
       ];
     })
     fluffychat # matrix chat client
+    inkscape # vector graphics
 
     foliate # e-book reader
     # Theme
