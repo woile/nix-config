@@ -8,7 +8,6 @@ let
   cfg = config.services.bastion;
   authDomain = "${cfg.settings.authPrefix}.${cfg.settings.rootDomain}";
   vpnDomain = "${cfg.settings.vpnPrefix}.${cfg.settings.rootDomain}";
-  oldVpnDomain = "${cfg.settings.vpnPrefix}.woile.dev";
 in
 {
   options = {
@@ -53,7 +52,6 @@ in
         "${authDomain}" = {
           extraDomainNames = [
             vpnDomain
-            oldVpnDomain
             # newAuthDomain
           ];
           # Run the ACME challenge server on an internal port
@@ -205,9 +203,6 @@ in
           originUrl = [
             "https://${vpnDomain}/auth"
             "https://${vpnDomain}/silent-renew"
-            "https://${oldVpnDomain}/auth"
-            "https://${oldVpnDomain}/silent-renew"
-
           ];
           enableLocalhostRedirects = true;
           public = true; # Required for Netbird's Single Page App (Dashboard)
@@ -229,7 +224,7 @@ in
       virtualHosts."${vpnDomain}" = {
         enableACME = lib.mkForce false;
         forceSSL = lib.mkForce false;
-        serverAliases = [ oldVpnDomain ];
+        # serverAliases = [  ];
         listen = lib.mkForce [
           {
             addr = "[::1]";
@@ -446,14 +441,14 @@ in
 
             # Netbird HTTP API
             vpn-api = {
-              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`)) && PathPrefix(`/api`)";
+              rule = "Host(`${vpnDomain}`) && PathPrefix(`/api`)";
               entryPoints = [ "websecure" ];
               service = "vpn-api-svc";
               tls = { };
             };
             # Netbird gRPC API (Management)
             vpn-grpc-mgmt = {
-              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`)) && PathPrefix(`/management.ManagementService/`)";
+              rule = "Host(`${vpnDomain}`) && PathPrefix(`/management.ManagementService/`)";
               entryPoints = [ "websecure" ];
               service = "vpn-grpc-mgmt-svc";
               tls = { };
@@ -461,7 +456,7 @@ in
 
             # Netbird Signal (gRPC) - Handles peer-to-peer connection brokering
             vpn-grpc-signal = {
-              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`)) && PathPrefix(`/signalexchange.SignalExchange/`)";
+              rule = "Host(`${vpnDomain}`) && PathPrefix(`/signalexchange.SignalExchange/`)";
               entryPoints = [ "websecure" ];
               service = "vpn-signal-svc";
               tls = { };
@@ -469,7 +464,7 @@ in
 
             # Netbird Dashboard Web UI
             vpn-dashboard = {
-              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`))";
+              rule = "Host(`${vpnDomain}`)";
               entryPoints = [ "websecure" ];
               service = "vpn-dashboard-svc";
               tls = { };
@@ -477,7 +472,7 @@ in
 
             # Netbird Relay
             vpn-relay = {
-              rule = "(Host(`${vpnDomain}`) || Host(`${oldVpnDomain}`)) && PathPrefix(`/relay`)";
+              rule = "Host(`${vpnDomain}`) && PathPrefix(`/relay`)";
               entryPoints = [ "websecure" ];
               service = "vpn-relay-svc";
               tls = { };

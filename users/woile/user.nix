@@ -21,6 +21,7 @@ in
       "libvirtd"
       "podman"
       "tss" # Trusted Computing Group Software Stack
+      "netbird-wt0"
     ];
     packages = with pkgs; [
       vim
