@@ -10,7 +10,12 @@
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.backupFileExtension = "backup";
-      home-manager.users.woile = import ./home.nix;
+      home-manager.users.woile = {
+        imports = [
+          ../../users/woile/home.nix
+          ../../profiles/development
+        ];
+      };
     }
   ];
   specialArgs = { inherit inputs; };

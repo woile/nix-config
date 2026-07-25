@@ -4,6 +4,7 @@
   ...
 }:
 {
+
   home.username = "woile";
   home.homeDirectory = "/home/woile";
 

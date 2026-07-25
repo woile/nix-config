@@ -23,6 +23,9 @@
     "sdhci_pci"
   ];
 
+  # Use latest kernel.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
   boot.kernelParams = [
@@ -127,6 +130,12 @@
   };
   hardware.amdgpu.opencl.enable = true;
   hardware.amdgpu.initrd.enable = true;
+
+  # Enable bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  hardware.bluetooth.settings.General.Experimental = true;
+
   # AI Environment Variables for Strix Point ROCm compatibility
   environment.variables = {
     HSA_OVERRIDE_GFX_VERSION = "11.5.0"; # Spoofs GPU for ROCm support
