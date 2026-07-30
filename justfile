@@ -10,6 +10,11 @@ mod infra '.infra/justfile'
 switch host=hostname:
     nh os switch --diff always --show-trace --ask --hostname "{{ host }}" .
 
+[group("management")]
+switch-tacuarita:
+    nh os switch --elevation-strategy passwordless \
+        --show-trace --target-host "tacuarita.vpn.woile.eu" --hostname "tacuarita" .
+
 # create new generation for next boot
 [group("management")]
 boot host=hostname:

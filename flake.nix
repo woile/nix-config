@@ -109,6 +109,12 @@
             inputs = inputs;
           }
         );
+        nixosConfigurations.tacuarita = nixpkgs.lib.nixosSystem (
+          import ./hosts/tacuarita {
+            home-manager = home-manager;
+            inputs = inputs;
+          }
+        );
         # id: new-cfg-targets
         homeConfigurations = {
           woile-ubuntu = import ./hosts/ubuntu {

@@ -3,6 +3,7 @@ let
   host_aconcagua = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIErEWpDXS7xmgLJEw7DT2wltPa2eqh6HSPyZBysCUB7s root@aconcagua";
   host_amaru = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPdeDK0E6TTE2tx0zORbC3It5NgSkuU+BPAcxH3f3OLa root@amaru";
   host_purmamarca = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIChsdJBrKwBt4y0XHYL45CttFurmVCwZpVvUnqxP1/wq root@nixos";
+  host_tacuarita = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGA/dQMWaaJo8MrXqd51Gy42vTHTpT0yzI7Ok8Ay8ekB root@nixos";
 in
 {
   "security/secrets/kanidm_admin_password.age".publicKeys = [
@@ -34,5 +35,9 @@ in
   "security/secrets/netbird_aconcagua_setup_key.age".publicKeys = [
     host_aconcagua_TPM
     host_aconcagua
+  ];
+  "security/secrets/netbird_tacuarita_setup_key.age".publicKeys = [
+    host_aconcagua_TPM
+    host_tacuarita
   ];
 }
