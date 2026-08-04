@@ -147,12 +147,13 @@
 
   # Ensure the TPM2 resource manager daemon is running
   security.tpm2.enable = true;
-  security.sudo.wheelNeedsPassword = false;
+  # security.sudo.wheelNeedsPassword = false;
 
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  # security.pam.sshAgentAuth.enable = true;
 
   # mDNS (service discovery on a local network)
   services.avahi = {
