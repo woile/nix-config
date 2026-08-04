@@ -1,5 +1,5 @@
 # Use this with NixOS
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   sshPubFiles = lib.filterAttrs (k: v: v == "regular" && lib.hasSuffix ".pub" k) (
@@ -30,4 +30,5 @@ in
     ];
     openssh.authorizedKeys.keys = authorizedKeys;
   };
+  users.users.root.openssh.authorizedKeys.keys = config.users.users.woile.openssh.authorizedKeys.keys;
 }

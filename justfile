@@ -97,3 +97,8 @@ remote-switch host=hostname:
 [group("management")]
 remote-boot host=hostname:
     nh os boot --diff always --show-trace --target-host "{{ host }}.local" --hostname "{{ host }}" .
+
+# deploy to all hosts
+[group("management")]
+deploy :
+    deploy

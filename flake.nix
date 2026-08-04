@@ -35,7 +35,11 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
 
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -45,6 +49,8 @@
       nixpkgs,
       home-manager,
       vpn-confinement,
+      self,
+      deploy-rs,
       ...
     }:
     # https://flake.parts/
@@ -56,7 +62,10 @@
       ];
 
       perSystem =
-        { pkgs, ... }:
+        { pkgs, inputs', ... }:
+        let
+          deploy-rs = inputs'.deploy-rs.packages.deploy-rs;
+        in
         {
           devShells.default = pkgs.mkShell {
             name = "dev";
@@ -68,6 +77,8 @@
               yq-go
               # scaleway-cli
               tofu-ls
+
+              deploy-rs
             ];
 
             shellHook = ''
@@ -123,6 +134,44 @@
             inputs = inputs;
           };
         };
+
+        deploy.nodes = {
+          purmamarca = {
+            hostname = "purmamarca.vpn.woile.eu";
+            sshUser = "root";
+            profiles.system = {
+              user = "root";
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.purmamarca;
+            };
+          };
+          aconcagua = {
+            hostname = "aconcagua";
+            sshUser = "root";
+            profiles.system = {
+              user = "root";
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.aconcagua;
+            };
+          };
+          amaru = {
+            hostname = "amaru.vpn.woile.eu";
+            sshUser = "root";
+            profiles.system = {
+              user = "root";
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.amaru;
+            };
+          };
+          tacuarita = {
+            hostname = "tacuarita.vpn.woile.eu";
+            sshUser = "root";
+            profiles.system = {
+              user = "root";
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.tacuarita;
+            };
+          };
+        };
+
+        checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
         specialArgs = { inherit inputs; };
       };
     };
