@@ -112,7 +112,7 @@ in
 
     # Authentication
     services.kanidm = {
-      package = pkgs.kanidm_1_10.withSecretProvisioning;
+      package = pkgs.kanidm_1_11.withSecretProvisioning;
 
       server = {
         enable = true;
