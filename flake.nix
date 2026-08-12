@@ -155,6 +155,7 @@
           amaru = {
             hostname = "amaru.vpn.woile.eu";
             sshUser = "root";
+            confirmTimeout = 120;
             profiles.system = {
               user = "root";
               path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.amaru;
