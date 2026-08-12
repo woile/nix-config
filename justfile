@@ -12,8 +12,8 @@ switch host=hostname:
 
 [group("management")]
 switch-tacuarita:
-    nh os switch --elevation-strategy passwordless \
-        --show-trace --target-host "tacuarita.vpn.woile.eu" --hostname "tacuarita" .
+    nh os switch \
+        --show-trace --target-host "root@tacuarita.vpn.woile.eu" --hostname "tacuarita" .
 
 # create new generation for next boot
 [group("management")]
