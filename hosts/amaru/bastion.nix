@@ -136,6 +136,11 @@ in
               "::1"
             ];
           };
+
+          online_backup = {
+            versions = 2;
+            schedule = "00 04 * * *";
+          };
           #   # OR
           # [http_client_address_info]
           # x-forward-for = ["127.0.0.1", "127.0.0.0/8"]
