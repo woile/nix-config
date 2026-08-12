@@ -86,6 +86,11 @@ secret__add name:
 secret__rekey:
     agenix --rekey --identity ~/.config/agenix/tpm-identity.txt
 
+# deploy to all hosts
+[group("management")]
+deploy groups='remote':
+    deploy --groups {{ groups }}
+
 # switch to a new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
 [group("management")]
@@ -97,8 +102,3 @@ remote-switch host=hostname:
 [group("management")]
 remote-boot host=hostname:
     nh os boot --diff always --show-trace --target-host "{{ host }}.local" --hostname "{{ host }}" .
-
-# deploy to all hosts
-[group("management")]
-deploy :
-    deploy
