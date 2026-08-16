@@ -139,7 +139,10 @@
           purmamarca = {
             hostname = "purmamarca.vpn.woile.eu";
             sshUser = "root";
-            groups = [ "remote" ];
+            groups = [
+              "remote"
+              "eu"
+            ];
             profiles.system = {
               user = "root";
               path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.purmamarca;
@@ -148,7 +151,10 @@
           aconcagua = {
             hostname = "aconcagua";
             sshUser = "root";
-            groups = [ "local" ];
+            groups = [
+              "local"
+              "eu"
+            ];
             profiles.system = {
               user = "root";
               path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.aconcagua;
@@ -158,7 +164,11 @@
             hostname = "amaru.vpn.woile.eu";
             sshUser = "root";
             confirmTimeout = 120;
-            groups = [ "remote" "cloud" ];
+            groups = [
+              "remote"
+              "cloud"
+              "eu"
+            ];
             magicRollback = false;
             profiles.system = {
               user = "root";
