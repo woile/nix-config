@@ -42,4 +42,10 @@
   '';
   # Disable signing in this vm
   programs.git.signing.signByDefault = lib.mkForce false;
+  programs.git.settings = {
+    pull = {
+      rebase = "true";
+      ff = "only";
+    };
+  };
 }
