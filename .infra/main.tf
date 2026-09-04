@@ -26,6 +26,14 @@ resource "scaleway_domain_record" "woile_eu_ownership" {
   ttl      = 3600
 }
 
+resource "scaleway_domain_record" "mb_woile_eu_ownership" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "_git-pages-forge-allowlist.mb"
+  type     = "TXT"
+  data     = "https://codeberg.org/woile/minibrain-md.git"
+  ttl      = 3600
+}
+
 resource "scaleway_domain_record" "woile_eu_google_search" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
   name     = ""
@@ -37,6 +45,14 @@ resource "scaleway_domain_record" "woile_eu_google_search" {
 resource "scaleway_domain_record" "woile_eu_apex" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
   name     = ""
+  type     = "ALIAS"
+  data     = "grebedoc.dev."
+  ttl      = 3600
+}
+
+resource "scaleway_domain_record" "mb_woile_eu" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "mb"
   type     = "ALIAS"
   data     = "grebedoc.dev."
   ttl      = 3600
@@ -69,6 +85,22 @@ resource "scaleway_domain_record" "auth_ipv4_eu_tld" {
 resource "scaleway_domain_record" "auth_ipv6_eu_tld" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
   name     = "auth"
+  type     = "AAAA"
+  data     = scaleway_instance_ip.public_ipv6_routed.address
+  ttl      = 3600
+}
+
+resource "scaleway_domain_record" "relay_ipv4_eu_tld" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "relay-eu"
+  type     = "A"
+  data     = scaleway_instance_ip.public_ip_routed.address
+  ttl      = 3600
+}
+
+resource "scaleway_domain_record" "relay_ipv6_eu_tld" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "relay-eu"
   type     = "AAAA"
   data     = scaleway_instance_ip.public_ipv6_routed.address
   ttl      = 3600
