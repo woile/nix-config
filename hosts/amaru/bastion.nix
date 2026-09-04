@@ -8,8 +8,12 @@ let
   cfg = config.services.bastion;
   authDomain = "${cfg.settings.authPrefix}.${cfg.settings.rootDomain}";
   vpnDomain = "${cfg.settings.vpnPrefix}.${cfg.settings.rootDomain}";
+  relayDomain = "${cfg.settings.relaySubdomain}.${cfg.settings.rootDomain}";
 in
 {
+  imports = [
+    ../../modules/netbird-relay.nix
+  ];
   options = {
     services.bastion = {
       enable = lib.mkEnableOption "Bastion server with VPN and Gateway";
@@ -36,6 +40,11 @@ in
               default = "auth";
               description = "Prefix attached to rootDomain when creating the Auth sub domain";
             };
+            "relaySubdomain" = lib.mkOption {
+              type = lib.types.str;
+              default = "relay-eu";
+              description = "Relay subdomain under the rootDomain";
+            };
           };
         };
       };
@@ -52,6 +61,7 @@ in
         "${authDomain}" = {
           extraDomainNames = [
             vpnDomain
+            relayDomain
             # newAuthDomain
           ];
           # Run the ACME challenge server on an internal port
@@ -83,7 +93,6 @@ in
     ];
     networking.firewall.allowedUDPPorts = [
       51821 # netbird client
-      3478 # STUN port (UDP) for NetBird NAT discovery
     ];
 
     # Register Secrets
@@ -274,16 +283,10 @@ in
             Secret = {
               _secret = config.age.secrets.netbird_turn_password.path;
             };
-            Turns = [
-              {
-                Proto = "udp";
-                URI = "turn:${vpnDomain}:3478";
-              }
-            ];
-            CredentialsTTL = "12h";
+            Turns = [ ];
           };
           Relay = {
-            Addresses = [ "rels://${vpnDomain}:443/relay" ];
+            Addresses = [ "rels://${relayDomain}:443" ];
             CredentialsTTL = "24h0m0s";
             Secret = {
               _secret = config.age.secrets.netbird_turn_password.path;
@@ -291,7 +294,7 @@ in
           };
           Stuns = [
             {
-              URI = "stun:${vpnDomain}:3478";
+              URI = "stun:${vpnDomain}:3479";
               Proto = "udp";
             }
           ];
@@ -310,6 +313,19 @@ in
           AUTH_SILENT_REDIRECT_URI = "/silent-renew";
         };
       };
+
+    };
+    services.netbird.relay = {
+      enable = true;
+      settings = {
+        listen-address = ":33081";
+        exposed-address = "rels://${relayDomain}:443";
+        log-level = "info";
+        enable-stun = true;
+        stun-ports = [ 3479 ];
+      };
+      openFirewall = true;
+      authSecretFile = config.age.secrets.netbird_turn_password.path;
     };
 
     systemd.services.netbird-management = {
@@ -474,6 +490,13 @@ in
               service = "vpn-dashboard-svc";
               tls = { };
             };
+            # Nixos Native Netbird Relay
+            vpn-native-relay = {
+              rule = "Host(`${relayDomain}`)";
+              entryPoints = [ "websecure" ];
+              service = "vpn-native-relay-svc";
+              tls = { };
+            };
 
             # Netbird Relay
             vpn-relay = {
@@ -523,6 +546,11 @@ in
             vpn-relay-svc = {
               loadBalancer.servers = [ { url = "http://127.0.0.1:33080"; } ];
             };
+
+            # Nixos Native Netbird Relay Service
+            vpn-native-relay-svc = {
+              loadBalancer.servers = [ { url = "http://[::1]:33081"; } ];
+            };
           };
         };
       };
@@ -536,46 +564,6 @@ in
     users.users.netbird-management = {
       isSystemUser = true;
       group = "netbird-management";
-    };
-
-    # Enable Podman virtualization for NetBird Relay
-    virtualisation.oci-containers = {
-      backend = "podman";
-    };
-    virtualisation.podman = {
-      enable = true;
-      defaultNetwork.settings.dns_enabled = true;
-    };
-
-    # NetBird Relay container
-    virtualisation.oci-containers.containers.netbird-relay = {
-      image = "netbirdio/relay:latest";
-      ports = [
-        "127.0.0.1:33080:33080" # Loopback for Traefik proxy
-        "3478:3478/udp" # Public STUN port
-      ];
-      environment = {
-        NB_LISTEN_ADDRESS = ":33080";
-        NB_EXPOSED_ADDRESS = "rels://${vpnDomain}:443/relay";
-        NB_LOG_LEVEL = "info";
-        NB_ENABLE_STUN = "true";
-        NB_STUN_PORTS = "3478";
-      };
-      environmentFiles = [
-        "/run/netbird-relay.env"
-      ];
-    };
-
-    # systemd service to generate the env file containing the decrypted secret
-    systemd.services.podman-netbird-relay = {
-      preStart = ''
-        password=$(cat ${config.age.secrets.netbird_turn_password.path})
-        echo "NB_AUTH_SECRET=$password" > /run/netbird-relay.env
-        chmod 600 /run/netbird-relay.env
-      '';
-      # Make sure the decrypted age secret is present
-      wants = [ "netbird-management.service" ];
-      after = [ "netbird-management.service" ];
     };
   };
 }
