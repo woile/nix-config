@@ -2,11 +2,16 @@
 
 > This repository contains my personal Nix configuration files.
 
+## Shortcuts
+
+- [update status](https://status.nixos.org/)
+
 ## Structure
 
 - `flake.nix`: The main Nix flake file.
 - `hardware`: Hardware configuration files.
 - [hosts](./hosts): Host-specific configuration files.
+- [modules](./modules): custom NixOS modules.
 - [profiles](./profiles): Profile-specific configuration files (e.g: laptop, developer).
 - `programs`: Program-specific configuration files, doesn't involve nix (e.g: zeditor).
 - `users`: User-specific configuration files.
@@ -14,7 +19,7 @@
 - [scripts](./scripts): Scripts for managing the configuration.
 
 This repository doesn't do any kind of magic, it's mainly for structure and organization.
-I try to keep standards, conventions and simplicity. A few values are repeated here and there.
+I try to keep standards, conventions, and simplicity. A few values are repeated here and there.
 
 ```sh
 .
