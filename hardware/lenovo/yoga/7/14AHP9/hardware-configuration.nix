@@ -25,7 +25,15 @@
   # boot.kernelPackages = pkgs.linuxPackages_latest; # Use LTS which is the default
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [ "amd_pstate=active" ];
+  boot.kernelParams = [
+    "amd_pstate=active"
+    # Enable BAR reallocation and reserve bus numbers / MMIO space for hotplug bridges
+    "pci=realloc,assign-busses,hpbussize=0x20,hpmemsize=256M,hpmemprefsize=2G"
+
+    # Prevent the SMU from stalling over Thunderbolt
+    "amdgpu.aspm=0"
+  ];
+
   boot.kernel.sysctl."kernel.sysrq" = 502;
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/4c3a7767-2d19-421b-be66-e2fda9ce9b3d";
@@ -80,11 +88,15 @@
 
   # Nvidia secondary graphics
   hardware.graphics.enable = true;
+  hardware.graphics.enable32Bit = true;
   hardware.graphics.extraPackages = with pkgs; [
     rocmPackages.clr.icd # OpenCL Runtime
   ];
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [
+    "amdgpu"
+    "nvidia"
+  ];
   hardware.nvidia = {
 
     # fix for kernel 6.13 5/02/2024
@@ -117,8 +129,9 @@
       # sync: rendering is completely delegated to the dGPU, while the iGPU only displays the rendered framebuffers
       sync.enable = false;
 
+      # ls /dev/dri/by-path/
       nvidiaBusId = "PCI:1:0:0";
-      amdgpuBusId = "PCI:63:0:0";
+      amdgpuBusId = "PCI:135:0:0";
     };
 
     powerManagement = {
