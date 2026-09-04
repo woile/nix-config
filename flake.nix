@@ -101,6 +101,10 @@
             path = ./templates/rust-pkgs-shell;
             description = "A nix shell and packages for rust development";
           };
+          python-shell = {
+            path = ./templates/python-shell;
+            description = "A python shell.nix for development with poetry and uv";
+          };
         };
         nixosConfigurations.purmamarca = nixpkgs.lib.nixosSystem (
           import ./hosts/purmamarca {
