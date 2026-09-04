@@ -108,10 +108,13 @@
   virtualisation.spiceUSBRedirection.enable = true;
   services.spice-vdagentd.enable = true; # enable copy and paste between host and guest
 
+  services.hardware.bolt.enable = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     inputs.temporis.packages.${stdenv.hostPlatform.system}.temporis-desktop
+    pciutils
   ];
 
   networking.firewall.enable = false;
