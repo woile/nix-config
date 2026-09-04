@@ -36,7 +36,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.printing.cups-pdf.enable = false;
+  services.printing.cups-pdf.enable = true;
   services.printing.cups-pdf.instances = {
     pdf = {
       settings = {
