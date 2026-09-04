@@ -196,6 +196,8 @@
     openInternalFirewall = true;
   };
   services.resolved.enable = true;
+  services.flaresolverr.enable = true;
+  services.flaresolverr.openFirewall = true;
 
   fileSystems = {
     # Mount the external drive with 5TB
@@ -205,6 +207,7 @@
       options = [
         "defaults"
         "nofail" # Prevent system from failing if this drive doesn't mount
+        "noatime" # Avoid write-back on every read; less USB traffic
         "gid=media" # for non-root access
         "dmask=007" # Set directory permissions to 770 (rwxrwx---) excluding execute for others
         "fmask=117" # not having everything be executable
