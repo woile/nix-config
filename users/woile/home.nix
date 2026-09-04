@@ -74,6 +74,16 @@
     pkgs.firefoxpwa
     pkgs.kdePackages.plasma-browser-integration
   ];
+  programs.firefox.profiles.default = {
+    id = 0;
+    name = "default";
+    isDefault = true;
+    settings = {
+      # Enable WebGPU core API
+      "dom.webgpu.enabled" = true;
+      "gfx.webrender.all" = true;
+    };
+  };
 
   programs.wezterm = {
     enable = true;
