@@ -20,6 +20,9 @@
   # gamemoderun %command%
   programs.gamemode.enable = true;
 
+  # Specialized "sandbox window" developed by Vale
+  programs.gamescope.enable = true;
+
   environment.systemPackages = with pkgs; [
     # For steam games
     protonup-qt
