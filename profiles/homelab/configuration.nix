@@ -216,5 +216,6 @@
   };
 
   users.users.woile.extraGroups = [ "media" ];
+  users.users.momo.extraGroups = [ "media" ];
   users.groups.media = { };
 }
