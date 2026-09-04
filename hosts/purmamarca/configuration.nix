@@ -14,7 +14,7 @@
     ../../hardware/lenovo/yoga/7/14AHP9/hardware-configuration.nix
 
     ../../users/woile/user.nix
-
+    ../../users/momo/user.nix
     ../../profiles/laptop
 
     ../../profiles/homelab
@@ -58,6 +58,15 @@
     LC_TELEPHONE = "nl_NL.UTF-8";
     LC_TIME = "nl_NL.UTF-8";
   };
+
+  # Auto-login user
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "momo";
+  };
+  # Set the default session to Plasma Bigscreen
+  services.displayManager.sessionPackages = [ pkgs.kdePackages.plasma-bigscreen ];
+  services.displayManager.defaultSession = "plasma-bigscreen-wayland";
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
