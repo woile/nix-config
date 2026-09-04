@@ -12,11 +12,9 @@
   imports = [
     # Include the results of the hardware scan.
     ../../hardware/lenovo/yoga/7/14AHP9/hardware-configuration.nix
-
     ../../users/woile/user.nix
     ../../users/momo/user.nix
     ../../profiles/laptop
-
     ../../profiles/homelab
   ];
 
@@ -30,6 +28,22 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernel.sysctl = {
+    # Fair Queueing packet scheduler (required for BBR pacing)
+    "net.core.default_qdisc" = "fq";
+
+    # Enable BBR congestion control
+    "net.ipv4.tcp_congestion_control" = "bbr";
+
+    # Maximize socket buffer sizes for high BDP (Bandwidth-Delay Product)
+    "net.core.rmem_max" = 16777216; # 16 MB
+    "net.core.wmem_max" = 16777216; # 16 MB
+
+    # [min, default, max] TCP memory auto-tuning (up to 16 MB)
+    "net.ipv4.tcp_rmem" = "4096 87380 16777216";
+    "net.ipv4.tcp_wmem" = "4096 65536 16777216";
+  };
+  boot.tmp.cleanOnBoot = true;
 
   networking.hostName = "purmamarca";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -84,8 +98,6 @@
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   hardware.bluetooth.settings.General.Experimental = true;
-
-  # Enable sound with pipewire.
 
   # automatically switch to newly-connected devices, is this lenovo specific?
   services.pulseaudio.extraConfig = "load-module module-switch-on-connect";

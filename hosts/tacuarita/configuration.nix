@@ -16,6 +16,21 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernel.sysctl = {
+    # Fair Queueing packet scheduler (required for BBR pacing)
+    "net.core.default_qdisc" = "fq";
+
+    # Enable BBR congestion control
+    "net.ipv4.tcp_congestion_control" = "bbr";
+
+    # Maximize socket buffer sizes for high BDP (Bandwidth-Delay Product)
+    "net.core.rmem_max" = 16777216; # 16 MB
+    "net.core.wmem_max" = 16777216; # 16 MB
+
+    # [min, default, max] TCP memory auto-tuning (up to 16 MB)
+    "net.ipv4.tcp_rmem" = "4096 87380 16777216";
+    "net.ipv4.tcp_wmem" = "4096 65536 16777216";
+  };
 
   networking.hostName = "tacuarita"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -96,9 +111,6 @@
     openInternalFirewall = true;
   };
   services.resolved.enable = true;
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
