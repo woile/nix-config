@@ -131,7 +131,6 @@
     netscanner # network diagnostics
 
     # TUI
-    systemctl-tui
     gitui # tig alternative
     bluetui
 

@@ -8,6 +8,9 @@
     wl-clipboard-rs
     # used to sign PDF by okular
     nss_latest
+
+    # TUI
+    systemctl-tui
   ];
 
   programs.appimage = {
