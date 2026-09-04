@@ -91,14 +91,18 @@ secret__rekey:
 deploy groups='remote':
     deploy --groups {{ groups }}
 
+[group('ops')]
+ssh host='purmamarca' cmd=env('cmd', ''):
+    ssh -o StrictHostKeyChecking=accept-new "root@{{ host }}.vpn.woile.eu" {{ cmd }}
+
 # switch to a new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
 [group("management")]
 remote-switch host=hostname:
-    nh os switch --show-trace --target-host "{{ host }}.local" --hostname "{{ host }}" .
+    nh os switch --show-trace --target-host "root@{{ host }}.local" --hostname "{{ host }}" .
 
 # create new generation on a remote host
 [arg('host', pattern='purmamarca|aconcagua')]
 [group("management")]
 remote-boot host=hostname:
-    nh os boot --diff always --show-trace --target-host "{{ host }}.local" --hostname "{{ host }}" .
+    nh os boot --diff always --show-trace --target-host "root@{{ host }}.local" --hostname "{{ host }}" .
