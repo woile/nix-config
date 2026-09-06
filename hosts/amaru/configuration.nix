@@ -104,8 +104,8 @@
     dates = "daily";
     options = "--delete-older-than 2d";
   };
-  services.journald.settings.Journal = ''
-    SystemMaxUse=50M
-    SystemMaxFileSize=10M
-  '';
+  services.journald.settings.Journal = {
+    SystemMaxUse="50M";
+    SystemMaxFileSize="10M";
+  };
 }

@@ -201,10 +201,10 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "26.05"; # Did you read the comment?
-  services.journald.extraConfig = ''
-    SystemMaxUse=200M
-    SystemMaxFileSize=50M
-  '';
+  services.journald.settings.Journal = {
+    SystemMaxUse="200M";
+    SystemMaxFileSize="50M";
+  };
   nix = {
     # Store optimization
     optimise = {
