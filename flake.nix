@@ -4,7 +4,7 @@
   inputs = {
     # system packages for nixos
     nixpkgs = {
-      url = "github:NixOS/nixpkgs/nixos-unstable";
+      url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
     };
 
     # user packages and dotfiles

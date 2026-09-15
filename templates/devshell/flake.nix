@@ -1,7 +1,7 @@
 {
   description = "A development shell";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.zst";
   };
   outputs =
     inputs@{
