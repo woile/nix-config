@@ -183,6 +183,14 @@
             hostname = "tacuarita.vpn.woile.eu";
             sshUser = "root";
             groups = [ "remote" ];
+            sshOpts = [
+              "-o"
+              "Compression=yes"
+              "-o"
+              "Ciphers=chacha20-poly1305@openssh.com,aes128-gcm@openssh.com"
+              "-o"
+              "IPQoS=throughput"
+            ];
             profiles.system = {
               user = "root";
               path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.tacuarita;
