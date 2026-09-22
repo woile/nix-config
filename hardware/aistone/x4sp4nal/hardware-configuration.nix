@@ -91,16 +91,17 @@
     # XHCI controllers staying active is one of the most common S0ix blockers.
     # "usbcore.autosuspend=1"
   ];
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/610f9caa-d492-41d8-80a5-1ba3bf7b7ba6";
-    fsType = "btrfs";
-    options = [ "subvol=@" ];
-  };
 
   boot.initrd.luks.devices."luks-6505edc5-61f3-4598-a3ef-2c20f4fcc236".device =
     "/dev/disk/by-uuid/6505edc5-61f3-4598-a3ef-2c20f4fcc236";
   boot.initrd.luks.devices."luks-6606e271-2d02-4664-a7b5-4d0783dc2cc1".device =
     "/dev/disk/by-uuid/6606e271-2d02-4664-a7b5-4d0783dc2cc1";
+
+  fileSystems."/" = {
+    device = "/dev/mapper/luks-6505edc5-61f3-4598-a3ef-2c20f4fcc236";
+    fsType = "btrfs";
+    options = [ "subvol=@" ];
+  };
   fileSystems."/boot" = {
     device = "/dev/disk/by-uuid/973E-E46E";
     fsType = "vfat";
