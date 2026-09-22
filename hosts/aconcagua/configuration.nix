@@ -74,6 +74,8 @@
     chromium
     finamp
     jellyfin-desktop
+
+    nix-forecast
   ];
   # services.udev.packages = [ pkgs.yubikey-personalization ];
 

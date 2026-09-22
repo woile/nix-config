@@ -37,8 +37,12 @@ rebuild__boot host=hostname:
 
 # update the lock
 [group("maintenance")]
-update input='':
+update input='': && cache__status
     nix flake update {{ input }}
+
+# Check cache availablility of NixOS configurations
+cache__status host=hostname:
+    nix-forecast -c ".#nixosConfigurations.{{ host }}"
 
 # initialise home-manager on a linux host
 [group("setup")]
