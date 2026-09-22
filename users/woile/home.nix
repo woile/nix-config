@@ -67,7 +67,6 @@
   ];
   # network diagnostics
   programs.trippy.enable = false;
-  programs.starship.enable = true;
 
   programs.firefox.enable = true;
   programs.firefox.nativeMessagingHosts = [

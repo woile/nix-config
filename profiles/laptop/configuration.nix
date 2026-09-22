@@ -27,6 +27,7 @@
   programs.bandwhich.enable = true;
   programs.captive-browser.enable = true;
   programs.captive-browser.interface = "wlp2s0";
+  programs.starship.enable = true;
 
   # automatic timezone, DISABLED: DIGI IP point to Romania
   services.automatic-timezoned.enable = false;
