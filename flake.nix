@@ -182,7 +182,7 @@
           tacuarita = {
             hostname = "tacuarita.vpn.woile.eu";
             sshUser = "root";
-            groups = [ "remote" ];
+            groups = [ "remote" "ar" ];
             sshOpts = [
               "-o"
               "Compression=yes"
