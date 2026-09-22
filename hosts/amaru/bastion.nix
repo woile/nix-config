@@ -11,9 +11,6 @@ let
   relayDomain = "${cfg.settings.relaySubdomain}.${cfg.settings.rootDomain}";
 in
 {
-  imports = [
-    ../../modules/netbird-relay.nix
-  ];
   options = {
     services.bastion = {
       enable = lib.mkEnableOption "Bastion server with VPN and Gateway";
