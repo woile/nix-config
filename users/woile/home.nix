@@ -181,11 +181,6 @@
     #others
     firefoxpwa
     slint-lsp
-
-    # fonts
-    nerd-fonts.iosevka
-    nerd-fonts.jetbrains-mono
-    iosevka
   ];
 
   home.shellAliases = {
@@ -196,12 +191,6 @@
     du = "dust";
     htop = "btm";
 
-  };
-
-  fonts = {
-    fontconfig = {
-      enable = true;
-    };
   };
 
   services.gpg-agent = {

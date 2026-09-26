@@ -79,6 +79,30 @@
   services.rsyncd.enable = true;
   services.flatpak.enable = true;
 
+  fonts = {
+    fontconfig = {
+      enable = true;
+      defaultFonts = {
+        serif = [ "Noto Serif" ];
+        sansSerif = [ "Noto Sans" ];
+        monospace = [ "Noto Sans Mono" ];
+        emoji = [ "Noto Color Emoji" ];
+      };
+    };
+    packages = with pkgs; [
+      # defaults
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+
+      # more fonts
+      nerd-fonts.iosevka
+      nerd-fonts.jetbrains-mono
+      iosevka
+    ];
+  };
+
   # Open ports in the firewall.
   networking.firewall = rec {
     allowedTCPPorts = [
