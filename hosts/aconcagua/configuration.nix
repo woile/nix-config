@@ -76,6 +76,7 @@
     jellyfin-desktop
 
     nix-forecast
+    freecad
   ];
   # services.udev.packages = [ pkgs.yubikey-personalization ];
 
