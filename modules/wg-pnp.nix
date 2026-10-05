@@ -4,6 +4,11 @@
 # Notes
 # - Some servers, even under the same provider, may not support NAT-PMP even if they claim to do so.
 # - Proton VPN: PT didn't work, but NL did work.
+# - The WireGuard interface (<namespace>0) only exists *inside* the VPN
+#   network namespace, so it never appears in the host's `ip a`.
+#   Inspect it with: ip netns exec <namespace> ip -br link
+#   A dead tunnel (no handshake) makes NAT-PMP fail; check with:
+#   ip netns exec <namespace> wg show
 # Original: https://github.com/ImUrX/nixfiles/blob/b94ed89a7025b68b60ed7cb4254b5512d1ec0f25/modules/wg-pnp.nix
 # Test:
 #   Add magnet from https://ipleak.net/ and compare IPs
@@ -159,11 +164,27 @@ with lib;
               return 1
             fi
 
+            # --- Tunnel health check ---
+            # A WireGuard interface can exist while the tunnel is dead (no
+            # handshake), which the interface check above cannot detect.
+            handshake="$(${pkgs.wireguard-tools}/bin/wg show "$VPN_IFACE" latest-handshakes 2>/dev/null | ${pkgs.coreutils}/bin/cut -f2 || true)"
+            now="$(${pkgs.coreutils}/bin/date +%s)"
+            if [[ ! "$handshake" =~ ^[0-9]+$ ]] || [ "$handshake" -eq 0 ] || [ $((now - handshake)) -gt 300 ]; then
+              echo "Warning: no recent WireGuard handshake on $VPN_IFACE (tunnel down or key stale)."
+            fi
+
             touch "$port_file"
 
             # --- NAT-PMP: Get a Public Port ---
-            # Request a port from the router (timeout: 60s, lease to VPN_GATEWAY_IP).
-            result="$(${pkgs.libnatpmp}/bin/natpmpc -a 1 $FIXED_INTERNAL_PORT "$protocol" 60 -g "$VPN_GATEWAY_IP")"
+            # Request a port from the router (lease: 60s via VPN_GATEWAY_IP).
+            # natpmpc's output is captured below, so a non-responding gateway
+            # looks like a silent freeze; `timeout` turns that into a fast,
+            # logged failure.
+            echo "Requesting NAT-PMP mapping from $VPN_GATEWAY_IP ($protocol)..."
+            if ! result="$(${pkgs.coreutils}/bin/timeout 30 ${pkgs.libnatpmp}/bin/natpmpc -a 1 $FIXED_INTERNAL_PORT "$protocol" 60 -g "$VPN_GATEWAY_IP")"; then
+              echo "Error: NAT-PMP request to $VPN_GATEWAY_IP failed or timed out. Output: $result"
+              return 1
+            fi
             echo "$result"
 
             # Extract the mapped public port from the output.

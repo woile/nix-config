@@ -52,7 +52,7 @@
   };
   vpnNamespaces.proton = {
     enable = true;
-    wireguardConfigFile = "/data/.secret/vpn/purmamarca-NL-749.conf";
+    wireguardConfigFile = "/data/.secret/vpn/purmamarca-ES-81.conf";
     accessibleFrom = [
       "192.168.100.0/24"
       "100.100.0.0/16"
@@ -96,6 +96,7 @@
     # network tools
     net-tools
     libnatpmp # natpmp
+    wireguard-tools # wg show inside the VPN namespace (ip netns exec proton wg show)
     tcpdump
   ];
 
