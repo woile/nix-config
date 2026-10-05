@@ -32,8 +32,9 @@
     rancher
     kubeseal
     bashInteractive
+    opentofu
   ];
-
+  programs.starship.enable = true;
   # load home-manager untracked functions
   programs.bash.bashrcExtra = ''
     if [ -f ~/.extrarc ]; then
