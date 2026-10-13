@@ -33,8 +33,6 @@
   services.automatic-timezoned.enable = false;
   services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
 
-  time.timeZone = "Europe/Lisbon";
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
   services.printing.cups-pdf.enable = true;

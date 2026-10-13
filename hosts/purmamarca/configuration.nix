@@ -72,6 +72,7 @@
     LC_TELEPHONE = "nl_NL.UTF-8";
     LC_TIME = "nl_NL.UTF-8";
   };
+  time.timeZone = "Europe/Lisbon";
 
   # Auto-login user
   services.displayManager.autoLogin = {
