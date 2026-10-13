@@ -118,7 +118,7 @@
     ];
     allowedUDPPortRanges = allowedTCPPortRanges;
   };
-  networking.nameservers = [ "1.1.1.1" ];
+  networking.nameservers = [ "86.54.11.1" "2a13:1001::86:54:11:1" "1.1.1.1" ];
 
   virtualisation = {
     containers.enable = true;
@@ -139,8 +139,8 @@
         # Optionally customize rootless Docker daemon settings
         daemon.settings = {
           dns = [
+            "86.54.11.1"
             "1.1.1.1"
-            "8.8.8.8"
           ];
         };
       };
