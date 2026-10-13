@@ -18,6 +18,9 @@ data "scaleway_domain_zone" "woile_eu_root" {
   subdomain = ""
 }
 
+# *******************************************************
+# Start TXT domains
+
 resource "scaleway_domain_record" "woile_eu_ownership" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
   name     = "_git-pages-forge-allowlist"
@@ -42,6 +45,18 @@ resource "scaleway_domain_record" "woile_eu_google_search" {
   ttl      = 3600
 }
 
+resource "scaleway_domain_record" "at_proto_woile_eu" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "_atproto"
+  type     = "TXT"
+  data     = "did=did:plc:76loxjswafa7wb4r6zbiii4e"
+  ttl      = 3600
+}
+
+# End TXT domains
+# *******************************************************
+# Start ALIAS domains
+
 resource "scaleway_domain_record" "woile_eu_apex" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
   name     = ""
@@ -57,6 +72,10 @@ resource "scaleway_domain_record" "mb_woile_eu" {
   data     = "grebedoc.dev."
   ttl      = 3600
 }
+
+# End ALIAS domains
+# *******************************************************
+# Start vpn.woile.eu
 
 resource "scaleway_domain_record" "vpn_ipv4_eu_tld" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
@@ -74,6 +93,10 @@ resource "scaleway_domain_record" "vpn_ipv6_eu_tld" {
   ttl      = 3600
 }
 
+# End vpn.woile.eu
+# *******************************************************
+# Start auth.woile.eu
+
 resource "scaleway_domain_record" "auth_ipv4_eu_tld" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
   name     = "auth"
@@ -90,6 +113,9 @@ resource "scaleway_domain_record" "auth_ipv6_eu_tld" {
   ttl      = 3600
 }
 
+# End auth.woile.eu
+# *******************************************************
+# Start relay.vpn.woile.eu
 resource "scaleway_domain_record" "relay_ipv4_eu_tld" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
   name     = "relay-eu"
@@ -106,13 +132,45 @@ resource "scaleway_domain_record" "relay_ipv6_eu_tld" {
   ttl      = 3600
 }
 
-resource "scaleway_domain_record" "at_proto_woile_eu" {
+# End relay.vpn.woile.eu
+# *******************************************************
+# Start in.vpn.woile.eu (netbird proxy)
+
+resource "scaleway_domain_record" "in_vpn_ipv6" {
   dns_zone = data.scaleway_domain_zone.woile_eu_root.id
-  name     = "_atproto"
-  type     = "TXT"
-  data     = "did=did:plc:76loxjswafa7wb4r6zbiii4e"
+  name     = "in.vpn"
+  type     = "AAAA"
+  data     = scaleway_instance_ip.public_ipv6_routed.address
   ttl      = 3600
 }
+
+# Wildcard subdomain: *.in.vpn.woile.eu
+resource "scaleway_domain_record" "wildcard_in_vpn_ipv6" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "*.in.vpn"
+  type     = "AAAA"
+  data     = scaleway_instance_ip.public_ipv6_routed.address
+  ttl      = 3600
+}
+resource "scaleway_domain_record" "in_vpn_ipv4" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "in.vpn"
+  type     = "A"
+  data     = scaleway_instance_ip.public_ip_routed.address
+  ttl      = 3600
+}
+
+# Wildcard subdomain: *.in.vpn.woile.eu
+resource "scaleway_domain_record" "wildcard_in_vpn_ipv4" {
+  dns_zone = data.scaleway_domain_zone.woile_eu_root.id
+  name     = "*.in.vpn"
+  type     = "A"
+  data     = scaleway_instance_ip.public_ip_routed.address
+  ttl      = 3600
+}
+
+# End *.in.vpn.woile.eu
+# *******************************************************
 
 ###################
 # Scaleway Server #

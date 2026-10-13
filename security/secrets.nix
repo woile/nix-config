@@ -40,4 +40,13 @@ in
     host_aconcagua_TPM
     host_tacuarita
   ];
+  "security/secrets/acme_proxy_dns.age".publicKeys = [
+    host_aconcagua_TPM
+    host_amaru
+  ];
+
+  "security/secrets/netbird_proxy_token.age".publicKeys = [
+    host_aconcagua_TPM
+    host_amaru
+  ];
 }

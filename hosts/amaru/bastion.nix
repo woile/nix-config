@@ -9,8 +9,12 @@ let
   authDomain = "${cfg.settings.authPrefix}.${cfg.settings.rootDomain}";
   vpnDomain = "${cfg.settings.vpnPrefix}.${cfg.settings.rootDomain}";
   relayDomain = "${cfg.settings.relaySubdomain}.${cfg.settings.rootDomain}";
+  proxySubdomain = "${cfg.settings.proxySubdomain}.${vpnDomain}";
 in
 {
+  imports = [
+    ../../modules/netbird-proxy.nix
+  ];
   options = {
     services.bastion = {
       enable = lib.mkEnableOption "Bastion server with VPN and Gateway";
@@ -42,13 +46,18 @@ in
               default = "relay-eu";
               description = "Relay subdomain under the rootDomain";
             };
+            "proxySubdomain" = lib.mkOption {
+              type = lib.types.str;
+              default = "in";
+              description = "Netbird proxy subdomain, also a wildcard. Sits inside the vpn domain.";
+            };
           };
         };
       };
     };
   };
-  config = lib.mkIf cfg.enable {
 
+  config = lib.mkIf cfg.enable {
     # TLS configuration
     security.acme = {
       acceptTerms = true;
@@ -74,11 +83,24 @@ in
             "kanidm.service"
           ];
         };
-        # "${vpnDomain}" = {
-        #   listenHTTP = "[::1]:3000";
-        #   group = "acme";
-        #   reloadServices = [ "traefik.service" ];
-        # };
+
+        "${proxySubdomain}" = {
+          domain = "${proxySubdomain}";
+          extraDomainNames = [ "*.${proxySubdomain}" ];
+          # https://go-acme.github.io/lego/dns/
+          dnsProvider = "scaleway";
+          dnsResolver = "1.1.1.1:53";
+
+          # Provider API tokens
+          environmentFile = config.age.secrets.acme_proxy_dns.path;
+          group = "acme";
+          dnsPropagationCheck = true;
+          # Reload services that consume this cert
+          reloadServices = [
+            "traefik.service"
+            "netbird-proxy.service" # or docker restart hook if NetBird runs in containers
+          ];
+        };
       };
     };
 
@@ -113,6 +135,20 @@ in
       file = ../../security/secrets/netbird_turn_password.age;
       owner = "netbird-management";
       group = "netbird-management";
+      mode = "0400";
+    };
+
+    age.secrets.acme_proxy_dns = {
+      file = ../../security/secrets/acme_proxy_dns.age;
+      owner = "acme";
+      group = "acme";
+      mode = "0400";
+    };
+
+    age.secrets.netbird_proxy_token = {
+      file = ../../security/secrets/netbird_proxy_token.age;
+      owner = "netbird-proxy";
+      group = "netbird-proxy";
       mode = "0400";
     };
 
@@ -214,6 +250,8 @@ in
           originUrl = [
             "https://${vpnDomain}/auth"
             "https://${vpnDomain}/silent-renew"
+            # Allow NetBird Reverse Proxy SSO callback
+            "https://${vpnDomain}/api/reverse-proxy/callback"
           ];
           enableLocalhostRedirects = true;
           public = true; # Required for Netbird's Single Page App (Dashboard)
@@ -262,6 +300,8 @@ in
           HttpConfig = {
             AuthAudience = "netbird";
             AuthIssuer = "https://${authDomain}/oauth2/openid/netbird";
+            AuthClientID = "netbird";
+            AuthCallbackURL = "https://${vpnDomain}/api/reverse-proxy/callback";
           };
           PKCEAuthorizationFlow = {
             ProviderConfig = {
@@ -308,10 +348,14 @@ in
           AUTH_SUPPORTED_SCOPES = "openid profile email";
           AUTH_REDIRECT_URI = "/auth";
           AUTH_SILENT_REDIRECT_URI = "/silent-renew";
+          NETBIRD_AGENT_NETWORK_ENABLED = true;
+          # NETBIRD_AGENT_NETWORK_ONLY = false;
+          NETBIRD_CLOUD = false;
+          NETBIRD_LICENSED = false;
         };
       };
-
     };
+
     services.netbird.relay = {
       enable = true;
       settings = {
@@ -323,6 +367,17 @@ in
       };
       openFirewall = true;
       authSecretFile = config.age.secrets.netbird_turn_password.path;
+    };
+
+    services.netbird.proxy = {
+      enable = true;
+      settings = {
+        domain = proxySubdomain;
+        cert-dir = "/var/lib/acme/${proxySubdomain}";
+        mgmt = "https://${vpnDomain}:443";
+        # trusted-proxies = "172.30.0.0/24";
+      };
+      proxyTokenFile = config.age.secrets.netbird_proxy_token.path;
     };
 
     systemd.services.netbird-management = {
@@ -387,6 +442,7 @@ in
     # Reverse proxy
     services.traefik = {
       enable = true;
+
       staticConfigOptions = {
         entryPoints = {
           web = {
@@ -435,6 +491,31 @@ in
           #   keyFile = "/var/lib/acme/${vpnDomain}/key.pem";
           # }
         ];
+
+        # For netbird proxy
+        tcp = {
+          routers = {
+            netbird-proxy = {
+              rule = "HostSNI(`*.${proxySubdomain}`) || HostSNI(`${proxySubdomain}`)";
+              entryPoints = [ "websecure" ];
+              tls.passthrough = true;
+              service = "netbird-proxy-svc";
+            };
+          };
+
+          services = {
+            netbird-proxy-svc = {
+              loadBalancer = {
+                proxyProtocol.version = 2;
+                servers = [
+                  # NetBird Proxy internal TLS port
+                  { address = "127.0.0.1:8447"; }
+                ];
+              };
+            };
+          };
+        };
+
         http = {
           serversTransports.kanidm-transport = {
             serverName = authDomain;
@@ -466,7 +547,7 @@ in
             };
             # Netbird gRPC API (Management)
             vpn-grpc-mgmt = {
-              rule = "Host(`${vpnDomain}`) && PathPrefix(`/management.ManagementService/`)";
+              rule = "Host(`${vpnDomain}`) && (PathPrefix(`/management.`) || PathPrefix(`/proxy.`))";
               entryPoints = [ "websecure" ];
               service = "vpn-grpc-mgmt-svc";
               tls = { };
