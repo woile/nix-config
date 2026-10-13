@@ -1,4 +1,4 @@
-export RULES := 'security/secrets.nix'
+export AGENIX_RULES := 'security/secrets.nix'
 
 hostname := `hostname`
 
@@ -100,13 +100,13 @@ ssh host='purmamarca' cmd=env('cmd', ''):
     ssh -o StrictHostKeyChecking=accept-new "root@{{ host }}.vpn.woile.eu" {{ cmd }}
 
 # switch to a new generation on a remote host
-[arg('host', pattern='purmamarca|aconcagua')]
+[arg('host', pattern='purmamarca|aconcagua|amaru|tacuarita')]
 [group("management")]
 remote-switch host=hostname:
-    nh os switch --show-trace --target-host "root@{{ host }}.local" --hostname "{{ host }}" .
+    nh os switch --show-trace --target-host "root@{{ host }}.vpn.woile.eu" --hostname "{{ host }}" .
 
 # create new generation on a remote host
-[arg('host', pattern='purmamarca|aconcagua')]
+[arg('host', pattern='purmamarca|aconcagua|amaru|tacuarita')]
 [group("management")]
 remote-boot host=hostname:
-    nh os boot --diff always --show-trace --target-host "root@{{ host }}.local" --hostname "{{ host }}" .
+    nh os boot --diff always --show-trace --target-host "root@{{ host }}.vpn.woile.eu" --hostname "{{ host }}" .
