@@ -147,8 +147,8 @@ in
 
     age.secrets.netbird_proxy_token = {
       file = ../../security/secrets/netbird_proxy_token.age;
-      owner = "netbird-proxy";
-      group = "netbird-proxy";
+      owner = "root";
+      group = "root";
       mode = "0400";
     };
 
@@ -375,8 +375,14 @@ in
         domain = proxySubdomain;
         cert-dir = "/var/lib/acme/${proxySubdomain}";
         mgmt = "https://${vpnDomain}:443";
-        # trusted-proxies = "172.30.0.0/24";
+        require-subdomain = true;
       };
+      environment = {
+        NB_PROXY_PRIVATE = true;
+        NB_PROXY_LOG_LEVEL = "info";
+        NB_PROXY_ALLOW_INSECURE = true;
+      };
+
       proxyTokenFile = config.age.secrets.netbird_proxy_token.path;
     };
 
