@@ -78,6 +78,27 @@ in
       };
 
     };
+    environment = lib.mkOption {
+      type = types.submodule {
+        freeformType =
+          with lib.types;
+          attrsOf (oneOf [
+            str
+            bool
+            int
+          ]);
+      };
+      example = {
+        NB_PROXY_PRIVATE = true;
+        NB_PROXY_LOG_LEVEL = "info";
+      };
+      default = { };
+      description = ''
+        Feed environment variables to the proxy. Some parameters can only be provided via environments.
+
+        Warning: Do not put secrets here.
+      '';
+    };
     proxyTokenFile = lib.mkOption {
       type = types.externalPath;
       description = ''
@@ -103,8 +124,9 @@ in
       after = [
         "network.target"
       ];
-
       wantedBy = [ "multi-user.target" ];
+
+      environment = lib.mapAttrs (_: lib.generators.mkValueStringDefault { }) cfg.environment;
       script = ''
         export NB_PROXY_TOKEN="$(< "$CREDENTIALS_DIRECTORY/proxy_token")"
         exec ${cmd} ${args}
