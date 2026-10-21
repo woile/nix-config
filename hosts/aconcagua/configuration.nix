@@ -34,9 +34,9 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  # time.timeZone = "Europe/Lisbon";
+  time.timeZone = "Europe/Lisbon";
 
-  # Select internationalisation properties.
+  # Select internationalization properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
@@ -50,7 +50,6 @@
     LC_TELEPHONE = "pt_PT.UTF-8";
     LC_TIME = "pt_PT.UTF-8";
   };
-  time.timeZone = "Europe/Amsterdam";
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
