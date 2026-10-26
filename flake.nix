@@ -17,7 +17,6 @@
 
     temporis = {
       url = "github:reciperium/temporis";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # VPN
