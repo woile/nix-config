@@ -22,11 +22,13 @@ in
       type = types.submodule {
         freeformType =
           with lib.types;
-          nullOr (oneOf [
-            bool
-            str
-            (listOf (oneOf [ str ]))
-          ]);
+          attrsOf (
+            nullOr (oneOf [
+              bool
+              str
+              (listOf (oneOf [ str ]))
+            ])
+          );
 
         options.domain = lib.mkOption {
           type = types.str;
