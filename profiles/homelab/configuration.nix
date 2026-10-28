@@ -9,9 +9,8 @@
     openFirewall = true;
     settings = {
       publish = {
-        enable = true;
-        addresses = true;
-        workstation = true;
+        publish-addresses = true;
+        publish-workstation = true;
       };
     };
     allowInterfaces = [ "enp99s0f3u1u2c2" ];
