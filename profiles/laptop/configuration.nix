@@ -102,21 +102,13 @@
   };
 
   # Open ports in the firewall.
-  networking.firewall = rec {
+  networking.firewall = {
     allowedTCPPorts = [
       51413 # transmission
       5900 # SPICE
       21118 # RustDesk
       8080 # local
     ];
-    allowedTCPPortRanges = [
-      # KDE Connect
-      {
-        from = 1714;
-        to = 1764;
-      }
-    ];
-    allowedUDPPortRanges = allowedTCPPortRanges;
   };
   networking.nameservers = [ "86.54.11.1" "2a13:1001::86:54:11:1" "1.1.1.1" ];
 

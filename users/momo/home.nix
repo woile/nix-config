@@ -4,7 +4,6 @@
   home.username = "momo";
   home.homeDirectory = "/home/momo";
 
-  services.kdeconnect.enable = true;
   programs.fd = {
     enable = true;
   };

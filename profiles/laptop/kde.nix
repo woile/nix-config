@@ -45,4 +45,6 @@
     fladder
     gelly
   ];
+
+  programs.kdeconnect.enable = true;
 }
