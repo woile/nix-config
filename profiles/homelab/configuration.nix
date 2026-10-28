@@ -7,9 +7,13 @@
     nssmdns4 = true;
     nssmdns6 = true;
     openFirewall = true;
-    publish.enable = true;
-    publish.addresses = true;
-    publish.workstation = true;
+    settings = {
+      publish = {
+        enable = true;
+        addresses = true;
+        workstation = true;
+      };
+    };
     allowInterfaces = [ "enp99s0f3u1u2c2" ];
   };
 
