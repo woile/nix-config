@@ -29,8 +29,8 @@
       incomplete-dir-enabled = true;
       "rpc-bind-address" = "192.168.15.1"; # Bind RPC/WebUI to VPN network namespace address
 
-      # RPC-whitelist examples
-      "rpc-whitelist" = "127.0.0.1,192.168.100.*,192.168.15.*,localhost,::1,*.local"; # Access from other machines on specific subnet
+      # RPC-whitelist
+      "rpc-whitelist" = "127.0.0.1,192.168.1.*,100.82.*,192.168.15.*,::1"; # Access from other machines on specific subnet
       "port-forwarding-enabled" = false;
       "rpc-whitelist-enabled" = true;
       "rpc-host-whitelist" = "*";
@@ -58,9 +58,10 @@
     enable = true;
     wireguardConfigFile = "/data/.secret/vpn/purmamarca-ES-81.conf";
     accessibleFrom = [
-      "192.168.100.0/24"
-      "100.100.0.0/16"
-      "127.0.0.1/32"
+      "192.168.1.0/24" # home LAN
+      "100.82.0.0/16" # netbird
+      "100.100.0.0/16" # ??
+      "127.0.0.1/32" # localhost
     ];
 
     # Make the WebUI accessible outside the namespace
