@@ -53,6 +53,18 @@
     nssmdns4 = true;
     nssmdns6 = true;
     openFirewall = true;
+    settings = {
+      server = {
+        allow-point-to-point = true;
+      };
+      publish = {
+        disable-publishing = false;
+        disable-user-service-publishing = false;
+        # publish-addresses = true;
+        # publish-workstation = true;
+        # publish-hinfo = true;
+      };
+    };
   };
 
   # disable pulseaudio

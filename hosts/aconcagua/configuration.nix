@@ -112,7 +112,7 @@
   };
 
   services.resolved.enable = true;
-
+  services.resolved.settings.Resolve.MulticastDNS = false;
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];

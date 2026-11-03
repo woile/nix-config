@@ -111,6 +111,7 @@
     openInternalFirewall = true;
   };
   services.resolved.enable = true;
+  services.resolved.settings.Resolve.MulticastDNS = false;
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;

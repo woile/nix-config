@@ -8,12 +8,21 @@
     nssmdns6 = true;
     openFirewall = true;
     settings = {
+      server = {
+        allow-point-to-point = true;
+      };
       publish = {
-        publish-addresses = true;
-        publish-workstation = true;
+        disable-publishing = false;
+        disable-user-service-publishing = false;
+        # publish-addresses = true;
+        # publish-workstation = true;
+        # publish-hinfo = true;
       };
     };
-    allowInterfaces = [ "enp99s0f3u1u2c2" ];
+    allowInterfaces = [
+      "eth0"
+      "nb-wt0"
+    ];
   };
 
   # Torrenting client
@@ -201,6 +210,8 @@
     openInternalFirewall = true;
   };
   services.resolved.enable = true;
+  services.resolved.settings.Resolve.MulticastDNS = false;
+
   services.flaresolverr.enable = true;
   services.flaresolverr.openFirewall = true;
 
