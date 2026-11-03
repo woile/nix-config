@@ -48,7 +48,6 @@
   # mDNS (service discovery on a local network)
   services.avahi = {
     enable = true;
-
     # Provide info to the Name Service Switch (NSS) of the host about the local network
     nssmdns4 = true;
     nssmdns6 = true;
@@ -60,9 +59,9 @@
       publish = {
         disable-publishing = false;
         disable-user-service-publishing = false;
-        # publish-addresses = true;
-        # publish-workstation = true;
-        # publish-hinfo = true;
+        publish-addresses = true;
+        publish-workstation = true;
+        publish-hinfo = true;
       };
     };
   };

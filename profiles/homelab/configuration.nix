@@ -2,28 +2,10 @@
 {
 
   # mDNS for local services discovery
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    nssmdns6 = true;
-    openFirewall = true;
-    settings = {
-      server = {
-        allow-point-to-point = true;
-      };
-      publish = {
-        disable-publishing = false;
-        disable-user-service-publishing = false;
-        # publish-addresses = true;
-        # publish-workstation = true;
-        # publish-hinfo = true;
-      };
-    };
-    allowInterfaces = [
-      "eth0"
-      "nb-wt0"
-    ];
-  };
+  services.avahi.allowInterfaces = [
+    "eth0"
+    "nb-wt0"
+  ];
 
   # Torrenting client
   services.transmission = {
