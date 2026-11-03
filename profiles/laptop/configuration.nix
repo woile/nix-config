@@ -122,7 +122,11 @@
       8080 # local
     ];
   };
-  networking.nameservers = [ "86.54.11.1" "2a13:1001::86:54:11:1" "1.1.1.1" ];
+  networking.nameservers = [
+    "86.54.11.1"
+    "2a13:1001::86:54:11:1"
+    "1.1.1.1"
+  ];
 
   virtualisation = {
     containers.enable = true;
