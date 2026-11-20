@@ -44,7 +44,7 @@
       "mcp-server-puppeteer"
       "opentofu"
       "typos"
-      "dependi"
+      "depsy"
       "tree-sitter-query"
       "log"
       "color-highlight"
