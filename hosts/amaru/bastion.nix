@@ -94,7 +94,8 @@ in
           # Provider API tokens
           environmentFile = config.age.secrets.acme_proxy_dns.path;
           group = "acme";
-          dnsPropagationCheck = true;
+          dnsAuthoritativePropagationCheck = true;
+          dnsRecursivePropagationCheck = true;
           # Reload services that consume this cert
           reloadServices = [
             "traefik.service"
